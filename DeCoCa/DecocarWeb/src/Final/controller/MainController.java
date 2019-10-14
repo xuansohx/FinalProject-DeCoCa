@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import Final.frame.Biz;
 import Final.vo.CarStatus;
+import Final.vo.Client;
 import Final.vo.Customer;
 import Final.vo.Reservation;
 import Final.vo.User;
@@ -216,6 +217,32 @@ public class MainController {
 		mv.addObject("rlist", rlist);
 		mv.addObject("center","schelist");
 		mv.setViewName("main");
+		return mv;
+	}
+	@RequestMapping("/updateStateAll.mc")
+	public ModelAndView updateAll() {
+		ModelAndView mv = new ModelAndView();
+		Client c = new Client("70.12.60.110", 9999);
+		c.setMsg(1, 0000, 0000);
+		try {
+			c.startClient();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.setViewName("carlist");
+		return mv;
+	}
+	@RequestMapping("/updateState.mc")
+	public ModelAndView updateOnecar(ModelAndView mv, String car) {
+		int car_id = Integer.parseInt(car);
+		Client c = new Client("70.12.60.110", 9999);
+		c.setMsg(0, car_id, 0000);
+		try {
+			c.startClient();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.setViewName("carlist");
 		return mv;
 	}
 }
