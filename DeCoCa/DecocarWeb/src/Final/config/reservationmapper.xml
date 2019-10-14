@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Final.mapper.ReservationMapper">
+
+<!-- 
+	<resultMap type="user" id="um">
+		<result property="identification" column="id"/>
+		<result property="password" column="pwd"/>
+		<result property="username" column="name"/>
+	</resultMap> -->	
+	
+	<insert id="insert" parameterType="reservation">
+		INSERT INTO RESERVATION VALUES (1003,'id02','sch3', #{calDate}, #{calDate}, ' ', 111, 1, 11, 11, 101, #{sStyle}, #{reuserid}, 123456, 0, #{sAddress}, #{eAddress}, #{memo})	 
+
+<!-- 		INSERT INTO RESERVATION VALUES (#{calid},#{userid},#{calName},#{calDate},#{sTime},#{eTime},#{sLng},
+		#{sLat},#{eLng},#{eLat},#{carid},#{sStyle},#{reuserid},#{pinNum},
+		#{calstatus},#{sAddress},#{eAddress},#{memo})	 -->
+	</insert>
+	
+	<!-- <update id="update" parameterType="cart">
+		UPDATE CART_TB SET PWD=#{pwd},NAME=#{name} WHERE ID=#{id}
+	</update> -->
+	
+	<!-- <delete id="delete" parameterType="Integer">
+		DELETE FROM CAR_STATUS WHERE statusid=#{statusid}
+	</delete>
+	 -->
+	<select id="select" parameterType="Integer" 
+	resultType="reservation">
+		SELECT * FROM RESERVATION WHERE calid=#{calid}	
+	</select>
+	
+	<select id="selectall" resultType="reservation">
+		SELECT * FROM RESERVATION ORDER BY 1
+	</select>
+	
+</mapper>
+
+
+
+
+
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Final.mapper.CarStatusMapper">
+
+<!-- 
+	<resultMap type="user" id="um">
+		<result property="identification" column="id"/>
+		<result property="password" column="pwd"/>
+		<result property="username" column="name"/>
+	</resultMap> -->	
+	
+	<insert id="insert" parameterType="carstatus">
+		INSERT INTO CAR_STATUS VALUES (#{statusid},#{battery},#{tire},#{door},#{safebelt},#{brake}
+		,#{engine},#{handle},#{temperature},#{speed},#{carlng},#{carlat})	
+	</insert>
+	
+	<!-- <update id="update" parameterType="cart">
+		UPDATE CART_TB SET PWD=#{pwd},NAME=#{name} WHERE ID=#{id}
+	</update> -->
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM CAR_STATUS WHERE statusid=#{statusid}
+	</delete>
+	
+	<select id="select" parameterType="Integer" 
+	resultType="carstatus">
+		SELECT * FROM CAR_STATUS WHERE statusid=#{statusid}	
+	</select>
+	
+	<select id="selectall" resultType="carstatus">
+		SELECT * FROM CAR_STATUS ORDER BY 1
+	</select>
+	
+</mapper>
+
+
+
+
+
+
