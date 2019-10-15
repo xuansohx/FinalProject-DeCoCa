@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import Final.frame.Biz;
 import Final.vo.CarStatus;
-import Final.vo.Customer;
 import Final.vo.Reservation;
 @Controller
 public class CarStatusController {
@@ -19,8 +18,6 @@ public class CarStatusController {
 	@Resource(name = "csbiz")
 	Biz<Integer, CarStatus> csbiz;
 	
-	@Resource(name = "cbiz")
-	Biz<Integer, Customer> cbiz;
 	
 	@Resource(name = "Ureserbiz")
 	Biz<String, Reservation> urbiz;
@@ -41,7 +38,7 @@ public class CarStatusController {
 		mv.addObject("rl", reservationList);
 		
 		
-		//carlocation4 : 지역명을 위도 경도로 나타내는 예제
+		//carlocation4 : 吏��뿭紐낆쓣 �쐞�룄 寃쎈룄濡� �굹���궡�뒗 �삁�젣
 		mv.setViewName("admin/cardetail");
 		return mv;
 	}
