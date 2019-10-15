@@ -32,6 +32,17 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap');
+
+
+#page_title{
+font-family: 'Lalezar', cursive;
+text-align: center;
+}
+</style>
+
 </head>
 <body class="animsition">
 
@@ -46,9 +57,9 @@
 			<div class="flex-w flex-tr">
 				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
 					<form action="loginimpl.mc" method="POST">
-						<h4 class="mtext-105 cl2 txt-center p-b-30">
-							LOG IN
-						</h4>
+						<h1 id="page_title">
+							LOG IN<br>
+						</h1>
 						
 					
 						<div class="col-sm-6 p-b-5 m-lr-auto ">

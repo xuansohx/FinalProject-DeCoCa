@@ -101,7 +101,7 @@
 						<%-- 사용자모드 로그인 --%>
 						<c:otherwise>
 							<ul class="main-menu">
-								<li><a href="#">${loginuser.userid}</a></li>
+								<li><a>${loginuser.userid}</a></li>
 								<li><a href="mypage.mc">MyPage</a></li>
 								<!-- <li><a href="schelist.mc">일정list</a></li> -->
 								<!-- 일정list는 mypage에 넣음 -->
