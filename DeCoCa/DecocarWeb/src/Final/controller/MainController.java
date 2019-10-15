@@ -22,9 +22,9 @@ import Final.vo.User;
 
 @Controller
 public class MainController {
-	@Resource(name="ubiz")
+	@Resource(name = "ubiz")
 	Biz<String, User> ubiz;
-	
+
 	@Resource(name = "cbiz")
 	Biz<String, Customer> biz;
 
@@ -39,26 +39,26 @@ public class MainController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("center", "center");
 		mv.setViewName("main");
-		//mv.setViewName("map2");
+		// mv.setViewName("map2");
 		return mv;
 	}
 
 	@RequestMapping("/loginimpl.mc")
 	public ModelAndView loginimpl(ModelAndView mv, HttpServletRequest request, HttpServletResponse response,
 			HttpSession session) {
-		String userid= request.getParameter("userid");
-		String pwd= request.getParameter("pwd");
-		int usertype = 0 ;
+		String userid = request.getParameter("userid");
+		String pwd = request.getParameter("pwd");
+		int usertype = 0;
 		ArrayList<CarStatus> cslist = null;
 		ArrayList<Reservation> relist = null;
 		try {
 			User dbuser = ubiz.get(userid);
 			cslist = csbiz.get();
 			relist = rbiz.get();
-			if(pwd.equals(dbuser.getPwd())) {
+			if (pwd.equals(dbuser.getPwd())) {
 				session.setAttribute("loginuser", dbuser);
 				usertype = dbuser.getUsertype();
-				System.out.println("유저타입 : "+usertype);
+				System.out.println("유저타입 : " + usertype);
 			} else {
 				response.setCharacterEncoding("UTF-8");
 				response.setContentType("text/html; charset=UTF-8");
@@ -94,7 +94,7 @@ public class MainController {
 		mv.addObject("relist", relist);
 
 		if (usertype == 1) {
-			mv.setViewName("admin/admin");			
+			mv.setViewName("admin/admin");
 		} else {
 			mv.addObject("center", "center");
 			mv.setViewName("main");
@@ -150,21 +150,22 @@ public class MainController {
 		mv.setViewName("main");
 		return mv;
 	}
-	
+
 	@RequestMapping("/userupdateimpl.mc")
-	public ModelAndView uupduserupdateimplate(HttpServletRequest request,User user,String userid,HttpServletResponse response) {
-		ModelAndView mv= new ModelAndView();
+	public ModelAndView uupduserupdateimplate(HttpServletRequest request, User user, String userid,
+			HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
 		System.out.println(user);
 		try {
 			ubiz.modify(user);
 			response.setCharacterEncoding("UTF-8");
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out;
-				out = response.getWriter();
-				out.println("<script>alert('수정되었습니다.'); location.href='main.mc'</script>");
-				out.flush();
-				
-				mv.addObject("center","uupdate");
+			out = response.getWriter();
+			out.println("<script>alert('수정되었습니다.'); location.href='main.mc'</script>");
+			out.flush();
+
+			mv.addObject("center", "uupdate");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -181,44 +182,41 @@ public class MainController {
 		mv.setViewName("schedule");
 		return mv;
 	}
-	
-	// 스케쥴에서 value값 가져오기 
+	// 스케쥴에서 value값 가져오기
 	@RequestMapping("/schregisterimpl.mc")
 	public void schregisterimpl(Reservation reserve, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		System.out.println(reserve.toString());
 		try {
 			rbiz.register(reserve);
-		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		try {
+			sendPush(reserve); // 일정을 등록하면 그 사람에게 인증키를 보내준다.
 			response.sendRedirect("schelist.mc");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	
 	// 스케쥴 리스트
 	@RequestMapping("/schelist.mc")
-	public ModelAndView schelist(Reservation reserve ,ArrayList<Reservation> rlist) {
+	public ModelAndView schelist(Reservation reserve, ArrayList<Reservation> rlist) {
 		ModelAndView mv = new ModelAndView();
-		
+
 		try {
 			rlist = rbiz.get();
-		} catch (Exception e) {	
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 //		System.out.println(rlist.);
 		mv.addObject("rlist", rlist);
-		mv.addObject("center","schelist");
+		mv.addObject("center", "schelist");
 		mv.setViewName("main");
 		return mv;
 	}
+
 	@RequestMapping("/updateStateAll.mc")
 	public ModelAndView updateAll() {
 		ModelAndView mv = new ModelAndView();
@@ -232,6 +230,7 @@ public class MainController {
 		mv.setViewName("carlist");
 		return mv;
 	}
+
 	@RequestMapping("/updateState.mc")
 	public ModelAndView updateOnecar(ModelAndView mv, String car) {
 		int car_id = Integer.parseInt(car);
@@ -245,4 +244,19 @@ public class MainController {
 		mv.setViewName("carlist");
 		return mv;
 	}
+	public void sendPush(Reservation reserve) {
+		String uid = reserve.getUserid();
+		User u;
+		try {
+			u = ubiz.get(uid);
+			String token = u.getUserdevice();
+			int pin = reserve.getPinNum();
+			FcmUtil fcm = new FcmUtil();
+			fcm.send_FCM(token, "데꼬가~", pin + "");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }

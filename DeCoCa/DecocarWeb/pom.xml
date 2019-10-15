@@ -1,37 +1,39 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>DeCoCa</groupId>
-  <artifactId>DeCoCa</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
-  <build>
-    <sourceDirectory>src</sourceDirectory>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.6.1</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>3.0.0</version>
-        <configuration>
-          <warSourceDirectory>web</warSourceDirectory>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  
-  	<properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>DeCoCa</groupId>
+	<artifactId>DeCoCa</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<warSourceDirectory>web</warSourceDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<properties>
 		<java-version>1.8</java-version>
-        <org.springframework-version>4.2.5.RELEASE</org.springframework-version>
+		<org.springframework-version>4.2.5.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.5</org.aspectj-version>
 		<org.slf4j-version>1.7.18</org.slf4j-version>
 	</properties>
-  <dependencies>
+	<dependencies>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -42,7 +44,7 @@
 				<exclusion>
 					<groupId>commons-logging</groupId>
 					<artifactId>commons-logging</artifactId>
-				 </exclusion>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -50,7 +52,7 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-				<dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
 			<version>${org.springframework-version}</version>
@@ -90,24 +92,24 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
-		</dependency>	
-		
-		
-		  <dependency>
+		</dependency>
+
+
+		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjtools</artifactId>
 			<version>${org.aspectj-version}</version>
-		 </dependency>
-		             
-		  <dependency>
+		</dependency>
+
+		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 			<version>${org.aspectj-version}</version>
-		  </dependency>
-		
-		
-		
-		
+		</dependency>
+
+
+
+
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -156,58 +158,58 @@
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
-				
+
 		<!-- Servlet -->
-       <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
 		<!-- Tiles3 -->
 		<dependency>
-            <groupId>org.apache.tiles</groupId>
-            <artifactId>tiles-core</artifactId>
-            <version>3.0.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tiles</groupId>
-            <artifactId>tiles-extras</artifactId>
-            <version>3.0.3</version>
-        </dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-core</artifactId>
+			<version>3.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-extras</artifactId>
+			<version>3.0.3</version>
+		</dependency>
 
-		  <!-- MyBatis -->
-		 <dependency>
-		  <groupId>org.mybatis</groupId>
-		  <artifactId>mybatis</artifactId>
-		  <version>3.2.3</version>
-		 </dependency>
-		
-		 <dependency>
-		  <groupId>org.mybatis</groupId>
-		  <artifactId>mybatis-spring</artifactId>
-		  <version>1.2.2</version>
-		 </dependency>
-		 <!-- DBCP -->
-		
-		 <dependency>
-		  <groupId>commons-dbcp</groupId>
-		  <artifactId>commons-dbcp</artifactId>
-		  <version>1.2.2</version>
-		 </dependency>
-		<!--  
-		 <dependency>
-		     <groupId>com.oracle</groupId>
-		     <artifactId>ojdbc6</artifactId>
-		     <version>11.2.0</version>
-		 </dependency>
-		 -->
-			<!-- AOP Alliance -->
+		<!-- MyBatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.2.3</version>
+		</dependency>
+		<!-- Firebase -->
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>6.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<!-- DBCP -->
+
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<!-- <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc6</artifactId> 
+			<version>11.2.0</version> </dependency> -->
+		<!-- AOP Alliance -->
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -237,31 +239,37 @@
 			<artifactId>cglib</artifactId>
 			<version>2.2</version>
 		</dependency>
-		<!-- json request -->   
+		<!-- json request -->
 		<dependency>
-		   <groupId>com.fasterxml.jackson.core</groupId>
-		   <artifactId>jackson-databind</artifactId>
-		   <version>2.3.3</version>
-		  </dependency>     
-		 <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.11</version>
-        </dependency>
-		 <dependency>
-		 	<groupId>taglibs</groupId>
-		 	<artifactId>standard</artifactId>
-		 	<version>1.1.2</version>
-		 </dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.11</version>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
 			<version>1.1</version>
-  		</dependency>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>18.0</version>
+		</dependency>
+
 	</dependencies>
-  
-  
-  
-  <name>DeCoCa</name>
+
+
+
+	<name>DeCoCa</name>
 </project>
