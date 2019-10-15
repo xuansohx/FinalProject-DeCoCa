@@ -132,20 +132,16 @@ table {
 				<!-- Icon header 로그인(OOO님),회원가입(로그아웃) -->
 				<div class="wrap-icon-header flex-w flex-r-m">
 						<c:choose>
-						<c:when test="${loginuser.usertype eq '1'.charAt(0) }">
-<%-- 						<c:when test="${loginuser.CUSTOMER_ADMIN eq '1'.charAt(0) }"> --%>
+						<c:when test="${loginuser.usertype eq '1' }">
 							<ul class="main-menu">
 								<li><a href="">${loginuser.userid} </a></li>	
-<%-- 								<li><a href="">${loginuser.CUSTOMER_ID} </a></li>	 --%>
 								<li><a href="logout.mc">LOGOUT</a></li>
 								<li><a href="customerupdate.mc?userid=${loginuser.userid}">회원정보수정</a></li>
-<%-- 								<li><a href="customerupdate.mc?CUSTOMER_ID=${loginuser.CUSTOMER_ID}">회원정보수정</a></li> --%>
 								<li><a href="proregister.mc">PRO REGISTER</a></li>
 								<li><a href="product_list.mc">PRODUCT LIST</a></li>
 							</ul>
 						</c:when>
 						<c:when test="${loginuser.usertype eq null }">
-<%-- 						<c:when test="${loginuser.CUSTOMER_ADMIN eq null }"> --%>
 							<ul class="main-menu">
 							<li><a href="login.mc">LOGIN</a></li>
 							<li><a href="curegister.mc">REGISTER</a></li>
@@ -154,10 +150,8 @@ table {
 						<c:otherwise >
 							<ul class="main-menu">
 								<li><a href="">${loginuser.userid} </a></li>
-<%-- 								<li><a href="">${loginuser.CUSTOMER_ID} </a></li> --%>
 								<li><a href="logout.mc">LOGOUT</a></li>
 								<li><a href="customerupdate.mc?userid=${loginuser.userid}">회원정보수정</a></li>
-<%-- 								<li><a href="customerupdate.mc?CUSTOMER_ID=${loginuser.CUSTOMER_ID}">회원정보수정</a></li> --%>
 							</ul>
 						</c:otherwise>
 						</c:choose>
@@ -177,8 +171,6 @@ table {
 
 
 <form name="scheduleform" action="schregisterimpl.mc" method="POST">
-<!-- <form name="scheduleform" action="data.mc" method="POST"> -->
-	<!-- <form name="scheduleform" method="POST"> -->
 		<table style="margin-left: auto; margin-right: auto;">
 			<tr>
 				<td align="center"><b>일정 등록</b></td>
@@ -195,10 +187,6 @@ table {
 				<td class="form"><input class="input" type="text"
 					id="schedulename" name="calName"></td>
 			</tr>
-			<!-- <tr>
-					<td class="label">일정 메모</td>
-					<td class="form"><input type="text" id="schedulememo"></td>
-				</tr> -->
 			<tr>
 				<td class="label">출발지 정보</td>
 				<td class="form"><input class="input" type="text"
@@ -213,16 +201,18 @@ table {
 				<td class="label">서비스타입</td>
 				<td class="form"><select id="scheduletype" class="input" name="sStyle">
 						<!-- 선택된 서비스를 기본서비스로 해볼까? -->
-						<!-- <option value="~~" selected>~~</option> -->
-						<option value="1">스마트 택시 서비스</option>
+						<!-- <option value="~~" <c:if test="${stype==1}"> selected </c:if> > ~~ </option> -->
+						<option value="1" <c:if test="${stype==1}"> selected </c:if>>스마트 택시 서비스</option>
+						<option value="2" <c:if test="${stype==2}"> selected </c:if>>픽업 서비스</option>
+						<option value="3" <c:if test="${stype==3}"> selected </c:if>>퀵 서비스</option>
+						
+						<!-- <option value="1">스마트 택시 서비스</option>
 						<option value="2">픽업 서비스</option>
-						<option value="3">퀵 서비스</option>
-<!-- 						<option value="smarttaxi">스마트 택시 서비스</option>
-						<option value="pickup">픽업 서비스</option>
-						<option value="quick">퀵 서비스</option> -->
+						<option value="3">퀵 서비스</option> -->
 				</select></td>
 				<!-- <td class="form"><input type="text" id="scheduletype"></td> -->
 			</tr>
+			
 			<!-- hidden으로 해놓고 서비스타입에 따라서 보였으면 좋겠다. -->
 			<tr>
 				<td class="label">받는사람</td>
@@ -242,10 +232,6 @@ table {
 		</table>
 		<input type="hidden" name="userid" value="${loginuser.userid}">
 	</form>
-
-
-	<!-- Footer -->
-
 
 
 

@@ -27,7 +27,6 @@ public class MainController {
 	@Resource(name = "ubiz")
 	Biz<String, User> ubiz;
 
-
 	@Resource(name = "csbiz")
 	Biz<Integer, CarStatus> csbiz;
 
@@ -51,8 +50,9 @@ public class MainController {
 		int usertype = 0;
 		ArrayList<CarStatus> cslist = null;
 		ArrayList<Reservation> relist = null;
+		User dbuser = null; 
 		try {
-			User dbuser = ubiz.get(userid);
+			dbuser = ubiz.get(userid);
 			cslist = csbiz.get();
 			relist = rbiz.get();
 			if (pwd.equals(dbuser.getPwd())) {
@@ -99,6 +99,9 @@ public class MainController {
 			mv.addObject("center", "center");
 			mv.setViewName("main");
 		}
+		
+		System.out.println("USER : "+dbuser);
+		
 		return mv;
 	}
 
@@ -111,6 +114,7 @@ public class MainController {
 		mv.setViewName("main");
 		return mv;
 	}
+
 
 	@RequestMapping("/userupdateimpl.mc")
 	public ModelAndView uupduserupdateimplate(HttpServletRequest request, User user, String userid,
@@ -137,9 +141,11 @@ public class MainController {
 
 	// 민경이 시간 제어 부문
 	@RequestMapping("/schedule.mc")
-	public ModelAndView schedule() {
+	public ModelAndView schedule1(HttpSession session ,String type) {
 		ModelAndView mv = new ModelAndView();
-		// mv.addObject("center","scheregister");
+
+		int stype = Integer.parseInt(type);
+		session.setAttribute("stype", stype);
 		mv.setViewName("schedule");
 		return mv;
 	}
@@ -148,7 +154,16 @@ public class MainController {
 	public void schregisterimpl(Reservation reserve, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		System.out.println(reserve.toString());
+		
+		String dfull = reserve.getCalDate();
+		
+		String ddate = dfull.substring(0, 10);
+		String dtime = dfull.substring(11, 16);
+		System.out.println(dfull+" = "+ddate+""+dtime);
+		reserve.setCalDate(ddate);
+		reserve.setsTime(dtime);
 		try {
+			
 			rbiz.register(reserve);
 		} catch (Exception e) {
 			e.printStackTrace();
