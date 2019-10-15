@@ -15,14 +15,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import Final.frame.Biz;
 import Final.vo.CarStatus;
+
+import Final.vo.Client;
+import Final.vo.Customer;
+
 import Final.vo.Reservation;
 import Final.vo.User;
 
 @Controller
 public class MainController {
-	@Resource(name="ubiz")
+	@Resource(name = "ubiz")
 	Biz<String, User> ubiz;
-	
+
 
 	@Resource(name = "csbiz")
 	Biz<Integer, CarStatus> csbiz;
@@ -35,32 +39,32 @@ public class MainController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("center", "center");
 		mv.setViewName("main");
-		//mv.setViewName("map2");
+		// mv.setViewName("map2");
 		return mv;
 	}
 
 	@RequestMapping("/loginimpl.mc")
 	public ModelAndView loginimpl(ModelAndView mv, HttpServletRequest request, HttpServletResponse response,
 			HttpSession session) {
-		String userid= request.getParameter("userid");
-		String pwd= request.getParameter("pwd");
-		int usertype = 0 ;
+		String userid = request.getParameter("userid");
+		String pwd = request.getParameter("pwd");
+		int usertype = 0;
 		ArrayList<CarStatus> cslist = null;
 		ArrayList<Reservation> relist = null;
 		try {
 			User dbuser = ubiz.get(userid);
 			cslist = csbiz.get();
 			relist = rbiz.get();
-			if(pwd.equals(dbuser.getPwd())) {
+			if (pwd.equals(dbuser.getPwd())) {
 				session.setAttribute("loginuser", dbuser);
 				usertype = dbuser.getUsertype();
-				System.out.println("À¯ÀúÅ¸ÀÔ : "+usertype);
+				System.out.println("ìœ ì €íƒ€ì… : " + usertype);
 			} else {
 				response.setCharacterEncoding("UTF-8");
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 
-				out.println("<script>alert('ºñ¹Ğ¹øÈ£°¡ Æ²·È½À´Ï´Ù.'); location.href='login.mc'</script>");
+				out.println("<script>alert('ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë ¸ìŠµë‹ˆë‹¤.'); location.href='login.mc'</script>");
 				out.flush();
 			}
 		} catch (Exception e) {
@@ -69,7 +73,7 @@ public class MainController {
 			PrintWriter out;
 			try {
 				out = response.getWriter();
-				out.println("<script>alert('¾ÆÀÌµğ°¡ Æ²·È½À´Ï´Ù.'); location.href='login.mc'</script>");
+				out.println("<script>alert('ì•„ì´ë””ê°€ í‹€ë ¸ìŠµë‹ˆë‹¤.'); location.href='login.mc'</script>");
 				out.flush();
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -77,10 +81,10 @@ public class MainController {
 			e.printStackTrace();
 		}
 		try {
-			// ÀÚµ¿Â÷ »óÅÂ
+			// ìë™ì°¨ ìƒíƒœ
 			cslist = csbiz.get();
 
-			// ¿¹¾à »óÅÂ
+			// ì˜ˆì•½ ìƒíƒœ
 			relist = rbiz.get();
 		} catch (Exception e) {
 
@@ -90,7 +94,7 @@ public class MainController {
 		mv.addObject("relist", relist);
 
 		if (usertype == 1) {
-			mv.setViewName("admin/admin");			
+			mv.setViewName("admin/admin");
 		} else {
 			mv.addObject("center", "center");
 			mv.setViewName("main");
@@ -108,21 +112,21 @@ public class MainController {
 		return mv;
 	}
 
-	
 	@RequestMapping("/userupdateimpl.mc")
-	public ModelAndView uupduserupdateimplate(HttpServletRequest request,User user,String userid,HttpServletResponse response) {
-		ModelAndView mv= new ModelAndView();
+	public ModelAndView uupduserupdateimplate(HttpServletRequest request, User user, String userid,
+			HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
 		System.out.println(user);
 		try {
 			ubiz.modify(user);
 			response.setCharacterEncoding("UTF-8");
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out;
-				out = response.getWriter();
-				out.println("<script>alert('¼öÁ¤µÇ¾ú½À´Ï´Ù.'); location.href='main.mc'</script>");
-				out.flush();
-				
-				mv.addObject("center","uupdate");
+			out = response.getWriter();
+			out.println("<script>alert('ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.'); location.href='main.mc'</script>");
+			out.flush();
+
+			mv.addObject("center", "uupdate");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -131,7 +135,7 @@ public class MainController {
 		return mv;
 	}
 
-	// ¹Î°æÀÌ ½Ã°£ Á¦¾î ºÎ¹®
+	// ë¯¼ê²½ì´ ì‹œê°„ ì œì–´ ë¶€ë¬¸
 	@RequestMapping("/schedule.mc")
 	public ModelAndView schedule() {
 		ModelAndView mv = new ModelAndView();
@@ -139,47 +143,42 @@ public class MainController {
 		mv.setViewName("schedule");
 		return mv;
 	}
-	
-	// ½ºÄÉÁì¿¡¼­ value°ª °¡Á®¿À±â 
+	// ìŠ¤ì¼€ì¥´ì—ì„œ valueê°’ ê°€ì ¸ì˜¤ê¸°
 	@RequestMapping("/schregisterimpl.mc")
 	public void schregisterimpl(Reservation reserve, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		System.out.println(reserve.toString());
 		try {
 			rbiz.register(reserve);
-		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		try {
+			sendPush(reserve); // ì¼ì •ì„ ë“±ë¡í•˜ë©´ ê·¸ ì‚¬ëŒì—ê²Œ ì¸ì¦í‚¤ë¥¼ ë³´ë‚´ì¤€ë‹¤.
 			response.sendRedirect("schelist.mc");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	
-	// ½ºÄÉÁì ¸®½ºÆ®
+	// ìŠ¤ì¼€ì¥´ ë¦¬ìŠ¤íŠ¸
 	@RequestMapping("/schelist.mc")
-	public ModelAndView schelist(Reservation reserve ,ArrayList<Reservation> rlist) {
+	public ModelAndView schelist(Reservation reserve, ArrayList<Reservation> rlist) {
 		ModelAndView mv = new ModelAndView();
-		
+
 		try {
 			rlist = rbiz.get();
-		} catch (Exception e) {	
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 //		System.out.println(rlist.);
 		mv.addObject("rlist", rlist);
-		mv.addObject("center","schelist");
+		mv.addObject("center", "schelist");
 		mv.setViewName("main");
 		return mv;
 	}
-	
-	
-	// ¸¶ÀÌÆäÀÌÁö
+  
+	// ë§ˆì´í˜ì´ì§€
 	@RequestMapping("/mypage.mc")
 	public ModelAndView mypage(String userid) {
 		ModelAndView mv = new ModelAndView();
@@ -194,6 +193,46 @@ public class MainController {
 		mv.setViewName("main");
 		return mv;
 	}
-	
-	
+
+	@RequestMapping("/updateStateAll.mc")
+	public ModelAndView updateAll() {
+		ModelAndView mv = new ModelAndView();
+		Client c = new Client("70.12.60.110", 9999);
+		c.setMsg(1, 0000, 0000);
+		try {
+			c.startClient();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.setViewName("carlist");
+		return mv;
+	}
+
+	@RequestMapping("/updateState.mc")
+	public ModelAndView updateOnecar(ModelAndView mv, String car) {
+		int car_id = Integer.parseInt(car);
+		Client c = new Client("70.12.60.110", 9999);
+		c.setMsg(0, car_id, 0000);
+		try {
+			c.startClient();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.setViewName("carlist");
+		return mv;
+	}
+	public void sendPush(Reservation reserve) {
+		String uid = reserve.getUserid();
+		User u;
+		try {
+			u = ubiz.get(uid);
+			String token = u.getUserdevice();
+			int pin = reserve.getPinNum();
+			FcmUtil fcm = new FcmUtil();
+			fcm.send_FCM(token, "ë°ê¼¬ê°€~", pin + "");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

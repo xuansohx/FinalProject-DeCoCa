@@ -98,6 +98,8 @@
 							<ul class="main-menu">
 								<li><a href="login.mc">LOGIN</a></li>
 								<li><a href="uregister.mc">REGISTER</a></li>
+								<li><a href="updateState.mc?car=10">test</a></li>
+								<li><a href="fcmtest.mc">testtest</a></li>
 							</ul>
 						</c:when>
 
