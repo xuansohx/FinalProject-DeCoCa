@@ -300,8 +300,7 @@ table {
 					value="등록" id="submitbt"></td>
 			</tr>
 		</table>
-
-		<!--  <input type="hidden" name="userid" value="${loginuser.userid}">-->
+		<input type="hidden" name="userid" value="${loginuser.userid}">
 	</form>
 	
 	<br>
