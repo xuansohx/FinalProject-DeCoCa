@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import Final.frame.Biz;
 import Final.vo.CarStatus;
 import Final.vo.Client;
-import Final.vo.Customer;
 import Final.vo.Reservation;
 import Final.vo.User;
 
@@ -24,10 +23,6 @@ import Final.vo.User;
 public class MainController {
 	@Resource(name = "ubiz")
 	Biz<String, User> ubiz;
-
-	@Resource(name = "cbiz")
-	Biz<String, Customer> biz;
-
 	@Resource(name = "csbiz")
 	Biz<Integer, CarStatus> csbiz;
 
@@ -51,20 +46,23 @@ public class MainController {
 		int usertype = 0;
 		ArrayList<CarStatus> cslist = null;
 		ArrayList<Reservation> relist = null;
+		User dbuser = null; 
 		try {
-			User dbuser = ubiz.get(userid);
+			dbuser = ubiz.get(userid);
 			cslist = csbiz.get();
 			relist = rbiz.get();
 			if (pwd.equals(dbuser.getPwd())) {
 				session.setAttribute("loginuser", dbuser);
 				usertype = dbuser.getUsertype();
 				System.out.println("유저타입 : " + usertype);
+				System.out.println("�쑀�����엯 : " + usertype);
 			} else {
 				response.setCharacterEncoding("UTF-8");
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
-
 				out.println("<script>alert('비밀번호가 틀렸습니다.'); location.href='login.mc'</script>");
+				out.println("<script>alert('鍮꾨�踰덊샇媛� ���졇�뒿�땲�떎.'); location.href='login.mc'</script>");
+
 				out.flush();
 			}
 		} catch (Exception e) {
@@ -74,6 +72,7 @@ public class MainController {
 			try {
 				out = response.getWriter();
 				out.println("<script>alert('아이디가 틀렸습니다.'); location.href='login.mc'</script>");
+				out.println("<script>alert('�븘�씠�뵒媛� ���졇�뒿�땲�떎.'); location.href='login.mc'</script>");
 				out.flush();
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -83,7 +82,6 @@ public class MainController {
 		try {
 			// 자동차 상태
 			cslist = csbiz.get();
-
 			// 예약 상태
 			relist = rbiz.get();
 		} catch (Exception e) {
@@ -99,6 +97,9 @@ public class MainController {
 			mv.addObject("center", "center");
 			mv.setViewName("main");
 		}
+		
+		System.out.println("USER : "+dbuser);
+		
 		return mv;
 	}
 
@@ -111,25 +112,46 @@ public class MainController {
 		mv.setViewName("main");
 		return mv;
 	}
+	@RequestMapping("/schedule.mc")
+	public ModelAndView schedule1(HttpSession session ,String type) {
+		ModelAndView mv = new ModelAndView();
 
-	@RequestMapping("/customerupdate.mc")
-	public ModelAndView cupdate(ModelAndView mv, String CUSTOMER_ID) {
-		Customer customer = null;
+		int stype = Integer.parseInt(type);
+		session.setAttribute("stype", stype);
+		mv.setViewName("schedule");
+		return mv;
+	}
+	// �뒪耳�伊댁뿉�꽌 value媛� 媛��졇�삤湲�
+	@RequestMapping("/schregisterimpl.mc")
+	public void schregisterimpl(Reservation reserve, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
+		System.out.println(reserve.toString());
+		
+		String dfull = reserve.getCalDate();
+		
+		String ddate = dfull.substring(0, 10);
+		String dtime = dfull.substring(11, 16);
+		System.out.println(dfull+" = "+ddate+""+dtime);
+		reserve.setCalDate(ddate);
+		reserve.setsTime(dtime);
 		try {
-			customer = biz.get(CUSTOMER_ID);
-
+			
+			rbiz.register(reserve);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		mv.addObject("customerupdate", customer);
-		mv.addObject("center", "cupdate");
-		mv.setViewName("main");
-		return mv;
+		try {
+			sendPush(reserve);
+			
+			response.sendRedirect("schelist.mc");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	@RequestMapping("/customerupdateimpl.mc")
-	public ModelAndView uupdcustomerupdateimplate(HttpServletRequest request, Customer customer, String CUSTOMER_ID,
-			HttpServletResponse response) {
+	
+	@RequestMapping("/schelist.mc")
+	public ModelAndView schelist(Reservation reserve, ArrayList<Reservation> rlist) {
 		ModelAndView mv = new ModelAndView();
 		System.out.println(customer);
 		try {
@@ -142,15 +164,18 @@ public class MainController {
 			out.println("<script>alert('수정되었습니다.'); location.href='main.mc'</script>");
 			out.flush();
 
-			mv.addObject("center", "cupdate");
+
+		try {
+			rlist = rbiz.get();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//		System.out.println(rlist.);
+		mv.addObject("rlist", rlist);
+		mv.addObject("center", "schelist");
 		mv.setViewName("main");
 		return mv;
 	}
-
 	@RequestMapping("/userupdateimpl.mc")
 	public ModelAndView uupduserupdateimplate(HttpServletRequest request, User user, String userid,
 			HttpServletResponse response) {
@@ -168,8 +193,15 @@ public class MainController {
 			mv.addObject("center", "uupdate");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+	
+	@RequestMapping("/mypage.mc")
+	public ModelAndView mypage() {
+		ModelAndView mv = new ModelAndView();		
+		try {
+		} catch (Exception e) {	
 			e.printStackTrace();
 		}
+		mv.addObject("center","mypage");
 		mv.setViewName("main");
 		return mv;
 	}
@@ -184,9 +216,8 @@ public class MainController {
 	// 스케쥴에서 value값 가져오기
 	@RequestMapping("/schregisterimpl.mc")
 	public void schregisterimpl(Reservation reserve, HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView();
-		System.out.println(reserve.toString());
-		try {
+    ModelAndView mv = new ModelAndView();	
+    try{
 			rbiz.register(reserve);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -195,10 +226,14 @@ public class MainController {
 			sendPush(reserve); // 일정을 등록하면 그 사람에게 인증키를 보내준다.
 			response.sendRedirect("schelist.mc");
 		} catch (IOException e) {
+			c.startClient();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		mv.setViewName("carlist");
+		return mv;
 	}
-
+	
 	// 스케쥴 리스트
 	@RequestMapping("/schelist.mc")
 	public ModelAndView schelist(Reservation reserve ,ArrayList<Reservation> rlist) {
@@ -213,8 +248,7 @@ public class MainController {
 		mv.addObject("center", "schelist");
 		mv.setViewName("main");
 		return mv;
-	}
-
+}
 	@RequestMapping("/updateStateAll.mc")
 	public ModelAndView updateAll() {
 		ModelAndView mv = new ModelAndView();
