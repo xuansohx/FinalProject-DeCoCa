@@ -23,9 +23,6 @@ import Final.vo.User;
 public class MainController {
 	@Resource(name="ubiz")
 	Biz<String, User> ubiz;
-	
-	@Resource(name = "cbiz")
-	Biz<String, Customer> biz;
 
 	@Resource(name = "csbiz")
 	Biz<Integer, CarStatus> csbiz;
@@ -50,8 +47,9 @@ public class MainController {
 		int usertype = 0 ;
 		ArrayList<CarStatus> cslist = null;
 		ArrayList<Reservation> relist = null;
+		User dbuser = null; 
 		try {
-			User dbuser = ubiz.get(userid);
+			dbuser = ubiz.get(userid);
 			cslist = csbiz.get();
 			relist = rbiz.get();
 			if(pwd.equals(dbuser.getPwd())) {
@@ -98,6 +96,9 @@ public class MainController {
 			mv.addObject("center", "center");
 			mv.setViewName("main");
 		}
+		
+		System.out.println("USER : "+dbuser);
+		
 		return mv;
 	}
 
@@ -111,72 +112,15 @@ public class MainController {
 		return mv;
 	}
 
-	@RequestMapping("/customerupdate.mc")
-	public ModelAndView cupdate(ModelAndView mv, String CUSTOMER_ID) {
-		Customer customer = null;
-		try {
-			customer = biz.get(CUSTOMER_ID);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		mv.addObject("customerupdate", customer);
-		mv.addObject("center", "cupdate");
-		mv.setViewName("main");
-		return mv;
-	}
-
-	@RequestMapping("/customerupdateimpl.mc")
-	public ModelAndView uupdcustomerupdateimplate(HttpServletRequest request, Customer customer, String CUSTOMER_ID,
-			HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView();
-		System.out.println(customer);
-		try {
-			biz.modify(customer);
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out;
-
-			out = response.getWriter();
-			out.println("<script>alert('수정되었습니다.'); location.href='main.mc'</script>");
-			out.flush();
-
-			mv.addObject("center", "cupdate");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		mv.setViewName("main");
-		return mv;
-	}
 	
-	@RequestMapping("/userupdateimpl.mc")
-	public ModelAndView uupduserupdateimplate(HttpServletRequest request,User user,String userid,HttpServletResponse response) {
-		ModelAndView mv= new ModelAndView();
-		System.out.println(user);
-		try {
-			ubiz.modify(user);
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out;
-				out = response.getWriter();
-				out.println("<script>alert('수정되었습니다.'); location.href='main.mc'</script>");
-				out.flush();
-				
-				mv.addObject("center","uupdate");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		mv.setViewName("main");
-		return mv;
-	}
 
 	// 민경이 시간 제어 부문
 	@RequestMapping("/schedule.mc")
-	public ModelAndView schedule() {
+	public ModelAndView schedule1(HttpSession session ,String type) {
 		ModelAndView mv = new ModelAndView();
-		// mv.addObject("center","scheregister");
+
+		int stype = Integer.parseInt(type);
+		session.setAttribute("stype", stype);
 		mv.setViewName("schedule");
 		return mv;
 	}
@@ -186,7 +130,16 @@ public class MainController {
 	public void schregisterimpl(Reservation reserve, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		System.out.println(reserve.toString());
+		
+		String dfull = reserve.getCalDate();
+		
+		String ddate = dfull.substring(0, 10);
+		String dtime = dfull.substring(11, 16);
+		System.out.println(dfull+" = "+ddate+""+dtime);
+		reserve.setCalDate(ddate);
+		reserve.setsTime(dtime);
 		try {
+			
 			rbiz.register(reserve);
 		
 		} catch (Exception e) {
