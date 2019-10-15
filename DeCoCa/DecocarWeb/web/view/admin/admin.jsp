@@ -367,7 +367,7 @@
 								<tbody>
 									<c:forEach var="cs" items="${cslist }">
 										<tr>
-										<td><a href="ctatedetail.mc?id">${cs.statusid}</a></td>
+										<td>${cs.statusid}</a></td>
 										<td>${cs.carlng}</td>
 										<td>${cs.carlat}</td>
 										<td>${cs.carlat}</td>

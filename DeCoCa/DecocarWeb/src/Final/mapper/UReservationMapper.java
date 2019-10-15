@@ -11,5 +11,4 @@ public interface UReservationMapper {
 	public Reservation select(String obj);
 	public ArrayList<Reservation> selectall();
 	
-
 }
