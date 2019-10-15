@@ -11,22 +11,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import Final.frame.Biz;
 import Final.vo.CarStatus;
-
-
-
+import Final.vo.Customer;
+import Final.vo.Reservation;
 @Controller
 public class CarStatusController {
 
 	@Resource(name = "csbiz")
 	Biz<Integer, CarStatus> csbiz;
 	
+	@Resource(name = "cbiz")
+	Biz<Integer, Customer> cbiz;
+	
+	@Resource(name = "Ureserbiz")
+	Biz<String, Reservation> urbiz;
+	
+	@Resource(name = "reserbiz")
+	Biz<Integer, Reservation> rbiz;
 
-	@RequestMapping("/carmap.mc")
-	public ModelAndView carmap() {
+
+	@RequestMapping("/ctatedetail.mc")
+	public ModelAndView ctatedetail() {
 		ModelAndView mv = new ModelAndView();
+		ArrayList<Reservation> reservationList = null;
+		try {
+			reservationList = rbiz.get();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		mv.addObject("rl", reservationList);
 		
-		//carlocation4 : Áö¿ª¸íÀ» À§µµ °æµµ·Î ³ªÅ¸³»´Â ¿¹Á¦
-		mv.setViewName("car/carlocation4");
+		
+		//carlocation4 : ì§€ì—­ëª…ì„ ìœ„ë„ ê²½ë„ë¡œ ë‚˜íƒ€ë‚´ëŠ” ì˜ˆì œ
+		mv.setViewName("admin/cardetail");
 		return mv;
 	}
 

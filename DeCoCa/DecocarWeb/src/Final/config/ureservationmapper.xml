@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Final.mapper.UReservationMapper">
+	<insert id="insert" parameterType="reservation">
+		INSERT INTO RESERVATION VALUES
+		(1003,'id02','sch3', #{calDate}, #{calDate}, ' ', 111, 1, 11, 11, 101,
+		#{sStyle}, #{reuserid}, 123456, 0, #{sAddress}, #{eAddress}, #{memo})
+	</insert>
+	<!--INSERT INTO RESERVATION VALUES (#{calid},#{userid},#{calName},#{calDate},#{sTime},#{eTime},#{sLng}, 
+		#{sLat},#{eLng},#{eLat},#{carid},#{sStyle},#{reuserid},#{pinNum}, #{calstatus},#{sAddress},#{eAddress},#{memo}) -->
+
+	<update id="update" parameterType="Reservation">
+		UPDATE RESERVATION SET calDate=#{calDate},sTime=#{sTime},sLng=#{sLng},sLat=#{sLat},
+		eLng=#{eLng},eLatE=#{eLat},reuserid=#{reuserid} WHERE userid=#{userid}
+	</update>
+
+	<delete id="delete" parameterType="String">
+		DELETE FROM RESERVATION WHERE userid=#{userid}
+	</delete>
+
+	<select id="select" parameterType="String"
+		resultType="reservation">
+		SELECT * FROM RESERVATION WHERE userid=#{userid}
+	</select>
+
+	<select id="selectall" resultType="reservation">
+		SELECT * FROM RESERVATION ORDER BY 1
+	</select>
+
+</mapper>
+
+
+
+
+
+

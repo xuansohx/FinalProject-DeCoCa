@@ -13,7 +13,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Admin Page</title>
+    <title>Car Detail</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all">
@@ -265,6 +265,7 @@
         </aside>
         <!-- END MENU SIDEBAR-->
 
+
         <!-- PAGE CONTAINER-->
         <div class="page-container">
             <!-- HEADER DESKTOP-->
@@ -451,11 +452,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="overview-wrap">
-                                    <h2 class="title-1">여기다</h2>
-                                    <button class="au-btn au-btn-icon au-btn--blue">
-                                        <i class="zmdi zmdi-plus"></i>add item</button>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="row m-t-25">
@@ -467,8 +464,8 @@
                                                 <i class="zmdi zmdi-account-o"></i>
                                             </div>
                                             <div class="text">
-                                                <h2>10368</h2>
-                                                <span>members online</span>
+                                                <h2>여기다가 사용자 정보 가져오기 </h2>
+                                                <span>사용자 정보 </span>
                                             </div>
                                         </div>
                                         <div class="overview-chart">

@@ -33,9 +33,9 @@ public class FcmController {
 		String tokenId="cOzckTHwC2o:APA91bHMNgy3rIxUz7sgqXa6VHL3axD3NNT0VhGgM4RFZrm-3Qx9hWRdp_"
 				+ "NTexvE1ynVrhkPKwKrBTLfub6VPD9MKfd8-rHj_nLhNlZZyTujD5YxKjKoRtE6_YPqUlZlC-icsQ"
 				+ "-PLIb-";
-		// »ç¿ëÀÚ ÅäÅ«¿¡°Ô Å¸ÀÌÆ²°ú ÄÁÅÙÃ÷¸¦ º¸³½´Ù.
-		String title="µ¥²¿±î";
-		String content="ÀÎÁõÅ°:7775";
+		// ì‚¬ìš©ì í† í°ì—ê²Œ íƒ€ì´í‹€ê³¼ ì»¨í…ì¸ ë¥¼ ë³´ë‚¸ë‹¤.
+		String title="ë°ê¼¬ê¹Œ";
+		String content="ì¸ì¦í‚¤:7775";
 		FcmUtil FcmUtil = new FcmUtil();
 		FcmUtil.send_FCM(tokenId, title, content);
 		return "test";

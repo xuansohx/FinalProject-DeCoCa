@@ -23,7 +23,6 @@ public class Reservation {
 	String eAddress;
 	String memo;
 	
-
 	public Reservation() {
 	}
 

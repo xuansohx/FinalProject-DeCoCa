@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</resultMap> -->	
 	
 	<insert id="insert" parameterType="reservation">
-		INSERT INTO RESERVATION VALUES (1003,'id02','sch3', #{calDate}, #{sTime}, ' ', 111, 1, 11, 11, 101, #{sStyle}, #{reuserid}, 123456, 0, #{sAddress}, #{eAddress}, #{memo})	 
+	INSERT INTO RESERVATION VALUES (1003,'id02','sch3', #{calDate}, #{sTime}, ' ', 111, 1, 11, 11, 101, #{sStyle}, #{reuserid}, 123456, 0, #{sAddress}, #{eAddress}, #{memo})	 
 
 <!-- 		INSERT INTO RESERVATION VALUES (#{calid},#{userid},#{calName},#{calDate},#{sTime},#{eTime},#{sLng},
 		#{sLat},#{eLng},#{eLat},#{carid},#{sStyle},#{reuserid},#{pinNum},
