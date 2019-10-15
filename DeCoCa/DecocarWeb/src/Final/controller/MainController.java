@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import Final.frame.Biz;
 import Final.vo.CarStatus;
-import Final.vo.Customer;
 import Final.vo.Reservation;
 import Final.vo.User;
 
@@ -24,8 +23,6 @@ public class MainController {
 	@Resource(name="ubiz")
 	Biz<String, User> ubiz;
 	
-	@Resource(name = "cbiz")
-	Biz<String, Customer> biz;
 
 	@Resource(name = "csbiz")
 	Biz<Integer, CarStatus> csbiz;
@@ -111,44 +108,6 @@ public class MainController {
 		return mv;
 	}
 
-	@RequestMapping("/customerupdate.mc")
-	public ModelAndView cupdate(ModelAndView mv, String CUSTOMER_ID) {
-		Customer customer = null;
-		try {
-			customer = biz.get(CUSTOMER_ID);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		mv.addObject("customerupdate", customer);
-		mv.addObject("center", "cupdate");
-		mv.setViewName("main");
-		return mv;
-	}
-
-	@RequestMapping("/customerupdateimpl.mc")
-	public ModelAndView uupdcustomerupdateimplate(HttpServletRequest request, Customer customer, String CUSTOMER_ID,
-			HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView();
-		System.out.println(customer);
-		try {
-			biz.modify(customer);
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out;
-
-			out = response.getWriter();
-			out.println("<script>alert('수정되었습니다.'); location.href='main.mc'</script>");
-			out.flush();
-
-			mv.addObject("center", "cupdate");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		mv.setViewName("main");
-		return mv;
-	}
 	
 	@RequestMapping("/userupdateimpl.mc")
 	public ModelAndView uupduserupdateimplate(HttpServletRequest request,User user,String userid,HttpServletResponse response) {
@@ -218,4 +177,23 @@ public class MainController {
 		mv.setViewName("main");
 		return mv;
 	}
+	
+	
+	// 마이페이지
+	@RequestMapping("/mypage.mc")
+	public ModelAndView mypage(String userid) {
+		ModelAndView mv = new ModelAndView();
+		User user = null;
+		try {
+			user = ubiz.get(userid);
+		} catch (Exception e) {	
+			e.printStackTrace();
+		}
+		mv.addObject("u",user);
+		mv.addObject("center","mypage");
+		mv.setViewName("main");
+		return mv;
+	}
+	
+	
 }
