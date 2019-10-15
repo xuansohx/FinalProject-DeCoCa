@@ -11,7 +11,6 @@ import Final.vo.User;
 
 @Repository("udao")
 public class UserDao implements Dao<String, User> {
-	
 	@Autowired
 	UserMapper um;
 	@Override

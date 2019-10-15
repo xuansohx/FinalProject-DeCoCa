@@ -176,7 +176,6 @@ public class MainController {
 	@RequestMapping("/schedule.mc")
 	public ModelAndView schedule() {
 		ModelAndView mv = new ModelAndView();
-		// mv.addObject("center","scheregister");
 		mv.setViewName("schedule");
 		return mv;
 	}
@@ -192,7 +191,6 @@ public class MainController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		try {
 			response.sendRedirect("schelist.mc");
 		} catch (IOException e) {
@@ -205,8 +203,7 @@ public class MainController {
 	// 스케쥴 리스트
 	@RequestMapping("/schelist.mc")
 	public ModelAndView schelist(Reservation reserve ,ArrayList<Reservation> rlist) {
-		ModelAndView mv = new ModelAndView();
-		
+		ModelAndView mv = new ModelAndView();		
 		try {
 			rlist = rbiz.get();
 		} catch (Exception e) {	

@@ -1,4 +1,4 @@
-package Final.reservation;
+package Final.UReservation;
 
 import java.util.ArrayList;
 
@@ -6,45 +6,44 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import Final.frame.Dao;
-import Final.mapper.ReservationMapper;
+import Final.mapper.UReservationMapper;
 import Final.vo.Reservation;
 
 
-@Repository("reserdao")
-public class ReservationDao implements Dao<Integer, Reservation> {
+@Repository("Ureserdao")
+public class UReservationDao implements Dao<String, Reservation> {
 	
 	@Autowired
-	ReservationMapper reserm;
+	UReservationMapper Ureserm;
 
 	@Override
 	public void insert(Reservation v) throws Exception {
-		reserm.insert(v);
+		Ureserm.insert(v);
 		
 	}
 
 	@Override
 	public void update(Reservation v) throws Exception {
-		reserm.update(v);
+		Ureserm.update(v);
 		
 	}
 
 	@Override
-	public void delete(Integer k) throws Exception {
-		reserm.delete(k);
+	public void delete(String k) throws Exception {
+		Ureserm.delete(k);
 		
 	}
 
 	@Override
-	public Reservation select(Integer k) throws Exception {
-		return reserm.select(k);
+	public Reservation select(String k) throws Exception {
+		return Ureserm.select(k);
 	}
 
 	@Override
 	public ArrayList<Reservation> select() throws Exception {
-		// TODO Auto-generated method stub
-		return reserm.selectall();
+		return Ureserm.selectall();
 	}
-	
-	
 
+	
+	
 }
