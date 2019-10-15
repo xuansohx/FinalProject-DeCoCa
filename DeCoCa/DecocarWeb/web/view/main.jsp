@@ -95,16 +95,19 @@
 							<ul class="main-menu">
 								<li><a href="login.mc">LOGIN</a></li>
 								<li><a href="uregister.mc">REGISTER</a></li>
+								<li><a href="updateState.mc?car=10">test</a></li>
+								<li><a href="fcmtest.mc">testtest</a></li>
 							</ul>
 						</c:when>
 
 						<%-- 사용자모드 로그인 --%>
 						<c:otherwise>
 							<ul class="main-menu">
-								<li><a href="userupdate.mc?userid=${loginuser.userid}">${loginuser.userid}
-								</a></li>
+								<li><a href="#">${loginuser.userid}</a></li>
+								<li><a href="mypage.mc">MyPage</a></li>
+								<!-- <li><a href="schelist.mc">일정list</a></li> -->
+								<!-- 일정list는 mypage에 넣음 -->
 								<li><a href="logout.mc">LOGOUT</a></li>
-								<li><a href="schelist.mc">일정list</a></li>
 							</ul>
 						</c:otherwise>
 					</c:choose>

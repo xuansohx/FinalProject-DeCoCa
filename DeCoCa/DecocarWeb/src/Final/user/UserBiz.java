@@ -30,6 +30,8 @@ public class UserBiz implements Biz<String, User> {
 		dao.update(v);
 		
 	}
+	
+
 
 	@Override
 	public User get(String k) throws Exception {
