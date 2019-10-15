@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import Final.frame.Biz;
 import Final.vo.CarStatus;
 import Final.vo.Client;
-import Final.vo.Customer;
 import Final.vo.Reservation;
 import Final.vo.User;
 
@@ -22,9 +21,6 @@ import Final.vo.User;
 public class FcmController {
 	@Resource(name="ubiz")
 	Biz<String, User> ubiz;
-	
-	@Resource(name = "cbiz")
-	Biz<String, Customer> biz;
 
 	@Resource(name = "csbiz")
 	Biz<Integer, CarStatus> csbiz;

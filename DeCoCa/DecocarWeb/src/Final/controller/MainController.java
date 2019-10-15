@@ -17,7 +17,6 @@ import Final.frame.Biz;
 import Final.vo.CarStatus;
 
 import Final.vo.Client;
-import Final.vo.Customer;
 
 import Final.vo.Reservation;
 import Final.vo.User;
@@ -58,13 +57,13 @@ public class MainController {
 			if (pwd.equals(dbuser.getPwd())) {
 				session.setAttribute("loginuser", dbuser);
 				usertype = dbuser.getUsertype();
-				System.out.println("유저타입 : " + usertype);
+				System.out.println("�쑀�����엯 : " + usertype);
 			} else {
 				response.setCharacterEncoding("UTF-8");
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 
-				out.println("<script>alert('비밀번호가 틀렸습니다.'); location.href='login.mc'</script>");
+				out.println("<script>alert('鍮꾨�踰덊샇媛� ���졇�뒿�땲�떎.'); location.href='login.mc'</script>");
 				out.flush();
 			}
 		} catch (Exception e) {
@@ -73,7 +72,7 @@ public class MainController {
 			PrintWriter out;
 			try {
 				out = response.getWriter();
-				out.println("<script>alert('아이디가 틀렸습니다.'); location.href='login.mc'</script>");
+				out.println("<script>alert('�븘�씠�뵒媛� ���졇�뒿�땲�떎.'); location.href='login.mc'</script>");
 				out.flush();
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -81,10 +80,10 @@ public class MainController {
 			e.printStackTrace();
 		}
 		try {
-			// 자동차 상태
+			// �옄�룞李� �긽�깭
 			cslist = csbiz.get();
 
-			// 예약 상태
+			// �삁�빟 �긽�깭
 			relist = rbiz.get();
 		} catch (Exception e) {
 
@@ -127,7 +126,7 @@ public class MainController {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out;
 			out = response.getWriter();
-			out.println("<script>alert('수정되었습니다.'); location.href='main.mc'</script>");
+			out.println("<script>alert('�닔�젙�릺�뿀�뒿�땲�떎.'); location.href='main.mc'</script>");
 			out.flush();
 
 			mv.addObject("center", "uupdate");
@@ -139,7 +138,7 @@ public class MainController {
 		return mv;
 	}
 
-	// 민경이 시간 제어 부문
+	// 誘쇨꼍�씠 �떆媛� �젣�뼱 遺�臾�
 	@RequestMapping("/schedule.mc")
 	public ModelAndView schedule1(HttpSession session ,String type) {
 		ModelAndView mv = new ModelAndView();
@@ -149,7 +148,7 @@ public class MainController {
 		mv.setViewName("schedule");
 		return mv;
 	}
-	// 스케쥴에서 value값 가져오기
+	// �뒪耳�伊댁뿉�꽌 value媛� 媛��졇�삤湲�
 	@RequestMapping("/schregisterimpl.mc")
 	public void schregisterimpl(Reservation reserve, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
@@ -169,14 +168,14 @@ public class MainController {
 			e.printStackTrace();
 		}
 		try {
-			sendPush(reserve); // 일정을 등록하면 그 사람에게 인증키를 보내준다.
+			sendPush(reserve); // �씪�젙�쓣 �벑濡앺븯硫� 洹� �궗�엺�뿉寃� �씤利앺궎瑜� 蹂대궡以��떎.
 			response.sendRedirect("schelist.mc");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// 스케쥴 리스트
+	// �뒪耳�伊� 由ъ뒪�듃
 	@RequestMapping("/schelist.mc")
 	public ModelAndView schelist(Reservation reserve, ArrayList<Reservation> rlist) {
 		ModelAndView mv = new ModelAndView();
@@ -193,7 +192,7 @@ public class MainController {
 		return mv;
 	}
   
-	// 마이페이지
+	// 留덉씠�럹�씠吏�
 	@RequestMapping("/mypage.mc")
 	public ModelAndView mypage(String userid) {
 		ModelAndView mv = new ModelAndView();
@@ -244,7 +243,7 @@ public class MainController {
 			String token = u.getUserdevice();
 			int pin = reserve.getPinNum();
 			FcmUtil fcm = new FcmUtil();
-			fcm.send_FCM(token, "데꼬가~", pin + "");
+			fcm.send_FCM(token, "�뜲瑗ш�~", pin + "");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
