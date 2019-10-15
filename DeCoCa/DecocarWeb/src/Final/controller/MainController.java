@@ -15,8 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import Final.frame.Biz;
 import Final.vo.CarStatus;
+
 import Final.vo.Client;
 import Final.vo.Customer;
+
 import Final.vo.Reservation;
 import Final.vo.User;
 
@@ -25,8 +27,6 @@ public class MainController {
 	@Resource(name = "ubiz")
 	Biz<String, User> ubiz;
 
-	@Resource(name = "cbiz")
-	Biz<String, Customer> biz;
 
 	@Resource(name = "csbiz")
 	Biz<Integer, CarStatus> csbiz;
@@ -58,13 +58,13 @@ public class MainController {
 			if (pwd.equals(dbuser.getPwd())) {
 				session.setAttribute("loginuser", dbuser);
 				usertype = dbuser.getUsertype();
-				System.out.println("À¯ÀúÅ¸ÀÔ : " + usertype);
+				System.out.println("ìœ ì €íƒ€ì… : " + usertype);
 			} else {
 				response.setCharacterEncoding("UTF-8");
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 
-				out.println("<script>alert('ºñ¹Ğ¹øÈ£°¡ Æ²·È½À´Ï´Ù.'); location.href='login.mc'</script>");
+				out.println("<script>alert('ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë ¸ìŠµë‹ˆë‹¤.'); location.href='login.mc'</script>");
 				out.flush();
 			}
 		} catch (Exception e) {
@@ -73,7 +73,7 @@ public class MainController {
 			PrintWriter out;
 			try {
 				out = response.getWriter();
-				out.println("<script>alert('¾ÆÀÌµğ°¡ Æ²·È½À´Ï´Ù.'); location.href='login.mc'</script>");
+				out.println("<script>alert('ì•„ì´ë””ê°€ í‹€ë ¸ìŠµë‹ˆë‹¤.'); location.href='login.mc'</script>");
 				out.flush();
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -81,10 +81,10 @@ public class MainController {
 			e.printStackTrace();
 		}
 		try {
-			// ÀÚµ¿Â÷ »óÅÂ
+			// ìë™ì°¨ ìƒíƒœ
 			cslist = csbiz.get();
 
-			// ¿¹¾à »óÅÂ
+			// ì˜ˆì•½ ìƒíƒœ
 			relist = rbiz.get();
 		} catch (Exception e) {
 
@@ -112,45 +112,6 @@ public class MainController {
 		return mv;
 	}
 
-	@RequestMapping("/customerupdate.mc")
-	public ModelAndView cupdate(ModelAndView mv, String CUSTOMER_ID) {
-		Customer customer = null;
-		try {
-			customer = biz.get(CUSTOMER_ID);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		mv.addObject("customerupdate", customer);
-		mv.addObject("center", "cupdate");
-		mv.setViewName("main");
-		return mv;
-	}
-
-	@RequestMapping("/customerupdateimpl.mc")
-	public ModelAndView uupdcustomerupdateimplate(HttpServletRequest request, Customer customer, String CUSTOMER_ID,
-			HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView();
-		System.out.println(customer);
-		try {
-			biz.modify(customer);
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out;
-
-			out = response.getWriter();
-			out.println("<script>alert('¼öÁ¤µÇ¾ú½À´Ï´Ù.'); location.href='main.mc'</script>");
-			out.flush();
-
-			mv.addObject("center", "cupdate");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		mv.setViewName("main");
-		return mv;
-	}
-
 	@RequestMapping("/userupdateimpl.mc")
 	public ModelAndView uupduserupdateimplate(HttpServletRequest request, User user, String userid,
 			HttpServletResponse response) {
@@ -162,7 +123,7 @@ public class MainController {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out;
 			out = response.getWriter();
-			out.println("<script>alert('¼öÁ¤µÇ¾ú½À´Ï´Ù.'); location.href='main.mc'</script>");
+			out.println("<script>alert('ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.'); location.href='main.mc'</script>");
 			out.flush();
 
 			mv.addObject("center", "uupdate");
@@ -174,7 +135,7 @@ public class MainController {
 		return mv;
 	}
 
-	// ¹Î°æÀÌ ½Ã°£ Á¦¾î ºÎ¹®
+	// ë¯¼ê²½ì´ ì‹œê°„ ì œì–´ ë¶€ë¬¸
 	@RequestMapping("/schedule.mc")
 	public ModelAndView schedule() {
 		ModelAndView mv = new ModelAndView();
@@ -182,7 +143,7 @@ public class MainController {
 		mv.setViewName("schedule");
 		return mv;
 	}
-	// ½ºÄÉÁì¿¡¼­ value°ª °¡Á®¿À±â
+	// ìŠ¤ì¼€ì¥´ì—ì„œ valueê°’ ê°€ì ¸ì˜¤ê¸°
 	@RequestMapping("/schregisterimpl.mc")
 	public void schregisterimpl(Reservation reserve, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
@@ -193,14 +154,14 @@ public class MainController {
 			e.printStackTrace();
 		}
 		try {
-			sendPush(reserve); // ÀÏÁ¤À» µî·ÏÇÏ¸é ±× »ç¶÷¿¡°Ô ÀÎÁõÅ°¸¦ º¸³»ÁØ´Ù.
+			sendPush(reserve); // ì¼ì •ì„ ë“±ë¡í•˜ë©´ ê·¸ ì‚¬ëŒì—ê²Œ ì¸ì¦í‚¤ë¥¼ ë³´ë‚´ì¤€ë‹¤.
 			response.sendRedirect("schelist.mc");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// ½ºÄÉÁì ¸®½ºÆ®
+	// ìŠ¤ì¼€ì¥´ ë¦¬ìŠ¤íŠ¸
 	@RequestMapping("/schelist.mc")
 	public ModelAndView schelist(Reservation reserve, ArrayList<Reservation> rlist) {
 		ModelAndView mv = new ModelAndView();
@@ -213,6 +174,22 @@ public class MainController {
 //		System.out.println(rlist.);
 		mv.addObject("rlist", rlist);
 		mv.addObject("center", "schelist");
+		mv.setViewName("main");
+		return mv;
+	}
+  
+	// ë§ˆì´í˜ì´ì§€
+	@RequestMapping("/mypage.mc")
+	public ModelAndView mypage(String userid) {
+		ModelAndView mv = new ModelAndView();
+		User user = null;
+		try {
+			user = ubiz.get(userid);
+		} catch (Exception e) {	
+			e.printStackTrace();
+		}
+		mv.addObject("u",user);
+		mv.addObject("center","mypage");
 		mv.setViewName("main");
 		return mv;
 	}
@@ -252,11 +229,10 @@ public class MainController {
 			String token = u.getUserdevice();
 			int pin = reserve.getPinNum();
 			FcmUtil fcm = new FcmUtil();
-			fcm.send_FCM(token, "µ¥²¿°¡~", pin + "");
+			fcm.send_FCM(token, "ë°ê¼¬ê°€~", pin + "");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
 }
