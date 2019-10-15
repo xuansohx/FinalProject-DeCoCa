@@ -58,7 +58,7 @@ width: 250px;
 
 <!-- 3. User Update -->
 <div class="mypage_package">
-<a href="userupdate.mc">
+<a href="userupdate.mc?userid=${loginuser.userid}">
 <img src="img/user_update.png" class="mypage_img">
 <h4 class="mypage_text">내 정보 수정</h4>
 </a>

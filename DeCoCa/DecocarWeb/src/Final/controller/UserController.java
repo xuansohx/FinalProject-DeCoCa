@@ -91,7 +91,6 @@ public class UserController {
 	@RequestMapping("/userupdate.mc")
 	public ModelAndView userupdate(HttpSession session, User user) {
 		ModelAndView mv = new ModelAndView();
-		System.out.println(user);
 		try {
 			user = ubiz.get(user.getUserid());
 		} catch (Exception e) {
@@ -114,22 +113,16 @@ public class UserController {
 			ubiz.modify(user);
 			response.setCharacterEncoding("UTF-8");
 			response.setContentType("text/html; charset=UTF-8");
-//			PrintWriter out;
-//			out = response.getWriter();
-//			out.println("<script>alert('수정되었습니다.');</script>");
-//			out.println("<script>alert('수정되었습니다.'); location.href='main.mc'</script>");
-//			out.flush();
+			PrintWriter out;
+			out = response.getWriter();
+			out.println("<script>alert('수정되었습니다.');</script>");
+			//out.println("<script>alert('수정되었습니다.'); location.href='main.mc'</script>");
+			out.flush();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("수정후 " + user);
-//		try {
-//			response.sendRedirect("m.mc");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
 		mv.addObject("center", "center");
 		mv.setViewName("main");
 		return mv;

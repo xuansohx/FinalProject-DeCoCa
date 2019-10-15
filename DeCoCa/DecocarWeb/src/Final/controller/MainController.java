@@ -113,32 +113,6 @@ public class MainController {
 		mv.setViewName("main");
 		return mv;
 	}
-
-
-	@RequestMapping("/userupdateimpl.mc")
-	public ModelAndView uupduserupdateimplate(HttpServletRequest request, User user, String userid,
-			HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView();
-		System.out.println(user);
-		try {
-			ubiz.modify(user);
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out;
-			out = response.getWriter();
-			out.println("<script>alert('�닔�젙�릺�뿀�뒿�땲�떎.'); location.href='main.mc'</script>");
-			out.flush();
-
-			mv.addObject("center", "uupdate");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		mv.setViewName("main");
-		return mv;
-	}
-
-	// 誘쇨꼍�씠 �떆媛� �젣�뼱 遺�臾�
 	@RequestMapping("/schedule.mc")
 	public ModelAndView schedule1(HttpSession session ,String type) {
 		ModelAndView mv = new ModelAndView();
@@ -168,14 +142,15 @@ public class MainController {
 			e.printStackTrace();
 		}
 		try {
-			sendPush(reserve); // �씪�젙�쓣 �벑濡앺븯硫� 洹� �궗�엺�뿉寃� �씤利앺궎瑜� 蹂대궡以��떎.
+			sendPush(reserve);
+			
 			response.sendRedirect("schelist.mc");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// �뒪耳�伊� 由ъ뒪�듃
+	
 	@RequestMapping("/schelist.mc")
 	public ModelAndView schelist(Reservation reserve, ArrayList<Reservation> rlist) {
 		ModelAndView mv = new ModelAndView();
@@ -192,17 +167,14 @@ public class MainController {
 		return mv;
 	}
   
-	// 留덉씠�럹�씠吏�
+	
 	@RequestMapping("/mypage.mc")
-	public ModelAndView mypage(String userid) {
-		ModelAndView mv = new ModelAndView();
-		User user = null;
+	public ModelAndView mypage() {
+		ModelAndView mv = new ModelAndView();		
 		try {
-			user = ubiz.get(userid);
 		} catch (Exception e) {	
 			e.printStackTrace();
 		}
-		mv.addObject("u",user);
 		mv.addObject("center","mypage");
 		mv.setViewName("main");
 		return mv;
