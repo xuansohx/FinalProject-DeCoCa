@@ -105,7 +105,7 @@
 		if (typeValue == 1) {
 			console.log("스마트택시 선택");
 			$("#receive").hide();
-			$('input[name="reuserid"]').val('');
+			$('input[name="reuserid"]').val('');			
 			$('input[name="schesubmit"]').removeAttr('disabled');
 		} else if (typeValue == 2) {
 			console.log("픽업 선택");
@@ -323,7 +323,7 @@
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
 					<label class="stext-102 cl3">서비스 타입</label> 
 					<select id="scheduletype" class="input size-111 bor8 stext-102 cl2 p-lr-20"
-					name="sStyle">
+					name="sStyle" onchange="changeStype()">
 						<!-- 선택된 서비스를 기본서비스로 해볼까? -->
 						<!-- <option value="~~" <c:if test="${stype==1}"> selected </c:if> > ~~ </option> -->
 						<option value="1" <c:if test="${stype==1}"> selected </c:if>>스마트 택시 서비스</option>
@@ -332,11 +332,11 @@
 				</select>		
 				</div>
 		
-				<div class="col-sm-6 p-b-5 m-lr-auto ">
+				<div class="col-sm-6 p-b-5 m-lr-auto" id="receive">
 					<label class="stext-102 cl3">받는 사람</label> 
 					<input
 						class="size-111 bor8 stext-102 cl2 p-lr-20"
-						id="schedulereceiver" type="text" name="reuserid">
+						id="schedulereceiver" type="text" name="reuserid"  >
           <input type="button"
 					name="idceck" value="사용자확인" /> &nbsp;&nbsp; <span class="idsame"></span>
 				</div>
@@ -348,7 +348,7 @@
 			</div>
 		</div>
 		
-			<label class="stext-102 cl3"></label> <input type="submit" 
+			<label class="stext-102 cl3"></label> <input type="submit" id="submitbt" name="schesubmit"
 							class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
 							style="width: 300px; height: 50px" value="등록">
 
