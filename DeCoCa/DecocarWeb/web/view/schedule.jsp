@@ -130,6 +130,9 @@
 
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap');
+
+
 body {
 	position: relative;
 	text-align: center;
@@ -170,6 +173,12 @@ table {
 #schedulememo {
 	width: 190px;
 }
+
+#page_title{
+font-family: 'Lalezar', cursive;
+text-align: center;
+}
+
 </style>
 
 </head>
@@ -220,9 +229,9 @@ table {
 						</c:when>
 						<c:otherwise>
 							<ul class="main-menu">
-								<li><a href="">${loginuser.userid} </a></li>
+								<li><a>${loginuser.userid} </a></li>
+								<li><a href="mypage.mc">MyPage</a></li>
 								<li><a href="logout.mc">LOGOUT</a></li>
-								<li><a href="customerupdate.mc?userid=${loginuser.userid}">회원정보수정</a></li>
 							</ul>
 						</c:otherwise>
 					</c:choose>
@@ -244,7 +253,7 @@ table {
 <form name="scheduleform" action="schregisterimpl.mc" method="POST">
 		<table style="margin-left: auto; margin-right: auto;">
 			<tr>
-				<td align="center"><b>일정 등록</b></td>
+				<td align="center" id="page_title"><h1>Reservation</h1><br></td>
 			</tr>
 		</table>
 		<table style="margin-left: auto; margin-right: auto;">

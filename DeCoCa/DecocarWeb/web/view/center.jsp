@@ -29,11 +29,11 @@
 	margin-bottom: 10px;
 }
 
-.homebttext>h1 {
+.homebttext> a > h1 {
 	font-family: 'Lalezar', cursive;
 }
 
-.homebttext>h6 {
+.homebttext > h6 {
 	font-family: 'Noto Sans KR', sans-serif;
 }
 </style>
