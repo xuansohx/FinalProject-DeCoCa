@@ -9,6 +9,5 @@ public interface UReservationMapper {
 	public void delete(String obj);
 	public void update(Reservation obj);
 	public Reservation select(String obj);
-	public ArrayList<Reservation> selectall();
-	
+	public ArrayList<Reservation> selectAll(String obj);	
 }

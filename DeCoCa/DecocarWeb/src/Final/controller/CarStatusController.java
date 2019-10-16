@@ -31,7 +31,7 @@ public class CarStatusController {
 		ModelAndView mv = new ModelAndView();
 		ArrayList<Reservation> reservationList = null;
 		try {
-			reservationList = rbiz.get();
+			reservationList = rbiz.getAll(null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 

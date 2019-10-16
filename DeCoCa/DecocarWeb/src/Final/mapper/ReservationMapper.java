@@ -10,7 +10,7 @@ public interface ReservationMapper {
 	public void delete(int obj);
 	public void update(Reservation obj);
 	public Reservation select(int obj);
-	public ArrayList<Reservation> selectall();
+	public ArrayList<Reservation> selectall(int obj);
 	
 
 }

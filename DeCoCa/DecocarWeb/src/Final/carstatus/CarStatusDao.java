@@ -39,7 +39,7 @@ public class CarStatusDao implements Dao<Integer, CarStatus> {
 	}
 
 	@Override
-	public ArrayList<CarStatus> select() throws Exception {
-		return carstatusm.selectall();
+	public ArrayList<CarStatus> selectAll(Integer k) throws Exception {
+		return carstatusm.selectall(k);
 	}
 }
