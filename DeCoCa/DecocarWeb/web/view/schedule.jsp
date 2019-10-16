@@ -35,13 +35,13 @@
 			height : '500px'
 		});
 		var tData = new Tmap.TData();//REST API 에서 제공되는 경로, 교통정보, POI 데이터를 쉽게 처리할 수 있는 클래스입니다.
-		
+
 		var sla, slo, ela, elo;
 		sla = 37.508849;
 		slo = 127.063147;
 		ela = 37.493038;
 		elo = 127.013774;
-		
+
 		var s_lonLat = new Tmap.LonLat(slo, sla); //시작 좌표입니다.   
 		var e_lonLat = new Tmap.LonLat(elo, ela); //도착 좌표입니다.
 		var optionObj = {
@@ -81,7 +81,79 @@
 	// 맵 생성 실행
 	initTmap();
 </script>
+<!-- select 변경 옵션 -->
+<script>
+	function changeStype() {
+		var typeSelect = document.getElementById("scheduletype");
+		var typeValue = typeSelect.options[typeSelect.selectedIndex].value;
+		console.log(typeValue);
+		change(typeValue);
+		/* reIdCheck() */
+	};
 
+	$(document).ready(function() {
+		var typeSelect = document.getElementById("scheduletype");
+		var typeValue = typeSelect.options[typeSelect.selectedIndex].value;
+		console.log(typeValue);
+		change(typeValue);
+		reIdCheck();
+	});
+
+	function change(typeValue) {
+		var rePart = document.getElementById("receive");
+
+		if (typeValue == 1) {
+			console.log("스마트택시 선택");
+			$("#receive").hide();
+			$('input[name="reuserid"]').val('');
+			$('input[name="schesubmit"]').removeAttr('disabled');
+		} else if (typeValue == 2) {
+			console.log("픽업 선택");
+			$("#receive").show();
+			$('input[name="schesubmit"]').attr('disabled', 'disabled');
+		} else if (typeValue == 3) {
+			console.log("퀵  선택");
+			$("#receive").show();
+			$('input[name="schesubmit"]').attr('disabled', 'disabled');
+		}
+	};
+
+	function reIdCheck() {
+		$('input[name="idceck"]')
+				.click(
+						function() {
+							var reuserid = $('input[name="reuserid"]').val();
+							$
+									.ajax({
+										url : "usercheckId.mc",
+										data : {
+											'userid' : reuserid
+										},
+										method : "POST",
+										success : function(result) {
+											if (result == '1') {
+												alert("확인되었습니다.");
+												$('input[name="schesubmit"]')
+														.removeAttr('disabled');
+												$('.idsame')
+														.html(
+																'<span style="color:red"></span>');
+												return false;
+											} else if (result == '0') {
+												alert("존재하지 않는 사용자입니다.");
+												$('input[name="schesubmit"]')
+														.attr('disabled',
+																'disabled');
+												$('.idsame')
+														.html(
+																'<span style="color:red">존재하지 않는 사용자입니다.</span>');
+												return false;
+											}
+										}
+									});
+						});
+	};
+</script>
 <head>
 <meta charset="EUC-KR">
 <title>DeCoCa</title>
@@ -136,11 +208,10 @@
 	resize: none;
 }
 
-#page_title{
-font-family: 'Lalezar', cursive;
-text-align: center;
+#page_title {
+	font-family: 'Lalezar', cursive;
+	text-align: center;
 }
-
 </style>
 
 </head>
@@ -171,10 +242,10 @@ text-align: center;
 				<!-- Icon header 로그인(OOO님),회원가입(로그아웃) -->
 				<div class="wrap-icon-header flex-w flex-r-m">
 
-						<c:choose>
+					<c:choose>
 						<c:when test="${loginuser.usertype eq '1' }">
 							<ul class="main-menu">
-								<li><a href="">${loginuser.userid} </a></li>	
+								<li><a href="">${loginuser.userid} </a></li>
 								<li><a href="logout.mc">LOGOUT</a></li>
 								<li><a href="customerupdate.mc?userid=${loginuser.userid}">회원정보수정</a></li>
 								<li><a href="proregister.mc">PRO REGISTER</a></li>
@@ -182,8 +253,6 @@ text-align: center;
 							</ul>
 						</c:when>
 						<c:when test="${loginuser.usertype eq null }">
-							<%-- 						<c:when test="${loginuser.CUSTOMER_ADMIN eq null }"> --%>
-
 							<ul class="main-menu">
 								<li><a href="login.mc">LOGIN</a></li>
 								<li><a href="curegister.mc">REGISTER</a></li>
@@ -212,22 +281,20 @@ text-align: center;
 
 
 
-<form name="scheduleform" action="schregisterimpl.mc" method="POST">
+	<form name="scheduleform" action="schregisterimpl.mc" method="POST">
 		<table style="margin-left: auto; margin-right: auto;">
 			<tr>
-				<td align="center" id="page_title"><h1>Reservation</h1><br></td>
+				<td align="center" id="page_title"><h1>Reservation</h1> <br></td>
 			</tr>
 		</table>
-		
-		<!-- 여기부터 수정 -->
-		
+    	
 		<div class="flex-w flex-tr">
 			<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
 					<label class="stext-102 cl3">예약 날짜</label> 
 					<input
 						class="size-111 bor8 stext-102 cl2 p-lr-20 form-control"
-						id="scheduledate" type="text" name="calDate">
+						id="scheduledate" type="text" name="calDate" required="required">
 				</div>
 		
 
@@ -235,16 +302,14 @@ text-align: center;
 					<label class="stext-102 cl3">일정 이름</label> 
 					<input
 						class="size-111 bor8 stext-102 cl2 p-lr-20"
-						id="schedulename" type="text" name="calName">
+						id="schedulename" type="text" name="calName" required="required">
 				</div>
-	
-		
-	
+        
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
 					<label class="stext-102 cl3">출발지 정보</label> 
 					<input
 						class="size-111 bor8 stext-102 cl2 p-lr-20"
-						id="schedulelocationstart" type="text" name="sAddress">
+						id="schedulelocationstart" type="text" name="sAddress" required="required">
 				</div>
 	
 		
@@ -252,11 +317,9 @@ text-align: center;
 					<label class="stext-102 cl3">도착지 정보</label> 
 					<input
 						class="size-111 bor8 stext-102 cl2 p-lr-20"
-						id="schedulelocationend" type="text" name="eAddress">
+						id="schedulelocationend" type="text" name="eAddress" required="required">
 				</div>
-		
-		
-	
+        
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
 					<label class="stext-102 cl3">서비스 타입</label> 
 					<select id="scheduletype" class="input size-111 bor8 stext-102 cl2 p-lr-20"
@@ -274,7 +337,10 @@ text-align: center;
 					<input
 						class="size-111 bor8 stext-102 cl2 p-lr-20"
 						id="schedulereceiver" type="text" name="reuserid">
+          <input type="button"
+					name="idceck" value="사용자확인" /> &nbsp;&nbsp; <span class="idsame"></span>
 				</div>
+
 		  	<div class="col-sm-6 p-b-5 m-lr-auto ">
 					<label class="stext-102 cl3">메모</label> 
 					<textarea class="size-111 bor8 stext-102 cl2 p-lr-20" id="schedulememo" name="memo"></textarea>
@@ -288,7 +354,7 @@ text-align: center;
 
 		<input type="hidden" name="userid" value="${loginuser.userid}">
 	</form>
-	
+
 	<br>
 	<br>
 
@@ -403,16 +469,6 @@ text-align: center;
 
 	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
 
-	<!-- <script type="text/javascript">
-$(document).ready(function(){
-	$("#submitbt").click(function(){
-		console.log("byabya");
-		/* out.println("bye"); */
-		alert("bye"); 
-		/* System.out.println("bye"); */
-	});
-}); // end document.ready 
-</script> -->
 </body>
 
 </html>
