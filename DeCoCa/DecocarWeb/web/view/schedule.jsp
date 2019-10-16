@@ -35,13 +35,13 @@
 			height : '500px'
 		});
 		var tData = new Tmap.TData();//REST API 에서 제공되는 경로, 교통정보, POI 데이터를 쉽게 처리할 수 있는 클래스입니다.
-		
+
 		var sla, slo, ela, elo;
 		sla = 37.508849;
 		slo = 127.063147;
 		ela = 37.493038;
 		elo = 127.013774;
-		
+
 		var s_lonLat = new Tmap.LonLat(slo, sla); //시작 좌표입니다.   
 		var e_lonLat = new Tmap.LonLat(elo, ela); //도착 좌표입니다.
 		var optionObj = {
@@ -83,106 +83,76 @@
 </script>
 <!-- select 변경 옵션 -->
 <script>
-function changeStype(){
-	var typeSelect = document.getElementById("scheduletype");
-	var typeValue = typeSelect.options[typeSelect.selectedIndex].value;
-	console.log(typeValue);
-	change(typeValue);
-	/* reIdCheck() */
-}; 
-
-$(document).ready(function(){
-	var typeSelect = document.getElementById("scheduletype");
-	var typeValue = typeSelect.options[typeSelect.selectedIndex].value;
-	console.log(typeValue);
-	change(typeValue);
-/* 	scheCheck(); */
-	reIdCheck(); 
-	
-});
-
-
-
-function change(typeValue){
-	var rePart = document.getElementById("receive");
-	
-	if(typeValue == 1){
-		console.log("스마트택시 선택");
-		$("#receive").hide();
-		/* input text 초기화 해야함 */
-		$('input[name="reuserid"]').val('');
-		$('input[name="schesubmit"]').removeAttr('disabled'); 
-	}else if(typeValue == 2){
-		console.log("픽업 선택");
-		$("#receive").show();
-		$('input[name="schesubmit"]').attr('disabled','disabled');
-	}else if(typeValue == 3){
-		console.log("퀵  선택");
-		$("#receive").show();
-		$('input[name="schesubmit"]').attr('disabled','disabled');
-	}	
-};
-
-function reIdCheck(){
-	$('input[name="idceck"]').click(function() {
-		var reuserid = $('input[name="reuserid"]').val();
-		$.ajax({
-			url:"usercheckId.mc",
-			data:{'userid':reuserid},
-			method:"POST",
-			success:function(result){
-				if(result == '1'){
-					alert("확인되었습니다.");
-					$('input[name="schesubmit"]').removeAttr('disabled'); 
-					$('.idsame').html('<span style="color:red"></span>');
-					return false;
-				}else if(result == '0'){
-					alert("존재하지 않는 사용자입니다.");
-					$('input[name="schesubmit"]').attr('disabled','disabled');
-					$('.idsame').html('<span style="color:red">존재하지 않는 사용자입니다.</span>');
-					return false;
-				}
-			}
-		});
-	});
-};
-
-/* scedule register button able/unable */
-/* function scheCheck(){
-	 $('input[name="test"]').click(function() {
-		var scheDate = $('input[name="calDate"]').val();
-		var scheName = $('input[name="calName"]').val();
-		var sAdr = $('input[name="sAddress"]').val();
-		var eAdr = $('input[name="eAddress"]').val();
+	function changeStype() {
 		var typeSelect = document.getElementById("scheduletype");
 		var typeValue = typeSelect.options[typeSelect.selectedIndex].value;
-		
-		console.log(scheDate+" "+scheName+" "+sAdr+" "+eAdr+" "+typeValue);
-		
-		if(scheDate!="" && scheName!="" && sAdr!="" && eAdr!=""){
-			console.log("FULL");
-			$('input[name="schesubmit"]').removeAttr('disabled');
-		}else {
-			console.log("NOT FULL");
-			$('input[name="schesubmit"]').attr('disabled','disabled');
-		} 
-	}); 
+		console.log(typeValue);
+		change(typeValue);
+		/* reIdCheck() */
+	};
+
+	$(document).ready(function() {
 		var typeSelect = document.getElementById("scheduletype");
 		var typeValue = typeSelect.options[typeSelect.selectedIndex].value;
-		
-		console.log(scheDate+" "+scheName+" "+sAdr+" "+eAdr+" "+typeValue);
-		
-		if(scheDate!="" && scheName!="" && sAdr!="" && eAdr!=""){
-			console.log("FULL");
-			$('input[name="schesubmit"]').removeAttr('disabled');
-		}else {
-			console.log("NOT FULL");
-			$('input[name="schesubmit"]').attr('disabled','disabled');
-		} 
+		console.log(typeValue);
+		change(typeValue);
 		reIdCheck();
+	});
 
-}; */
+	function change(typeValue) {
+		var rePart = document.getElementById("receive");
 
+		if (typeValue == 1) {
+			console.log("스마트택시 선택");
+			$("#receive").hide();
+			$('input[name="reuserid"]').val('');
+			$('input[name="schesubmit"]').removeAttr('disabled');
+		} else if (typeValue == 2) {
+			console.log("픽업 선택");
+			$("#receive").show();
+			$('input[name="schesubmit"]').attr('disabled', 'disabled');
+		} else if (typeValue == 3) {
+			console.log("퀵  선택");
+			$("#receive").show();
+			$('input[name="schesubmit"]').attr('disabled', 'disabled');
+		}
+	};
+
+	function reIdCheck() {
+		$('input[name="idceck"]')
+				.click(
+						function() {
+							var reuserid = $('input[name="reuserid"]').val();
+							$
+									.ajax({
+										url : "usercheckId.mc",
+										data : {
+											'userid' : reuserid
+										},
+										method : "POST",
+										success : function(result) {
+											if (result == '1') {
+												alert("확인되었습니다.");
+												$('input[name="schesubmit"]')
+														.removeAttr('disabled');
+												$('.idsame')
+														.html(
+																'<span style="color:red"></span>');
+												return false;
+											} else if (result == '0') {
+												alert("존재하지 않는 사용자입니다.");
+												$('input[name="schesubmit"]')
+														.attr('disabled',
+																'disabled');
+												$('.idsame')
+														.html(
+																'<span style="color:red">존재하지 않는 사용자입니다.</span>');
+												return false;
+											}
+										}
+									});
+						});
+	};
 </script>
 <head>
 <meta charset="EUC-KR">
@@ -232,8 +202,9 @@ function reIdCheck(){
 
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap');
-
+@import
+	url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap')
+	;
 
 body {
 	position: relative;
@@ -276,11 +247,10 @@ table {
 	width: 190px;
 }
 
-#page_title{
-font-family: 'Lalezar', cursive;
-text-align: center;
+#page_title {
+	font-family: 'Lalezar', cursive;
+	text-align: center;
 }
-
 </style>
 
 </head>
@@ -311,10 +281,10 @@ text-align: center;
 				<!-- Icon header 로그인(OOO님),회원가입(로그아웃) -->
 				<div class="wrap-icon-header flex-w flex-r-m">
 
-						<c:choose>
+					<c:choose>
 						<c:when test="${loginuser.usertype eq '1' }">
 							<ul class="main-menu">
-								<li><a href="">${loginuser.userid} </a></li>	
+								<li><a href="">${loginuser.userid} </a></li>
 								<li><a href="logout.mc">LOGOUT</a></li>
 								<li><a href="customerupdate.mc?userid=${loginuser.userid}">회원정보수정</a></li>
 								<li><a href="proregister.mc">PRO REGISTER</a></li>
@@ -350,10 +320,10 @@ text-align: center;
 
 
 
-<form name="scheduleform" action="schregisterimpl.mc" method="POST">
+	<form name="scheduleform" action="schregisterimpl.mc" method="POST">
 		<table style="margin-left: auto; margin-right: auto;">
 			<tr>
-				<td align="center" id="page_title"><h1>Reservation</h1><br></td>
+				<td align="center" id="page_title"><h1>Reservation</h1> <br></td>
 			</tr>
 		</table>
 		<table style="margin-left: auto; margin-right: auto;">
@@ -379,23 +349,26 @@ text-align: center;
 			</tr>
 			<tr>
 				<td class="label">서비스타입</td>
-				<td class="form"><select id="scheduletype" class="input" name="sStyle" onchange="changeStype()"> 
-						<option value="1" <c:if test="${stype==1}"> selected </c:if>>스마트 택시 서비스</option>
-						<option value="2" <c:if test="${stype==2}"> selected </c:if>>픽업 서비스</option>
-						<option value="3" <c:if test="${stype==3}"> selected </c:if>>퀵 서비스</option>					
+				<td class="form"><select id="scheduletype" class="input"
+					name="sStyle" onchange="changeStype()">
+						<option value="1" <c:if test="${stype==1}"> selected </c:if>>스마트
+							택시 서비스</option>
+						<option value="2" <c:if test="${stype==2}"> selected </c:if>>픽업
+							서비스</option>
+						<option value="3" <c:if test="${stype==3}"> selected </c:if>>퀵
+							서비스</option>
 
 				</select></td>
 				<td></td>
 			</tr>
-		
-			<!-- hidden으로 해놓고 서비스타입에 따라서 보였으면 좋겠다. -->	
+
+			<!-- hidden으로 해놓고 서비스타입에 따라서 보였으면 좋겠다. -->
 			<!-- @@@ COMPLETE @@@ -->
 			<tr id="receive">
 				<td class="label">받는사람</td>
 				<td class="form"><input class="input" type="text"
-					id="schedulereceiver" name="reuserid">
-					<input type="button"
-								name="idceck" value="사용자확인" /> &nbsp;&nbsp; <span class="idsame"></span></td>
+					id="schedulereceiver" name="reuserid"> <input type="button"
+					name="idceck" value="사용자확인" /> &nbsp;&nbsp; <span class="idsame"></span></td>
 			</tr>
 			<tr>
 				<td class="label2">메모</td>
@@ -404,13 +377,12 @@ text-align: center;
 			</tr>
 			<tr>
 				<td><input type="submit" style="width: 80px; height: 40px"
-					value="등록" id="submitbt" name="schesubmit">
-					<input type="button" style="width: 80px; height: 40px" value="test" name="test"></td>
+					value="등록" id="submitbt" name="schesubmit"></td>
 			</tr>
 		</table>
 		<input type="hidden" name="userid" value="${loginuser.userid}">
 	</form>
-	
+
 	<br>
 	<br>
 
@@ -525,16 +497,6 @@ text-align: center;
 
 	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
 
-	<!-- <script type="text/javascript">
-$(document).ready(function(){
-	$("#submitbt").click(function(){
-		console.log("byabya");
-		/* out.println("bye"); */
-		alert("bye"); 
-		/* System.out.println("bye"); */
-	});
-}); // end document.ready 
-</script> -->
 </body>
 
 </html>
