@@ -65,8 +65,7 @@
 									<th class="column-5">출발장소</th>
 									<th class="column-6">도착장소</th>
 									<th class="column-7">메모</th>
-								</tr>
-							
+								</tr>							
 								
 							<c:forEach var="r" items ="${rlist }">
 								<tr class="table_row">

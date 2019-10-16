@@ -9,7 +9,7 @@ public interface CarStatusMapper {
 	public void delete(int obj);
 	public void update(CarStatus obj);
 	public ArrayList<CarStatus> select(int obj);
-	public ArrayList<CarStatus> selectall();
+	public ArrayList<CarStatus> selectall(int obj);
 	
 
 }

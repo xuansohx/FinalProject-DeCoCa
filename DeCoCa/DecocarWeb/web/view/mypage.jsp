@@ -52,8 +52,10 @@ width: 250px;
 <div class="mypage_control">
 <!-- 2. User Calendar List -->
 <div class="mypage_package">
+<a href="schelist.mc?userid=${loginuser.userid}">
 <img src="img/user_cal_list.png" class="mypage_img">
 <h4 class="mypage_text">내 일정 조회</h4>
+</a>
 </div>
 
 <!-- 3. User Update -->

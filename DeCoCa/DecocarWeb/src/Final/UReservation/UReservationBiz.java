@@ -34,7 +34,7 @@ public class UReservationBiz implements Biz<String, Reservation> {
 		return dao.select(k);
 	}
 	@Override
-	public ArrayList<Reservation> get() throws Exception {
-		return dao.select();
+	public ArrayList<Reservation> getAll(String k) throws Exception {
+		return dao.selectAll(k);
 	}
 }

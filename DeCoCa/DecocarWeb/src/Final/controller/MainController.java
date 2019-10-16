@@ -25,13 +25,15 @@ import Final.vo.User;
 public class MainController {
 	@Resource(name = "ubiz")
 	Biz<String, User> ubiz;
-
+	
 	@Resource(name = "csbiz")
 	Biz<Integer, CarStatus> csbiz;
 
 	@Resource(name = "reserbiz")
 	Biz<Integer, Reservation> rbiz;
-
+	
+	@Resource(name = "Ureserbiz")
+	Biz<String, Reservation> uresbiz;
 	@RequestMapping("/main.mc")
 	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView();
@@ -52,8 +54,8 @@ public class MainController {
 		User dbuser = null; 
 		try {
 			dbuser = ubiz.get(userid);
-			cslist = csbiz.get();
-			relist = rbiz.get();
+			cslist = csbiz.getAll(1);
+			relist = rbiz.getAll(1);
 			if (pwd.equals(dbuser.getPwd())) {
 				session.setAttribute("loginuser", dbuser);
 				usertype = dbuser.getUsertype();
@@ -81,10 +83,10 @@ public class MainController {
 		}
 		try {
 			// �옄�룞李� �긽�깭
-			cslist = csbiz.get();
+			cslist = csbiz.getAll(1);
 
 			// �삁�빟 �긽�깭
-			relist = rbiz.get();
+			relist = rbiz.getAll(1);
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -127,36 +129,33 @@ public class MainController {
 	public void schregisterimpl(Reservation reserve, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		System.out.println(reserve.toString());
-		
-		String dfull = reserve.getCalDate();
-		
+		String dfull = reserve.getCalDate();		
 		String ddate = dfull.substring(0, 10);
 		String dtime = dfull.substring(11, 16);
 		System.out.println(dfull+" = "+ddate+""+dtime);
 		reserve.setCalDate(ddate);
 		reserve.setsTime(dtime);
+		System.out.println(reserve.toString());
+		String uid = reserve.getUserid();
 		try {
-			
 			rbiz.register(reserve);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		try {
-			sendPush(reserve);
-			
-			response.sendRedirect("schelist.mc");
+			//sendPush(reserve);
+			response.sendRedirect("schelist.mc?userid="+uid);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
-	
 	@RequestMapping("/schelist.mc")
-	public ModelAndView schelist(Reservation reserve, ArrayList<Reservation> rlist) {
+	public ModelAndView schelist(Reservation reserve,String userid) {
 		ModelAndView mv = new ModelAndView();
-
+		ArrayList<Reservation> rlist = null;
 		try {
-			rlist = rbiz.get();
+			//rlist = rbiz.get();
+			rlist = uresbiz.getAll(userid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
