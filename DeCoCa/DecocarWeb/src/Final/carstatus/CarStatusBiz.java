@@ -37,9 +37,8 @@ public class CarStatusBiz implements Biz<Integer, CarStatus> {
 	}
 
 	@Override
-	public ArrayList<CarStatus> get() throws Exception {
-	
-		return dao.select();
+	public ArrayList<CarStatus> getAll(Integer k) throws Exception {	
+		return dao.selectAll(k);
 	}
 	
 }

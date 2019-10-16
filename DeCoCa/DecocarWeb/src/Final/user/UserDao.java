@@ -38,7 +38,7 @@ public class UserDao implements Dao<String, User> {
 	}
 
 	@Override
-	public ArrayList<User> select() throws Exception {
+	public ArrayList<User> selectAll(String k) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

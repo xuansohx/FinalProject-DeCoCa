@@ -40,8 +40,8 @@ public class UReservationDao implements Dao<String, Reservation> {
 	}
 
 	@Override
-	public ArrayList<Reservation> select() throws Exception {
-		return Ureserm.selectall();
+	public ArrayList<Reservation> selectAll(String k) throws Exception {
+		return Ureserm.selectAll(k);
 	}
 
 	

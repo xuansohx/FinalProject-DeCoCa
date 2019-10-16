@@ -24,13 +24,15 @@ import Final.vo.User;
 public class MainController {
 	@Resource(name = "ubiz")
 	Biz<String, User> ubiz;
-
+	
 	@Resource(name = "csbiz")
 	Biz<Integer, CarStatus> csbiz;
 
 	@Resource(name = "reserbiz")
 	Biz<Integer, Reservation> rbiz;
-
+	
+	@Resource(name = "Ureserbiz")
+	Biz<String, Reservation> uresbiz;
 	@RequestMapping("/main.mc")
 	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView();
@@ -45,24 +47,27 @@ public class MainController {
 			HttpSession session) {
 		String userid = request.getParameter("userid");
 		String pwd = request.getParameter("pwd");
+		String token = request.getParameter("USERDEVICE");
 		int usertype = 0;
 		ArrayList<CarStatus> cslist = null;
 		ArrayList<Reservation> relist = null;
 		User dbuser = null; 
 		try {
 			dbuser = ubiz.get(userid);
-			cslist = csbiz.get();
-			relist = rbiz.get();
+			cslist = csbiz.getAll(1);
+			relist = rbiz.getAll(1);
 			if (pwd.equals(dbuser.getPwd())) {
 				session.setAttribute("loginuser", dbuser);
 				usertype = dbuser.getUsertype();
-				System.out.println("�쑀�����엯 : " + usertype);
+				if(!token.equals("hi")) {
+					dbuser.setUserdevice(token);
+					ubiz.modify(dbuser);
+				}
 			} else {
 				response.setCharacterEncoding("UTF-8");
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
-
-				out.println("<script>alert('鍮꾨�踰덊샇媛� ���졇�뒿�땲�떎.'); location.href='login.mc'</script>");
+				out.println("<script>alert('incorrect password'); location.href='login.mc'</script>");
 				out.flush();
 			}
 		} catch (Exception e) {
@@ -71,7 +76,7 @@ public class MainController {
 			PrintWriter out;
 			try {
 				out = response.getWriter();
-				out.println("<script>alert('�븘�씠�뵒媛� ���졇�뒿�땲�떎.'); location.href='login.mc'</script>");
+				out.println("<script>alert('check'); location.href='login.mc'</script>");
 				out.flush();
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -79,11 +84,8 @@ public class MainController {
 			e.printStackTrace();
 		}
 		try {
-			// �옄�룞李� �긽�깭
-			cslist = csbiz.get();
-
-			// �삁�빟 �긽�깭
-			relist = rbiz.get();
+			cslist = csbiz.getAll(1);
+			relist = rbiz.getAll(1);
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -124,15 +126,13 @@ public class MainController {
 	// �뒪耳�伊댁뿉�꽌 value媛� 媛��졇�삤湲�
 	@RequestMapping("/schregisterimpl.mc")
 	public void schregisterimpl(Reservation reserve, HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView();
-		//System.out.println(reserve.toString());
+		ModelAndView mv = new ModelAndView();		
 		String dfull = reserve.getCalDate();
 		String ddate = dfull.substring(0, 10);
 		String dtime = dfull.substring(11, 16);
 		System.out.println(dfull+" = "+ddate+""+dtime);
 		reserve.setCalDate(ddate);
 		reserve.setsTime(dtime);
-
 		/* create PinNumber */
 		Random r = new Random();
 		String key = ""; // pinNumber(temp)
@@ -146,30 +146,27 @@ public class MainController {
 		}
 		int pinNum = Integer.parseInt(key); // pinNumber(Final) 
 		reserve.setPinNum(pinNum); // set PinNum (DB)
-		System.out.println(reserve.toString()); // test
-		
-		/* Input DataBase */
+    System.out.println(reserve.toString());
+		String uid = reserve.getUserid();
 		try {
-			rbiz.register(reserve);	// insert DataBase
+			rbiz.register(reserve);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		try {
 			sendPush(reserve);
-			
-			response.sendRedirect("schelist.mc");
+			response.sendRedirect("schelist.mc?userid="+uid);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
-	
 	@RequestMapping("/schelist.mc")
-	public ModelAndView schelist(Reservation reserve, ArrayList<Reservation> rlist) {
+	public ModelAndView schelist(Reservation reserve,String userid) {
 		ModelAndView mv = new ModelAndView();
-
+		ArrayList<Reservation> rlist = null;
 		try {
-			rlist = rbiz.get();
+			//rlist = rbiz.get();
+			rlist = uresbiz.getAll(userid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -222,13 +219,13 @@ public class MainController {
 	}
 	public void sendPush(Reservation reserve) {
 		String uid = reserve.getUserid();
-		User u;
+		User u = null;
 		try {
 			u = ubiz.get(uid);
 			String token = u.getUserdevice();
 			int pin = reserve.getPinNum();
 			FcmUtil fcm = new FcmUtil();
-			fcm.send_FCM(token, "�뜲瑗ш�~", pin + "");
+			fcm.send_FCM(token, "decoca", pin + "");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

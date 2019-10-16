@@ -25,8 +25,8 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM RESERVATION WHERE userid=#{userid}
 	</select>
 
-	<select id="selectall" resultType="reservation">
-		SELECT * FROM RESERVATION ORDER BY 1
+	<select id="selectAll" resultType="reservation" parameterType="String">
+		SELECT * FROM RESERVATION WHERE userid=#{userid}
 	</select>
 
 </mapper>
