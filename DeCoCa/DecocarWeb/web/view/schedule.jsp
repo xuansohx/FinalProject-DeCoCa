@@ -132,46 +132,8 @@
 <style>
 @import url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap');
 
-
-body {
-	position: relative;
-	text-align: center;
-}
-
-table {
-	border-spacing: none;
-}
-
-.label {
-	float: left;
-	width: 120px;
-	text-align: right;
-	padding-right: 10px;
-}
-
-.form {
-	width: 190px;
-	text-align: center;
-}
-
-.form>.input {
-	width: 190px;
-}
-
-.label2 {
-	float: left;
-	width: 120px;
-	text-align: right;
-	padding-right: 10px;
-}
-/* .form2 {
-	width: 190px;
-	height: 60px;
-	line-height: 60px;
-	text-align: center;
-} */
 #schedulememo {
-	width: 190px;
+	resize: none;
 }
 
 #page_title{
@@ -256,61 +218,78 @@ text-align: center;
 				<td align="center" id="page_title"><h1>Reservation</h1><br></td>
 			</tr>
 		</table>
-		<table style="margin-left: auto; margin-right: auto;">
-			<tr>
-				<td class="label">예약 날짜</td>
-				<td class="form"><input type="text" class="form-control"
-					id="scheduledate" name="calDate"></td>
-			</tr>
-			<tr>
-				<td class="label">일정 이름</td>
-				<td class="form"><input class="input" type="text"
-					id="schedulename" name="calName"></td>
-			</tr>
-			<tr>
-				<td class="label">출발지 정보</td>
-				<td class="form"><input class="input" type="text"
-					id="schedulelocationstart" name="sAddress"></td>
-			</tr>
-			<tr>
-				<td class="label">도착지 정보</td>
-				<td class="form"><input class="input" type="text"
-					id="schedulelocationend" name="eAddress"></td>
-			</tr>
-			<tr>
-				<td class="label">서비스타입</td>
-				<td class="form"><select id="scheduletype" class="input"
+		
+		<!-- 여기부터 수정 -->
+		
+		<div class="flex-w flex-tr">
+			<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">예약 날짜</label> 
+					<input
+						class="size-111 bor8 stext-102 cl2 p-lr-20 form-control"
+						id="scheduledate" type="text" name="calDate">
+				</div>
+		
+
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">일정 이름</label> 
+					<input
+						class="size-111 bor8 stext-102 cl2 p-lr-20"
+						id="schedulename" type="text" name="calName">
+				</div>
+	
+		
+	
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">출발지 정보</label> 
+					<input
+						class="size-111 bor8 stext-102 cl2 p-lr-20"
+						id="schedulelocationstart" type="text" name="sAddress">
+				</div>
+	
+		
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">도착지 정보</label> 
+					<input
+						class="size-111 bor8 stext-102 cl2 p-lr-20"
+						id="schedulelocationend" type="text" name="eAddress">
+				</div>
+		
+		
+	
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">서비스 타입</label> 
+					<select id="scheduletype" class="input size-111 bor8 stext-102 cl2 p-lr-20"
 					name="sStyle">
 						<!-- 선택된 서비스를 기본서비스로 해볼까? -->
 						<!-- <option value="~~" <c:if test="${stype==1}"> selected </c:if> > ~~ </option> -->
 						<option value="1" <c:if test="${stype==1}"> selected </c:if>>스마트 택시 서비스</option>
 						<option value="2" <c:if test="${stype==2}"> selected </c:if>>픽업 서비스</option>
 						<option value="3" <c:if test="${stype==3}"> selected </c:if>>퀵 서비스</option>					
+				</select>		
+				</div>
+		
 
-				</select></td>
-				<!-- <td class="form"><input type="text" id="scheduletype"></td> -->
-				<td></td>
-			</tr>
-			
-			<!-- hidden으로 해놓고 서비스타입에 따라서 보였으면 좋겠다. -->
-			<tr>
-				<td class="label">받는사람</td>
-				<td class="form"><input class="input" type="text"
-					id="schedulereceiver" name="reuserid"></td>
-			</tr>
-			<tr>
-				<td class="label2">메모</td>
-				<td class="form2"><textarea id="schedulememo" name="memo"
-						cols="10"></textarea></td>
-				<!-- <td class="form2"><input type="text" id="schedulememo"></td> -->
-			</tr>
-			<tr>
-				<td><input type="submit" style="width: 80px; height: 40px"
-					value="등록" id="submitbt"></td>
-			</tr>
-		</table>
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">받는 사람</label> 
+					<input
+						class="size-111 bor8 stext-102 cl2 p-lr-20"
+						id="schedulereceiver" type="text" name="reuserid">
+				</div>
+		
 
-		<!--  <input type="hidden" name="userid" value="${loginuser.userid}">-->
+		
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">메모</label> 
+					<textarea class="size-111 bor8 stext-102 cl2 p-lr-20" id="schedulememo" name="memo"></textarea>
+				</div>
+			</div>
+		</div>
+		
+			<label class="stext-102 cl3"></label> <input type="submit" 
+							class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
+							style="width: 300px; height: 50px" value="등록">
+	
 	</form>
 	
 	<br>
