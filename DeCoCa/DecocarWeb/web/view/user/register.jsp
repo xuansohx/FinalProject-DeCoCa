@@ -124,27 +124,6 @@
 			obj.pnumber.focus();
 			return false;
 		}
-		/* 주소랑 이메일 안쓴다. */
-		/* if (!obj.CUSTOMER_ADDR.value
-				|| obj.CUSTOMER_ADDR.value.trim().length == 0) {
-			alert("주소가 입력되지 않았습니다.");
-			obj.CUSTOMER_ADDR.value = "";
-			obj.CUSTOMER_ADDR.focus();
-			return false;
-		}
-		if (!obj.CUSTOMER_EMAIL.value
-				|| obj.CUSTOMER_EMAIL.value.trim().length == 0) {
-			alert("이메일이 입력되지 않았습니다.");
-			obj.CUSTOMER_EMAIL.value = "";
-			obj.CUSTOMER_EMAIL.focus();
-			return false;
-		}
-		if (regex.test(email) === false) {
-            alert("잘못된 이메일 형식입니다.");
-            obj.CUSTOMER_EMAIL.value=""
-            obj.CUSTOMER_EMAIL.focus()
-            return false;
-        } */
 	}
 
 	$(document).ready(function() {
@@ -180,7 +159,7 @@
 						$('input[name="registerok"]').attr('disabled','disabled');
 						$('.idsame').html('<span style="color:red">아이디 중복입니다.</span>');
 						return false;
-					}else if(result == '0'){
+					}else if(result == '0'&& obj.userid.value.length >0 ){
 						alert("사용 가능한 아이디 입니다.");
 						$('input[name="registerok"]').removeAttr('disabled');
 						$('.idsame').html('<span style="color:red"></span>');
@@ -243,7 +222,7 @@ text-align: center;
 
 
 	<!-- Content page -->
-	<section class="bg0 p-t-104 p-b-116">
+	<section class="bg0  p-b-116">
 		<div class="container">
 			<div class="p-b-10">
 				<h3 class="ltext-103 cl5"></h3>
@@ -290,20 +269,7 @@ text-align: center;
 								class="size-111 bor8 stext-102 cl2 p-lr-20" id="phone"
 								type="text" name="pnumber">
 						</div>
-						
-						<!-- 주소랑 이메일은 DeCoCa에서 안씀 -->
-						<!-- <div class="col-sm-6 p-b-5 m-lr-auto ">
-							<label class="stext-102 cl3" for="name">ADDRESS</label> <input
-								class="size-111 bor8 stext-102 cl2 p-lr-20" id="address"
-								type="text" name="CUSTOMER_ADDR">
-						</div>
-
-						<div class="col-sm-6 p-b-5 m-lr-auto ">
-							<label class="stext-102 cl3" for="email">EMAIL</label> <input
-								class="size-111 bor8 stext-102 cl2 p-lr-20" id="email"
-								type="text" name="CUSTOMER_EMAIL">예>id@domain.com
-						</div> -->
-
+		
 						<label class="stext-102 cl3"></label> <input type="submit" name="registerok"
 							class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
 							style="width: 300px; height: 50px" value="REGISTER">

@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org/DTD Config 3.0//EN"
 		<mapper resource="Final/config/usermapper.xml"/>
 		<mapper resource="Final/config/carstatusmapper.xml"/>
 		<mapper resource="Final/config/reservationmapper.xml"/>
+		<mapper resource="Final/config/ureservationmapper.xml"/>
 		<!-- <mapper resource="Final/config/ureservationmapper.xml"/> -->
 	</mappers>
 </configuration>

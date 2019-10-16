@@ -234,46 +234,8 @@ function reIdCheck(){
 <style>
 @import url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap');
 
-
-body {
-	position: relative;
-	text-align: center;
-}
-
-table {
-	border-spacing: none;
-}
-
-.label {
-	float: left;
-	width: 120px;
-	text-align: right;
-	padding-right: 10px;
-}
-
-.form {
-	width: 190px;
-	text-align: center;
-}
-
-.form>.input {
-	width: 190px;
-}
-
-.label2 {
-	float: left;
-	width: 120px;
-	text-align: right;
-	padding-right: 10px;
-}
-/* .form2 {
-	width: 190px;
-	height: 60px;
-	line-height: 60px;
-	text-align: center;
-} */
 #schedulememo {
-	width: 190px;
+	resize: none;
 }
 
 #page_title{
@@ -383,11 +345,26 @@ text-align: center;
 						<option value="1" <c:if test="${stype==1}"> selected </c:if>>스마트 택시 서비스</option>
 						<option value="2" <c:if test="${stype==2}"> selected </c:if>>픽업 서비스</option>
 						<option value="3" <c:if test="${stype==3}"> selected </c:if>>퀵 서비스</option>					
-
-				</select></td>
-				<td></td>
-			</tr>
+				</select>		
+				</div>
 		
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">받는 사람</label> 
+					<input
+						class="size-111 bor8 stext-102 cl2 p-lr-20"
+						id="schedulereceiver" type="text" name="reuserid">
+				</div>
+		  	<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">메모</label> 
+					<textarea class="size-111 bor8 stext-102 cl2 p-lr-20" id="schedulememo" name="memo"></textarea>
+				</div>
+			</div>
+		</div>
+		
+			<label class="stext-102 cl3"></label> <input type="submit" 
+							class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
+							style="width: 300px; height: 50px" value="등록">
+
 			<!-- hidden으로 해놓고 서비스타입에 따라서 보였으면 좋겠다. -->	
 			<!-- @@@ COMPLETE @@@ -->
 			<tr id="receive">

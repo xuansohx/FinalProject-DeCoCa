@@ -40,7 +40,7 @@ public class UserBiz implements Biz<String, User> {
 	}
 
 	@Override
-	public ArrayList<User> get() throws Exception {
+	public ArrayList<User> getAll(String k) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
