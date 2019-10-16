@@ -81,7 +81,109 @@
 	// 맵 생성 실행
 	initTmap();
 </script>
+<!-- select 변경 옵션 -->
+<script>
+function changeStype(){
+	var typeSelect = document.getElementById("scheduletype");
+	var typeValue = typeSelect.options[typeSelect.selectedIndex].value;
+	console.log(typeValue);
+	change(typeValue);
+	/* reIdCheck() */
+}; 
 
+$(document).ready(function(){
+	var typeSelect = document.getElementById("scheduletype");
+	var typeValue = typeSelect.options[typeSelect.selectedIndex].value;
+	console.log(typeValue);
+	change(typeValue);
+/* 	scheCheck(); */
+	reIdCheck(); 
+	
+});
+
+
+
+function change(typeValue){
+	var rePart = document.getElementById("receive");
+	
+	if(typeValue == 1){
+		console.log("스마트택시 선택");
+		$("#receive").hide();
+		/* input text 초기화 해야함 */
+		$('input[name="reuserid"]').val('');
+		$('input[name="schesubmit"]').removeAttr('disabled'); 
+	}else if(typeValue == 2){
+		console.log("픽업 선택");
+		$("#receive").show();
+		$('input[name="schesubmit"]').attr('disabled','disabled');
+	}else if(typeValue == 3){
+		console.log("퀵  선택");
+		$("#receive").show();
+		$('input[name="schesubmit"]').attr('disabled','disabled');
+	}	
+};
+
+function reIdCheck(){
+	$('input[name="idceck"]').click(function() {
+		var reuserid = $('input[name="reuserid"]').val();
+		$.ajax({
+			url:"usercheckId.mc",
+			data:{'userid':reuserid},
+			method:"POST",
+			success:function(result){
+				if(result == '1'){
+					alert("확인되었습니다.");
+					$('input[name="schesubmit"]').removeAttr('disabled'); 
+					$('.idsame').html('<span style="color:red"></span>');
+					return false;
+				}else if(result == '0'){
+					alert("존재하지 않는 사용자입니다.");
+					$('input[name="schesubmit"]').attr('disabled','disabled');
+					$('.idsame').html('<span style="color:red">존재하지 않는 사용자입니다.</span>');
+					return false;
+				}
+			}
+		});
+	});
+};
+
+/* scedule register button able/unable */
+/* function scheCheck(){
+	 $('input[name="test"]').click(function() {
+		var scheDate = $('input[name="calDate"]').val();
+		var scheName = $('input[name="calName"]').val();
+		var sAdr = $('input[name="sAddress"]').val();
+		var eAdr = $('input[name="eAddress"]').val();
+		var typeSelect = document.getElementById("scheduletype");
+		var typeValue = typeSelect.options[typeSelect.selectedIndex].value;
+		
+		console.log(scheDate+" "+scheName+" "+sAdr+" "+eAdr+" "+typeValue);
+		
+		if(scheDate!="" && scheName!="" && sAdr!="" && eAdr!=""){
+			console.log("FULL");
+			$('input[name="schesubmit"]').removeAttr('disabled');
+		}else {
+			console.log("NOT FULL");
+			$('input[name="schesubmit"]').attr('disabled','disabled');
+		} 
+	}); 
+		var typeSelect = document.getElementById("scheduletype");
+		var typeValue = typeSelect.options[typeSelect.selectedIndex].value;
+		
+		console.log(scheDate+" "+scheName+" "+sAdr+" "+eAdr+" "+typeValue);
+		
+		if(scheDate!="" && scheName!="" && sAdr!="" && eAdr!=""){
+			console.log("FULL");
+			$('input[name="schesubmit"]').removeAttr('disabled');
+		}else {
+			console.log("NOT FULL");
+			$('input[name="schesubmit"]').attr('disabled','disabled');
+		} 
+		reIdCheck();
+
+}; */
+
+</script>
 <head>
 <meta charset="EUC-KR">
 <title>DeCoCa</title>
@@ -220,8 +322,6 @@ text-align: center;
 							</ul>
 						</c:when>
 						<c:when test="${loginuser.usertype eq null }">
-							<%-- 						<c:when test="${loginuser.CUSTOMER_ADMIN eq null }"> --%>
-
 							<ul class="main-menu">
 								<li><a href="login.mc">LOGIN</a></li>
 								<li><a href="curegister.mc">REGISTER</a></li>
@@ -260,53 +360,52 @@ text-align: center;
 			<tr>
 				<td class="label">예약 날짜</td>
 				<td class="form"><input type="text" class="form-control"
-					id="scheduledate" name="calDate"></td>
+					id="scheduledate" name="calDate" required="required"></td>
 			</tr>
 			<tr>
 				<td class="label">일정 이름</td>
 				<td class="form"><input class="input" type="text"
-					id="schedulename" name="calName"></td>
+					id="schedulename" name="calName" required="required"></td>
 			</tr>
 			<tr>
 				<td class="label">출발지 정보</td>
 				<td class="form"><input class="input" type="text"
-					id="schedulelocationstart" name="sAddress"></td>
+					id="schedulelocationstart" name="sAddress" required="required"></td>
 			</tr>
 			<tr>
 				<td class="label">도착지 정보</td>
 				<td class="form"><input class="input" type="text"
-					id="schedulelocationend" name="eAddress"></td>
+					id="schedulelocationend" name="eAddress" required="required"></td>
 			</tr>
 			<tr>
 				<td class="label">서비스타입</td>
-				<td class="form"><select id="scheduletype" class="input"
-					name="sStyle">
-						<!-- 선택된 서비스를 기본서비스로 해볼까? -->
-						<!-- <option value="~~" <c:if test="${stype==1}"> selected </c:if> > ~~ </option> -->
+				<td class="form"><select id="scheduletype" class="input" name="sStyle" onchange="changeStype()"> 
 						<option value="1" <c:if test="${stype==1}"> selected </c:if>>스마트 택시 서비스</option>
 						<option value="2" <c:if test="${stype==2}"> selected </c:if>>픽업 서비스</option>
 						<option value="3" <c:if test="${stype==3}"> selected </c:if>>퀵 서비스</option>					
 
 				</select></td>
-				<!-- <td class="form"><input type="text" id="scheduletype"></td> -->
 				<td></td>
 			</tr>
-			
-			<!-- hidden으로 해놓고 서비스타입에 따라서 보였으면 좋겠다. -->
-			<tr>
+		
+			<!-- hidden으로 해놓고 서비스타입에 따라서 보였으면 좋겠다. -->	
+			<!-- @@@ COMPLETE @@@ -->
+			<tr id="receive">
 				<td class="label">받는사람</td>
 				<td class="form"><input class="input" type="text"
-					id="schedulereceiver" name="reuserid"></td>
+					id="schedulereceiver" name="reuserid">
+					<input type="button"
+								name="idceck" value="사용자확인" /> &nbsp;&nbsp; <span class="idsame"></span></td>
 			</tr>
 			<tr>
 				<td class="label2">메모</td>
 				<td class="form2"><textarea id="schedulememo" name="memo"
 						cols="10"></textarea></td>
-				<!-- <td class="form2"><input type="text" id="schedulememo"></td> -->
 			</tr>
 			<tr>
 				<td><input type="submit" style="width: 80px; height: 40px"
-					value="등록" id="submitbt"></td>
+					value="등록" id="submitbt" name="schesubmit">
+					<input type="button" style="width: 80px; height: 40px" value="test" name="test"></td>
 			</tr>
 		</table>
 		<input type="hidden" name="userid" value="${loginuser.userid}">
