@@ -12,12 +12,12 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</resultMap> -->	
 	
 	<insert id="insert" parameterType="user">
-		INSERT INTO user_tb VALUES (#{userid},#{pwd},#{name},#{pnumber},0,1234567890)	
+		INSERT INTO user_tb VALUES (#{userid},#{pwd},#{name},#{pnumber},0,'1234567890')	
 <!-- 		INSERT INTO user_tb VALUES (#{userid},#{pwd},#{name},#{pnumber},'0','1234567890')	 -->
 	</insert>
 	
 	<update id="update" parameterType="user">
-		UPDATE user_tb SET PWD=#{pwd},NAME=#{name},PNUMBER=#{pnumber},USERTYPE='0',USERDEVICE='1234567890' WHERE USERID=#{userid}
+		UPDATE user_tb SET PWD=#{pwd},NAME=#{name},PNUMBER=#{pnumber},USERTYPE='0',USERDEVICE=#{userdevice} WHERE USERID=#{userid}
 	</update>
 	
 	<delete id="delete" parameterType="String">
