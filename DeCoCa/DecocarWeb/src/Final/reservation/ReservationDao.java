@@ -40,9 +40,9 @@ public class ReservationDao implements Dao<Integer, Reservation> {
 	}
 
 	@Override
-	public ArrayList<Reservation> select() throws Exception {
+	public ArrayList<Reservation> selectAll(Integer k) throws Exception {
 		// TODO Auto-generated method stub
-		return reserm.selectall();
+		return reserm.selectall(k);
 	}
 	
 	

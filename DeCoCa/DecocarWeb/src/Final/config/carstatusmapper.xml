@@ -29,10 +29,9 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM CAR_STATUS WHERE statusid=#{statusid}	
 	</select>
 	
-	<select id="selectall" resultType="carstatus">
+	<select id="selectall" resultType="carstatus" parameterType="Integer">
 		SELECT * FROM CAR_STATUS ORDER BY 1
-	</select>
-	
+	</select>	
 </mapper>
 
 

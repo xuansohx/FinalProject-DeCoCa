@@ -269,17 +269,13 @@ text-align: center;
 				</select>		
 				</div>
 		
-
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
 					<label class="stext-102 cl3">받는 사람</label> 
 					<input
 						class="size-111 bor8 stext-102 cl2 p-lr-20"
 						id="schedulereceiver" type="text" name="reuserid">
 				</div>
-		
-
-		
-				<div class="col-sm-6 p-b-5 m-lr-auto ">
+		  	<div class="col-sm-6 p-b-5 m-lr-auto ">
 					<label class="stext-102 cl3">메모</label> 
 					<textarea class="size-111 bor8 stext-102 cl2 p-lr-20" id="schedulememo" name="memo"></textarea>
 				</div>
@@ -289,7 +285,8 @@ text-align: center;
 			<label class="stext-102 cl3"></label> <input type="submit" 
 							class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
 							style="width: 300px; height: 50px" value="등록">
-	
+
+		<input type="hidden" name="userid" value="${loginuser.userid}">
 	</form>
 	
 	<br>
