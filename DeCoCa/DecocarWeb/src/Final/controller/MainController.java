@@ -3,6 +3,7 @@ package Final.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import Final.frame.Biz;
 import Final.vo.CarStatus;
-
 import Final.vo.Client;
-
 import Final.vo.Reservation;
 import Final.vo.User;
 
@@ -126,18 +125,32 @@ public class MainController {
 	@RequestMapping("/schregisterimpl.mc")
 	public void schregisterimpl(Reservation reserve, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
-		System.out.println(reserve.toString());
-		
+		//System.out.println(reserve.toString());
 		String dfull = reserve.getCalDate();
-		
 		String ddate = dfull.substring(0, 10);
 		String dtime = dfull.substring(11, 16);
 		System.out.println(dfull+" = "+ddate+""+dtime);
 		reserve.setCalDate(ddate);
 		reserve.setsTime(dtime);
+
+		/* create PinNumber */
+		Random r = new Random();
+		String key = ""; // pinNumber(temp)
+		for(int i=0; i<6; i++) {
+			String ran = Integer.toString(r.nextInt(10));
+			if(!key.contains(ran)) {
+				key += ran;
+			}else {
+				i -=1;
+			}
+		}
+		int pinNum = Integer.parseInt(key); // pinNumber(Final) 
+		reserve.setPinNum(pinNum); // set PinNum (DB)
+		System.out.println(reserve.toString()); // test
+		
+		/* Input DataBase */
 		try {
-			
-			rbiz.register(reserve);
+			rbiz.register(reserve);	// insert DataBase
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

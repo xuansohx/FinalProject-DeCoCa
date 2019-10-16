@@ -39,6 +39,9 @@ width: 250px;
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
+a > .mypage_text {
+color: #666666;
+}
 
 </style>
 
