@@ -221,7 +221,7 @@ text-align: center;
 
 
 	<!-- Content page -->
-	<section class="bg0 p-t-104 p-b-116">
+	<section class="bg0  p-b-116">
 		<div class="container">
 			<div class="p-b-10">
 				<h3 class="ltext-103 cl5"></h3>

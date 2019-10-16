@@ -35,14 +35,11 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap');
-
-
 #page_title{
 font-family: 'Lalezar', cursive;
 text-align: center;
 }
 </style>
-
 </head>
 <body class="animsition">
 
@@ -72,8 +69,8 @@ text-align: center;
 							<label class="stext-102 cl3" for="pwd">PASSWORD</label>
 							<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="pwd" type="password" name="pwd">
 <!-- 							<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="pwd" type="password" name="CUSTOMER_PWD"> -->
-						</div> 
-	
+						</div>
+						<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="USERDEVICE" type="hidden" name="USERDEVICE" value="hi">
 						<label class="stext-102 cl3"></label>
 						<input type="submit" value="LOG IN" class="flex-c-m m-lr-auto stext-101 cl0  bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" style="width : 300px ;height : 50px">
 							
