@@ -24,15 +24,16 @@ import Final.vo.User;
 public class MainController {
 	@Resource(name = "ubiz")
 	Biz<String, User> ubiz;
-	
+
 	@Resource(name = "csbiz")
 	Biz<Integer, CarStatus> csbiz;
 
 	@Resource(name = "reserbiz")
 	Biz<Integer, Reservation> rbiz;
-	
+
 	@Resource(name = "Ureserbiz")
 	Biz<String, Reservation> uresbiz;
+
 	@RequestMapping("/main.mc")
 	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView();
@@ -51,7 +52,7 @@ public class MainController {
 		int usertype = 0;
 		ArrayList<CarStatus> cslist = null;
 		ArrayList<Reservation> relist = null;
-		User dbuser = null; 
+		User dbuser = null;
 		try {
 			dbuser = ubiz.get(userid);
 			cslist = csbiz.getAll(1);
@@ -59,7 +60,7 @@ public class MainController {
 			if (pwd.equals(dbuser.getPwd())) {
 				session.setAttribute("loginuser", dbuser);
 				usertype = dbuser.getUsertype();
-				if(!token.equals("hi")) {
+				if (!token.equals("hi")) {
 					dbuser.setUserdevice(token);
 					ubiz.modify(dbuser);
 				}
@@ -99,9 +100,9 @@ public class MainController {
 			mv.addObject("center", "center");
 			mv.setViewName("main");
 		}
-		
-		System.out.println("USER : "+dbuser);
-		
+
+		System.out.println("USER : " + dbuser);
+
 		return mv;
 	}
 
@@ -114,78 +115,15 @@ public class MainController {
 		mv.setViewName("main");
 		return mv;
 	}
-	@RequestMapping("/schedule.mc")
-	public ModelAndView schedule1(HttpSession session ,String type) {
-		ModelAndView mv = new ModelAndView();
 
-		int stype = Integer.parseInt(type);
-		session.setAttribute("stype", stype);
-		mv.setViewName("schedule");
-		return mv;
-	}
-	// �뒪耳�伊댁뿉�꽌 value媛� 媛��졇�삤湲�
-	@RequestMapping("/schregisterimpl.mc")
-	public void schregisterimpl(Reservation reserve, HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView();		
-		String dfull = reserve.getCalDate();
-		String ddate = dfull.substring(0, 10);
-		String dtime = dfull.substring(11, 16);
-		System.out.println(dfull+" = "+ddate+""+dtime);
-		reserve.setCalDate(ddate);
-		reserve.setsTime(dtime);
-		/* create PinNumber */
-		Random r = new Random();
-		String key = ""; // pinNumber(temp)
-		for(int i=0; i<6; i++) {
-			String ran = Integer.toString(r.nextInt(10));
-			if(!key.contains(ran)) {
-				key += ran;
-			}else {
-				i -=1;
-			}
-		}
-		int pinNum = Integer.parseInt(key); // pinNumber(Final) 
-		reserve.setPinNum(pinNum); // set PinNum (DB)
-    System.out.println(reserve.toString());
-		String uid = reserve.getUserid();
-		try {
-			rbiz.register(reserve);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			sendPush(reserve);
-			response.sendRedirect("schelist.mc?userid="+uid);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	@RequestMapping("/schelist.mc")
-	public ModelAndView schelist(Reservation reserve,String userid) {
-		ModelAndView mv = new ModelAndView();
-		ArrayList<Reservation> rlist = null;
-		try {
-			//rlist = rbiz.get();
-			rlist = uresbiz.getAll(userid);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-//		System.out.println(rlist.);
-		mv.addObject("rlist", rlist);
-		mv.addObject("center", "schelist");
-		mv.setViewName("main");
-		return mv;
-	}
-  
-	
 	@RequestMapping("/mypage.mc")
 	public ModelAndView mypage() {
-		ModelAndView mv = new ModelAndView();		
+		ModelAndView mv = new ModelAndView();
 		try {
-		} catch (Exception e) {	
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		mv.addObject("center","mypage");
+		mv.addObject("center", "mypage");
 		mv.setViewName("main");
 		return mv;
 	}
@@ -216,19 +154,5 @@ public class MainController {
 		}
 		mv.setViewName("carlist");
 		return mv;
-	}
-	public void sendPush(Reservation reserve) {
-		String uid = reserve.getUserid();
-		User u = null;
-		try {
-			u = ubiz.get(uid);
-			String token = u.getUserdevice();
-			int pin = reserve.getPinNum();
-			FcmUtil fcm = new FcmUtil();
-			fcm.send_FCM(token, "decoca", pin + "");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }

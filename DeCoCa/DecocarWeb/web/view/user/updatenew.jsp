@@ -236,7 +236,6 @@ text-align: center;
 					<form action="userupdateimpl.mc" method="POST"
 						onsubmit="return joinCheck(this)">
 
-						<!--챦쩔쩍챙혬혻챌혬짹챦쩔쩍, 챦쩔쩍챙혺쩐챦쩔쩍챙혛혮챔쨍째챘혥혡챙혘혝, 채쨘혣챙혝짹챘혘쩌,email-->
 						<div class="col-sm-6 p-b-5 m-lr-auto ">
 							<label class="stext-102 cl3" for="id">ID</label> <input
 								class="size-111 bor8 stext-102 cl2 p-lr-20" id="id" type="text"

@@ -127,13 +127,5 @@ public class UserController {
 		mv.setViewName("main");
 		return mv;
 	}
-
-	@RequestMapping("/curegister.mc")
-	public ModelAndView curegister() {
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("center", "register");
-		mv.setViewName("main");
-
-		return mv;
-	}
+	
 }
