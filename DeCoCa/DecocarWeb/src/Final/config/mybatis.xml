@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org/DTD Config 3.0//EN"
 		<typeAlias type="Final.vo.User" alias="user"/>
 	    <typeAlias type="Final.vo.CarStatus" alias="carstatus"/>
 	    <typeAlias type="Final.vo.Reservation" alias="reservation"/>
-	    <!-- <typeAlias type="Final.vo.Reservation" alias="ureservation"/> -->
+	    <typeAlias type="Final.vo.Car" alias="car"/>
 	</typeAliases>
 	
 	<mappers>
@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org/DTD Config 3.0//EN"
 		<mapper resource="Final/config/carstatusmapper.xml"/>
 		<mapper resource="Final/config/reservationmapper.xml"/>
 		<mapper resource="Final/config/ureservationmapper.xml"/>
-		<!-- <mapper resource="Final/config/ureservationmapper.xml"/> -->
+		<mapper resource="Final/config/carmapper.xml"/>
 	</mappers>
 </configuration>
 
