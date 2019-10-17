@@ -1,0 +1,99 @@
+corder 여기에 민경이 부분.. 
+
+자동차 상태
+CREATE TABLE CAR_STATUS
+(
+    statusid       NUMBER   NULL, 
+    battery        NUMBER          NULL, 
+    tire       NUMBER          NULL, 
+    door        NUMBER          NULL, 
+    safebelt         NUMBER          NULL, 
+    brake       NUMBER          NULL, 
+    engine       NUMBER          NULL, 
+    handle    NUMBER          NULL, 
+    temperature         VARCHAR2(10)          NULL, 
+    speed         VARCHAR2(10)          NULL, 
+    carlng         VARCHAR2(10)          NULL,
+    carlat         VARCHAR2(10)          NULL 
+)
+
+INSERT INTO car_status VALUES  ( 111, 100, 1, 1, 1, 1, 1, 120, '19.2', '31.5', '37.508390' , '127.033131')
+
+
+예약 테이블 작성(임의)
+
+CREATE TABLE RESERVATION
+(
+    calid       NUMBER   NULL, 
+    userid      VARCHAR2(20)          NULL, 
+    calDate     VARCHAR2(20)          NULL, 
+    sTime       VARCHAR2(20)          NULL, 
+    eTime       VARCHAR2(20)          NULL, 
+    sLng        VARCHAR2(20)          NULL, 
+    sLat        VARCHAR2(20)          NULL, 
+    eLng        VARCHAR2(20)          NULL, 
+    eLat        VARCHAR2(20)          NULL, 
+    carid       NUMBER          NULL, 
+    sStyle      NUMBER          NULL,
+    reuserid    VARCHAR2(20)          NULL,
+    pinNum      NUMBER          NULL, 
+    calstatus   NUMBER          NULL,
+    sAddress    VARCHAR2(20)         NULL,
+    eAddress    VARCHAR2(20)          NULL,
+    memo        VARCHAR2(100)           NULL
+
+)
+
+CREATE TABLE CAR_STATUS
+(
+    statusid       NUMBER   NULL, 
+    battery        NUMBER          NULL, 
+    tire       NUMBER          NULL, 
+    door        NUMBER          NULL, 
+    safebelt         NUMBER          NULL, 
+    brake       NUMBER          NULL, 
+    engine       NUMBER          NULL, 
+    handle    NUMBER          NULL, 
+    temperature         VARCHAR2(10)          NULL, 
+    speed         VARCHAR2(10)          NULL, 
+    carlng         VARCHAR2(10)          NULL,
+    carlat         VARCHAR2(10)          NULL 
+)
+
+
+create table user_tb(
+ userid  varchar2(20),
+ pwd varchar2(20),
+ name varchar2(15),
+ pnumber varchar2(15),
+ usertype number,
+ userdevice varchar2(200)
+  )
+
+CREATE SEQUENCE RESERVATION_SEQ
+START WITH 101
+INCREMENT BY 1;
+
+CREATE SEQUENCE CAR_SEQ
+START WITH 2001
+INCREMENT BY 1;
+
+
+
+create table car_tb(
+ carid  number,
+ statusid number,
+ centerid number,
+ cartype number,
+ carnumber varchar2(12),
+ calid number
+  )
+
+
+
+INSERT INTO RESERVATION VALUES  ( 1000, 'hohoho', '2019-10-10', '9:30', '10:30', '37.123', '125.3434', '37.124', '125.3535', 100, 1 , 'hsm511', 808080, 1)
+
+
+
+INSERT INTO RESERVATION VALUES (#{calid},#{userid},#{calDate},#{sTime},#{eTime},#{sLng}
+		,#{sLat},#{eLng},#{eLat},#{carid},#{sStyle},#{reuserid},#{pinNum},#{calstatus})	
