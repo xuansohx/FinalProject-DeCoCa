@@ -133,6 +133,7 @@ public class MainController {
 		System.out.println(dfull+" = "+ddate+""+dtime);
 		reserve.setCalDate(ddate);
 		reserve.setsTime(dtime);
+		
 		/* create PinNumber */
 		Random r = new Random();
 		String key = ""; // pinNumber(temp)

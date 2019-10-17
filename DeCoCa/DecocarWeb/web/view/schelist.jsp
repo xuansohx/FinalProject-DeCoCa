@@ -7,13 +7,8 @@
 <html lang="en">
 
 <head>
-	<style>
-		.column-4{
-			padding:10px;
-		}
 
-	</style>
-	<title>Product List</title>
+	<title>My Reservation List</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--===============================================================================================-->
@@ -40,62 +35,116 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<!--===============================================================================================-->
+
+<script>
+<!--  Create new Class when I have reservation completed -->
+/* $(document).read(function(){
+	var status = $(r.calstatus);
+	if(status.equals("0")|| status == 0 || status == "0"){
+	$('#test').css('color','red');
+	}
+}); */
+</script>
+
+<style>
+@import
+	url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap')
+	;
+
+#mypage_title {
+	font-family: 'Lalezar', cursive;
+	text-align: center;
+}
+
+.list {
+	margin: 0 auto;
+}
+
+.column-4 {
+	padding: 10px;
+}
+
+</style>
+
 </head>
 
 <body class="animsition">
 
 	
 	<form class="bg0 p-t-75 p-b-85">
-		<div class="container">
+	
+		<div class="container" style="text-align:center;">
 
-			<!-- <div class="p-b-10">
-				<h3 class="ltext-103 cl5">예약 리스트</h3>
-			</div> -->
+			<h1 id="mypage_title">My Reservation List</h1>
+			<br>
 
-			<div class="row">
-				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
-					<div class="m-l-25 m-r--38 m-lr-0-xl">
+			<div class="row" >
+				<!-- <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50"> -->
+					 <div class="m-l-25 m-r--38 m-lr-0-xl list"> 
+					
 						<div class="wrap-table-shopping-cart">
 							<table class="table-shopping-cart">
 								<tr class="table_head">
 									<th class="column-1">NUM</th>
 									<th class="column-2">DATE</th>
-									<th class="column-3"></th>
+									<th class="column-3">일정이름</th>
 									<th class="column-4">출발시간</th>
 									<th class="column-5">출발장소</th>
 									<th class="column-6">도착장소</th>
-									<th class="column-7">메모</th>
+									<th class="column-7">진행상태</th>
 								</tr>							
 								
 							<c:forEach var="r" items ="${rlist }">
 								<tr class="table_row">
-									<td class="column-1">${r.calid }
-										<%-- <div>
-										<a id="btnx" href="product_delete.mc?product_no=${p.product_no }">							
-										<img class="how-itemcart1" src="images/${p.product_picture1 }" alt="IMG">
-										</a></div> --%>
-									</td>
+									<td class="column-1">${r.calid }</td>
 									<td class="column-2">${r.calDate} </td>
 									<td class="column-3"><a href="scheupdate.mc?calid=${r.calid }">${r.calName } </a></td>
-<%-- 									<td class="column-2"><a href="product_update.mc?product_no=${p.product_no }">${p.product_nm } </a></td> --%>
-								
 									<td class="column-4">${r.sTime}</td>
 									<td class="column-5"> ${r.sAddress }</td>
 									<td class="column-6"> ${r.eAddress }</td>
-									<td class="column-7"> ${r.memo }</td>
+									
+									<!-- -------------------------------- -->
+									<!-- SHOW 'calstatus'-->
+									<c:choose>
+									<c:when test="${r.calstatus eq '0'}">
+									<td class="column-7">예정</td>
+									</c:when>
+									
+									<c:when test="${r.calstatus eq '1'}">
+									<td class="column-7">준비</td>
+										<style>
+									.table_row > td{
+									color:red;
+									}
+									</style>
+									</c:when>
+									
+									<c:when test="${r.calstatus eq '2'}">
+									<td class="column-7">진행</td>
+									</c:when>
+
+										<c:when test="${r.calstatus eq '3'}">
+											<td class="column-7">완료</td>	
+											<style> /* reservation completed Check */
+											.table_row {
+											text-decoration-line: line-through;
+											text-decoration-color: #FE2E2E;
+											color: #E6E6E6; /* Font Color */
+											}
+											</style>
+										</c:when>
+									</c:choose>
+									
 								</tr>
 							</c:forEach>	
-								
-								
-								
-
+	
 							</table>
 
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+		 	</div> 
+		<!-- </div> --> 
 	</form>
 
 
