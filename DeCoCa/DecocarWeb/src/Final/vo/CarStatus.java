@@ -91,6 +91,14 @@ public class CarStatus {
 		this.engine = engine;
 	}
 
+	@Override
+	public String toString() {
+		return "CarStatus [statusid=" + statusid + ", battery=" + battery + ", tire=" + tire + ", door=" + door
+				+ ", safebelt=" + safebelt + ", brake=" + brake + ", engine=" + engine + ", handle=" + handle
+				+ ", temperature=" + temperature + ", speed=" + speed + ", carlng=" + carlng + ", carlat=" + carlat
+				+ "]";
+	}
+
 	public int getHandle() {
 		return handle;
 	}

@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class webserversSocketClient {
-	Socket socket;
+	static Socket socket;
 	boolean rflag = true;
 	public webserversSocketClient() {
 	}
@@ -57,6 +57,7 @@ public class webserversSocketClient {
 		Scanner sc = new Scanner(System.in);
 		boolean sflag = true;
 		while (sflag) {
+			System.out.println(socket);
 			System.out.println("Input Msg.");
 			String str = sc.next();
 			sendMsg(str); // message를 보냄 - sendMsg 함수와 send라는 Thread?
@@ -71,11 +72,11 @@ public class webserversSocketClient {
 
 	// Inner Class로 정의
 	class Sender extends Thread {
-	
+
 		OutputStream out;
 		DataOutputStream dout;
 		String msg;
-		
+
 		public Sender(Socket socket) throws IOException {
 			out = socket.getOutputStream();
 			dout = new DataOutputStream(out);
@@ -95,16 +96,19 @@ public class webserversSocketClient {
 			}
 		}
 	}
+
 	class Receiver extends Thread {
 		// connection이 되면 client가 가만히 있어도 server가 메시지 보낼 수 있도록
 		Socket socket;
 		InputStream in;
 		DataInputStream din;
+
 		public Receiver(Socket socket) throws IOException {
 			this.socket = socket;
 			in = socket.getInputStream();
 			din = new DataInputStream(in);
 		}
+
 		public void run() {
 			// 받는 역할만 수행
 			try {
@@ -116,13 +120,28 @@ public class webserversSocketClient {
 			}
 		}
 	}
+
 	public static void main(String[] args) {
-		webserversSocketClient client = null;
+		
 		try {
-			client = new webserversSocketClient("70.12.60.110", 9999);
-			//client = new Client("70.12.60.90", 8888);
-			//client = new Client("70.12.60.111", 8877);
-			client.start();
+
+			Runnable r = new Runnable() {
+				@Override
+				public void run() {
+					webserversSocketClient client = null;
+					try {
+						client = new webserversSocketClient("70.12.225.81", 1234);
+					client.start();
+					client.sendMsg("hiroo");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			};
+			Thread t= new Thread(r);
+			t.start();
+			System.out.println(socket);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
