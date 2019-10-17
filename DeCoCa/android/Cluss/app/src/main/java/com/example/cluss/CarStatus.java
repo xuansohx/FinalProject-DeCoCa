@@ -1,4 +1,4 @@
-package Final.vo;
+package com.example.cluss;
 
 public class CarStatus {
 	int statusid;
@@ -20,7 +20,6 @@ public class CarStatus {
 
 	public CarStatus(int statusid, int battery, int tire, int door, int safebelt, int brake, int engine, int handle,
 			String temperature, String speed, String carlng, String carlat) {
-		
 		this.statusid = statusid;
 		this.battery = battery;
 		this.tire = tire;
@@ -91,14 +90,6 @@ public class CarStatus {
 		this.engine = engine;
 	}
 
-	@Override
-	public String toString() {
-		return "CarStatus [statusid=" + statusid + ", battery=" + battery + ", tire=" + tire + ", door=" + door
-				+ ", safebelt=" + safebelt + ", brake=" + brake + ", engine=" + engine + ", handle=" + handle
-				+ ", temperature=" + temperature + ", speed=" + speed + ", carlng=" + carlng + ", carlat=" + carlat
-				+ "]";
-	}
-
 	public int getHandle() {
 		return handle;
 	}
@@ -137,6 +128,23 @@ public class CarStatus {
 
 	public void setCarlat(String carlat) {
 		this.carlat = carlat;
+	}
+
+	public String toStringForQry(){
+		String str="";
+		str+="statusid="+statusid;
+		str+="&&battery="+battery;
+		str+="&&tire="+tire;
+		str+="&&door="+door;
+		str+="&&safebelt="+safebelt;
+		str+="&&brake="+brake;
+		str+="&&engine="+engine;
+		str+="&&handle="+handle;
+		str+="&&temperature="+temperature;
+		str+="&&speed="+speed;
+		str+="&&carlng="+carlng;
+		str+="&&carlat="+carlat;
+		return str;
 	}
 	
 }

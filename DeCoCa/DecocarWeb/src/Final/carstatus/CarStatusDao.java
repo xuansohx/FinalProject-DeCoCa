@@ -24,7 +24,7 @@ public class CarStatusDao implements Dao<Integer, CarStatus> {
 
 	@Override
 	public void update(CarStatus v) throws Exception {
-		
+		carstatusm.update(v);
 	}
 
 	@Override

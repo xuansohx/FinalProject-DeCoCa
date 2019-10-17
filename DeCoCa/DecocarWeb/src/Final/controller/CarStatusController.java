@@ -12,19 +12,18 @@ import org.springframework.web.servlet.ModelAndView;
 import Final.frame.Biz;
 import Final.vo.CarStatus;
 import Final.vo.Reservation;
+
 @Controller
 public class CarStatusController {
 
 	@Resource(name = "csbiz")
 	Biz<Integer, CarStatus> csbiz;
-	
-	
+
 	@Resource(name = "Ureserbiz")
 	Biz<String, Reservation> urbiz;
-	
+
 	@Resource(name = "reserbiz")
 	Biz<Integer, Reservation> rbiz;
-
 
 	@RequestMapping("/ctatedetail.mc")
 	public ModelAndView ctatedetail() {
@@ -34,13 +33,23 @@ public class CarStatusController {
 			reservationList = rbiz.getAll(null);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 		mv.addObject("rl", reservationList);
-		
-		
-		//carlocation4 : 吏��뿭紐낆쓣 �쐞�룄 寃쎈룄濡� �굹���궡�뒗 �삁�젣
 		mv.setViewName("admin/cardetail");
 		return mv;
 	}
-
+	@RequestMapping("/statusCenter.mc")
+	public ModelAndView getStatusFromAndroid(CarStatus cs) {
+		ModelAndView mv = new ModelAndView();
+		System.out.println(cs.toString());		
+		try {
+			csbiz.modify(cs);
+			//csbiz.register(cs);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.setViewName("admin/cardetail");
+		return mv;
+	}
 }

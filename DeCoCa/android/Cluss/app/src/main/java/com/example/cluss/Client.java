@@ -1,3 +1,5 @@
+package com.example.cluss;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -6,24 +8,32 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class webserversSocketClient {
-	static Socket socket;
+public class Client {
+	Socket socket;
 	boolean rflag = true;
-	public webserversSocketClient() {
+	String ip;
+	int port;
+	Server s;
+	public Client() {
 	}
-	public webserversSocketClient(String ip, int port) throws IOException {
+	public Client(String ip, int port, Server s) {
+		this.ip = ip;
+		this.port = port;
+		this.s = s;
+	}
+	public void startClient() throws IOException {
 		boolean flag = true;
 		while (flag) {
 			try {
-				// Construct¿¡¼­´Â socket¸¸ ¸¸µê
-				// connectionÀÌ ÀÏ¾î³ª socketÀÌ ¸¸µé¾îÁö¸é?
+				// Constructì—ì„œëŠ” socketë§Œ ë§Œë“¦
+				// connectionì´ ì¼ì–´ë‚˜ socketì´ ë§Œë“¤ì–´ì§€ë©´?
 				socket = new Socket(ip, port);
 				if (socket != null && socket.isConnected()) {
-					break; // socketÀº ÇÑ ¹ø¸¸ ¸¸µé¸é µÊ
+					break; // socketì€ í•œ ë²ˆë§Œ ë§Œë“¤ë©´ ë¨
 				}
 			} catch (Exception e) {
 				System.out.println("Re-Try");
-				// socketÀÌ ¾È ¸¸µé¾îÁö¸é retry ÇØ¾ß µÊ
+				// socketì´ ì•ˆ ë§Œë“¤ì–´ì§€ë©´ retry í•´ì•¼ ë¨
 				try {
 					Thread.sleep(3000);
 				} catch (InterruptedException e1) {
@@ -33,59 +43,37 @@ public class webserversSocketClient {
 		} // end while
 		new Receiver(socket).start();
 	}
-
 	public void sendMsg(String msg) throws IOException {
 		Sender sender = null;
 		sender = new Sender(socket);
 		sender.setMsg(msg);
 		sender.start();
 	}
-
 	public void start() throws Exception {
-		// Client ½ÃÀÛÇÏ¶ó´Â ÀÇ¹ÌÀÇ start
-		/*
-		 * try { // º¸³»´Â thread? out = socket.getOutputStream(); dout= new
-		 * DataOutputStream(out); in = socket.getInputStream(); din = new
-		 * DataInputStream(in); dout.writeUTF("HELLO.."); // Client°¡ º¸³»´Â ¸Ş½ÃÁö
-		 * 
-		 * // ¹Ş´Â thread? String str = din.readUTF(); System.out.println(str);
-		 * }catch(Exception e) { throw e; }finally { if(din != null) { din.close(); }
-		 * if(socket != null) { socket.close(); } }
-		 */
-
-		// º¸³»´Â °ÍÀº ¿©±â¿¡¼­ - ¸Ş½ÃÁö
 		Scanner sc = new Scanner(System.in);
 		boolean sflag = true;
 		while (sflag) {
-			System.out.println(socket);
 			System.out.println("Input Msg.");
 			String str = sc.next();
-			sendMsg(str); // message¸¦ º¸³¿ - sendMsg ÇÔ¼ö¿Í send¶ó´Â Thread?
-			// Start°¡ µÇ¸é socketÀÌ »ı¼ºµÇ°í, Thread¸¦ ÅëÇØ ÁÖ°í ¹ŞÀ½
-			if (str.equals("q")) { // 'q' ÀÔ·ÂÇÏ¸é Á¾·á
+			sendMsg(str);
+			if (str.equals("q")) {
 				break;
 			}
 		}
 		System.out.println("Bye...");
 		sc.close();
 	}
-
-	// Inner Class·Î Á¤ÀÇ
 	class Sender extends Thread {
-
 		OutputStream out;
 		DataOutputStream dout;
 		String msg;
-
 		public Sender(Socket socket) throws IOException {
 			out = socket.getOutputStream();
 			dout = new DataOutputStream(out);
 		}
-
 		public void setMsg(String msg) {
 			this.msg = msg;
 		}
-
 		public void run() {
 			if (dout != null) {
 				try {
@@ -94,57 +82,36 @@ public class webserversSocketClient {
 					e.printStackTrace();
 				}
 			}
+
 		}
 	}
-
 	class Receiver extends Thread {
-		// connectionÀÌ µÇ¸é client°¡ °¡¸¸È÷ ÀÖ¾îµµ server°¡ ¸Ş½ÃÁö º¸³¾ ¼ö ÀÖµµ·Ï
 		Socket socket;
 		InputStream in;
 		DataInputStream din;
-
 		public Receiver(Socket socket) throws IOException {
 			this.socket = socket;
 			in = socket.getInputStream();
 			din = new DataInputStream(in);
 		}
-
 		public void run() {
-			// ¹Ş´Â ¿ªÇÒ¸¸ ¼öÇà
 			try {
 				while (rflag) {
 					String str = din.readUTF();
+					String [] spl = str.split("-");
+					if(str.equals("updateState")){
+						s.sendMsg("state");
+						HttpTask httpTask;
+						CarStatus carStatus;
+						carStatus = new CarStatus(10,150,30,40,50,60,70,80,"a","b","c","d");
+						httpTask= new HttpTask("http://70.12.60.110/DeCoCa/statusCenter.mc?"+carStatus.toStringForQry());
+						httpTask.execute();
+					}
 					System.out.println(str);
 				}
 			} catch (Exception e) {
+
 			}
 		}
 	}
-
-	public static void main(String[] args) {
-		
-		try {
-
-			Runnable r = new Runnable() {
-				@Override
-				public void run() {
-					webserversSocketClient client = null;
-					try {
-						client = new webserversSocketClient("70.12.225.81", 1234);
-					client.start();
-					client.sendMsg("hiroo");
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			};
-			Thread t= new Thread(r);
-			t.start();
-			System.out.println(socket);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 }
