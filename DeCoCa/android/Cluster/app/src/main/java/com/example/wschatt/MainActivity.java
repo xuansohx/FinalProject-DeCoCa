@@ -36,15 +36,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         System.out.println(getLocalIpAddress());
-        try {
-            s = new Server(1234);
-            s.start();
-            c = new Client("70.12.60.110",9999,s);
-            ClThread cl = new ClThread(c);
-            cl.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            s = new Server(1234);
+//            s.start();
+//            c = new Client("70.12.60.110",9999,s);
+//            ClThread cl = new ClThread(c);
+//            cl.start();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
     class ClThread extends Thread{
         Client client;
