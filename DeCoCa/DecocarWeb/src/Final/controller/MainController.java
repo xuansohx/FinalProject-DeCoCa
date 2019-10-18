@@ -168,4 +168,17 @@ public class MainController {
 			e.printStackTrace();
 		}
 	}
+	public void sendPushtoReicever(Reservation reserve) {
+		String uid = reserve.getReuserid();
+		User u = null;
+		try {
+			u = ubiz.get(uid);
+			String token = u.getUserdevice();
+			int pin = reserve.getPinNum();
+			FcmUtil fcm = new FcmUtil();
+			fcm.send_FCM(token, "decoca", pin + "");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
