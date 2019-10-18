@@ -17,19 +17,16 @@ public class CarDao implements Dao<Integer, Car> {
 	@Override
 	public void insert(Car v) throws Exception {
 		cm.insert(v);
-		
 	}
 
 	@Override
 	public void update(Car v) throws Exception {
 		cm.update(v);
-		
 	}
 
 	@Override
 	public void delete(Integer k) throws Exception {
 		cm.delete(k);
-		
 	}
 
 	@Override
@@ -41,6 +38,4 @@ public class CarDao implements Dao<Integer, Car> {
 	public ArrayList<Car> selectAll(Integer k) throws Exception {
 		return cm.selectall(k);
 	}
-
-
 }

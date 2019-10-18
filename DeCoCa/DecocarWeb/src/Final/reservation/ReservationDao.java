@@ -19,19 +19,16 @@ public class ReservationDao implements Dao<Integer, Reservation> {
 	@Override
 	public void insert(Reservation v) throws Exception {
 		reserm.insert(v);
-		
 	}
 
 	@Override
 	public void update(Reservation v) throws Exception {
 		reserm.update(v);
-		
 	}
 
 	@Override
 	public void delete(Integer k) throws Exception {
 		reserm.delete(k);
-		
 	}
 
 	@Override
@@ -41,10 +38,6 @@ public class ReservationDao implements Dao<Integer, Reservation> {
 
 	@Override
 	public ArrayList<Reservation> selectAll(Integer k) throws Exception {
-		// TODO Auto-generated method stub
 		return reserm.selectall(k);
 	}
-	
-	
-
 }

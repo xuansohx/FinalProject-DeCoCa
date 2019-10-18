@@ -18,19 +18,16 @@ public class CarBiz implements Biz<Integer, Car> {
 	@Override
 	public void register(Car v) throws Exception {
 		dao.insert(v);
-		
 	}
 
 	@Override
 	public void modify(Car v) throws Exception {
 		dao.update(v);
-		
 	}
 
 	@Override
 	public void remove(Integer k) throws Exception {
 		dao.delete(k);
-		
 	}
 
 	@Override
@@ -42,6 +39,4 @@ public class CarBiz implements Biz<Integer, Car> {
 	public ArrayList<Car> getAll(Integer k) throws Exception {
 		return dao.selectAll(k);
 	}
-	
-
 }

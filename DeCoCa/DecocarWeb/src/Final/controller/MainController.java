@@ -33,6 +33,7 @@ public class MainController {
 	
 	@Resource(name = "Ureserbiz")
 	Biz<String, Reservation> uresbiz;
+	
 	@RequestMapping("/main.mc")
 	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView();
@@ -94,7 +95,8 @@ public class MainController {
 		mv.addObject("relist", relist);
 
 		if (usertype == 1) {
-			mv.setViewName("admin/admin");
+//			mv.addObject("manager/center", "manager/center");
+			mv.setViewName("manager/main");
 		} else {
 			mv.addObject("center", "center");
 			mv.setViewName("main");
@@ -114,6 +116,16 @@ public class MainController {
 		mv.setViewName("main");
 		return mv;
 	}
+	
+//	@RequestMapping("/manlogout.mc")
+//	public ModelAndView manlogout(ModelAndView mv, HttpSession session) {
+//		if (session != null) {
+//			session.invalidate();
+//		}
+////		mv.addObject("center", "manager/center");
+//		mv.setViewName("manager/main");
+//		return mv;
+//	}
 	
 	@RequestMapping("/mypage.mc")
 	public ModelAndView mypage() {

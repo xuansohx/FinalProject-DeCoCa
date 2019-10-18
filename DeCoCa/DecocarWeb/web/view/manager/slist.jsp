@@ -32,7 +32,7 @@ a:hover {
 }
 </style>
 
-<title>Schedule List</title>
+<title>Schedule List[admin]</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -75,28 +75,26 @@ a:hover {
 	<form class="bg0 p-t-75 p-b-85">
 		<div class="container">
 
-			<!-- <div class="p-b-10">
-				<h3 class="ltext-103 cl5">예약 리스트</h3>
-			</div> -->
-
-			<div class="row">
 				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
 					<div class="m-l-25 m-r--38 m-lr-0-xl">
 						<div class="wrap-table-shopping-cart">
 							<table class="table-shopping-cart">
 								<tr class="table_head">
-									<th class="column-1">NUM</th>
-									<th class="column-2">DATE</th>
-									<th class="column-3">일정이름</th>
-									<th class="column-4">출발시간</th>
-									<th class="column-5">출발장소</th>
-									<th class="column-6">도착장소</th>
-									<th class="column-7">메모</th>
+									<th class="column-1">ID</th>
+									<th class="column-2">CARID</th>
+									<th class="column-3">SERVICE</th>
+									<th class="column-4">USERID</th>
+									<th class="column-5">DATE</th>
+									<th class="column-6">STIME</th>
+									<th class="column-7">ETIME</th>
+									<th class="column-8">SADDRESS</th>
+									<th class="column-9">EADDRESS</th>
+									<th class="column-10">MEMO</th>
 								</tr>
 
-								<c:forEach var="r" items="${rlist }">
+								<c:forEach var="s" items="${slist }">
 									<tr class="table_row">
-										<td class="column-1"><a
+										<%-- <td class="column-1"><a
 											href="schedetail.mc?calid=${r.calid }">${r.calid } </a></td>
 										<td class="column-2"><a
 											href="schedetail.mc?calid=${r.calid }">${r.calDate} </a></td>
@@ -109,7 +107,17 @@ a:hover {
 										<td class="column-6"><a
 											href="schedetail.mc?calid=${r.calid }"> ${r.eAddress } </a></td>
 										<td class="column-7"><a
-											href="schedetail.mc?calid=${r.calid }"> ${r.memo } </a></td>
+											href="schedetail.mc?calid=${r.calid }"> ${r.memo } </a></td> --%>
+											<td class="column-1">${s.calid }</td>
+											<td class="column-2">${s.carid }</td>
+											<td class="column-3">${s.sStyle }</td>
+											<td class="column-4">${s.userid }</td>
+											<td class="column-5">${s.calDate }</td>
+											<td class="column-6">${s.sTime }</td>
+											<td class="column-7">${s.eTime }</td>
+											<td class="column-8">${s.sAddress }</td>
+											<td class="column-9">${s.eAddress }</td>
+											<td class="column-10">${s.memo }</td>
 									</tr>
 								</c:forEach>
 							</table>
