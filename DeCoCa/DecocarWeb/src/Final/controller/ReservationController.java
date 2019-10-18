@@ -38,6 +38,7 @@ public class ReservationController {
 		return mv;
 	}
 
+	// Click Reservation OK Button
 	@RequestMapping("/schregisterimpl.mc")
 	public void schregisterimpl(Reservation reserve, HttpServletResponse response) {
 		String dfull = reserve.getCalDate();
@@ -61,6 +62,7 @@ public class ReservationController {
 		reserve.setPinNum(pinNum); // set PinNum (DB)
     System.out.println(reserve.toString());
 		String uid = reserve.getUserid();
+		int calid = reserve.getCalid();
 		try {
 			rbiz.register(reserve);
 		} catch (Exception e) {
@@ -68,7 +70,10 @@ public class ReservationController {
 		}
 		try {
 			sendPush(reserve);
-			response.sendRedirect("schelist.mc?userid="+uid);
+			/* response.sendRedirect("schelist.mc?userid="+uid); */
+			/* 일정등록 버튼을 누르면 Controller에서 인증키까지 생성한 후 DB에 insert
+			 * 그후, CarStatusController에서 배차 → ReservationList 듸움*/
+			response.sendRedirect("allocation.mc?calid="+calid);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
