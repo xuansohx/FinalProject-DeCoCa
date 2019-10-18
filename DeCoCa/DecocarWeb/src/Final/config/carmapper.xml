@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Final.mapper.CarMapper">
+
+	<insert id="insert" parameterType="car">
+		INSERT INTO car_tb VALUES
+		(#{carid},#{statusid},#{centerid},#{cartype},#{carnumber},#{calid})
+	</insert>
+
+	<update id="update" parameterType="car">
+		UPDATE car_tb SET STATUSID=#{statusid}, CALID=#{calid} WHERE CARID=#{carid}
+	</update>
+
+	<delete id="delete" parameterType="String">
+		DELETE FROM car_tb WHERE CARID=#{carid}
+	</delete>
+
+	<select id="select" parameterType="String" resultType="car">
+		SELECT *
+		FROM car_tb WHERE CARID=#{carid}
+	</select>
+
+	<select id="selectall" resultType="car">
+		SELECT * FROM car_tb ORDER BY 1
+	</select>
+
+</mapper>
+	
