@@ -24,7 +24,7 @@
 	
 <head>
 <meta charset="EUC-KR">
-<title>DeCoCa</title>
+<title>DeCoCar</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -136,11 +136,11 @@
 
 
 	<!-- 여백 -->
-	<div class="sec-banner bg0 p-t-80 p-b-50">
+<!-- 	<div class="sec-banner bg0 p-t-80 p-b-50">
 		<div class="container">
 			<div class="row"></div>
 		</div>
-	</div>
+	</div> -->
 
 
 
