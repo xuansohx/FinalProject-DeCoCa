@@ -21,139 +21,7 @@
 	href="css/bootstrap-datetimepicker.min.css" media="all" />
 <link rel="stylesheet" type="text/css"
 	href="css/bootstrap-datetimepicker.css" media="all" />
-
-<!-- Map Function -->
-<script>
-	var map;
-	// 페이지가 로딩이 된 후 호출하는 함수입니다.
-	function initTmap() {
-		// map 생성
-		// Tmap.map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
-		map = new Tmap.Map({
-			div : 'map_div',
-			width : '100%',
-			height : '500px'
-		});
-		var tData = new Tmap.TData();//REST API 에서 제공되는 경로, 교통정보, POI 데이터를 쉽게 처리할 수 있는 클래스입니다.
-
-		var sla, slo, ela, elo;
-		sla = 37.508849;
-		slo = 127.063147;
-		ela = 37.493038;
-		elo = 127.013774;
-
-		var s_lonLat = new Tmap.LonLat(slo, sla); //시작 좌표입니다.   
-		var e_lonLat = new Tmap.LonLat(elo, ela); //도착 좌표입니다.
-		var optionObj = {
-			reqCoordType : "WGS84GEO", //요청 좌표계 옵셥 설정입니다.
-			resCoordType : "EPSG3857" //응답 좌표계 옵셥 설정입니다.
-		}
-
-		tData.getRoutePlan(s_lonLat, e_lonLat, optionObj);//경로 탐색 데이터를 콜백 함수를 통해 XML로 리턴합니다.
-
-		tData.events.register("onComplete", tData, onComplete);//데이터 로드가 성공적으로 완료되었을 때 발생하는 이벤트를 등록합니다.
-		tData.events.register("onProgress", tData, onProgress);//데이터 로드중에 발생하는 이벤트를 등록합니다.
-		tData.events.register("onError", tData, onError);//데이터 로드가 실패했을 떄 발생하는 이벤트를 등록합니다.
-
-	}
-
-	//데이터 로드가 성공적으로 완료되었을 때 발생하는 이벤트 함수 입니다. 
-	function onComplete() {
-		console.log(this.responseXML); //xml로 데이터를 받은 정보들을 콘솔창에서 확인할 수 있습니다.
-
-		var kmlForm = new Tmap.Format.KML({
-			extractStyles : true
-		}).read(this.responseXML);
-		var vectorLayer = new Tmap.Layer.Vector("vectorLayerID");
-		vectorLayer.addFeatures(kmlForm);
-		map.addLayer(vectorLayer);
-		//경로 그리기 후 해당영역으로 줌  
-		map.zoomToExtent(vectorLayer.getDataExtent());
-	}
-	//데이터 로드중 발생하는 이벤트 함수입니다.
-	function onProgress() {
-		//alert("onComplete");
-	}
-	//데이터 로드시 에러가 발생시 발생하는 이벤트 함수입니다.
-	function onError() {
-		alert("onError");
-	}
-	// 맵 생성 실행
-	initTmap();
-</script>
-<!-- select 변경 옵션 -->
-<script>
-	function changeStype() {
-		var typeSelect = document.getElementById("scheduletype");
-		var typeValue = typeSelect.options[typeSelect.selectedIndex].value;
-		console.log(typeValue);
-		change(typeValue);
-		/* reIdCheck() */
-	};
-
-	$(document).ready(function() {
-		var typeSelect = document.getElementById("scheduletype");
-		var typeValue = typeSelect.options[typeSelect.selectedIndex].value;
-		console.log(typeValue);
-		change(typeValue);
-		reIdCheck();
-	});
-
-	function change(typeValue) {
-		var rePart = document.getElementById("receive");
-
-		if (typeValue == 1) {
-			console.log("스마트택시 선택");
-			$("#receive").hide();
-			$('input[name="reuserid"]').val('');			
-			$('input[name="schesubmit"]').removeAttr('disabled');
-		} else if (typeValue == 2) {
-			console.log("픽업 선택");
-			$("#receive").show();
-			$('input[name="schesubmit"]').attr('disabled', 'disabled');
-		} else if (typeValue == 3) {
-			console.log("퀵  선택");
-			$("#receive").show();
-			$('input[name="schesubmit"]').attr('disabled', 'disabled');
-		}
-	};
-
-	function reIdCheck() {
-		$('input[name="idceck"]')
-				.click(
-						function() {
-							var reuserid = $('input[name="reuserid"]').val();
-							$
-									.ajax({
-										url : "usercheckId.mc",
-										data : {
-											'userid' : reuserid
-										},
-										method : "POST",
-										success : function(result) {
-											if (result == '1') {
-												alert("확인되었습니다.");
-												$('input[name="schesubmit"]')
-														.removeAttr('disabled');
-												$('.idsame')
-														.html(
-																'<span style="color:red"></span>');
-												return false;
-											} else if (result == '0') {
-												alert("존재하지 않는 사용자입니다.");
-												$('input[name="schesubmit"]')
-														.attr('disabled',
-																'disabled');
-												$('.idsame')
-														.html(
-																'<span style="color:red">존재하지 않는 사용자입니다.</span>');
-												return false;
-											}
-										}
-									});
-						});
-	};
-</script>
+	
 <head>
 <meta charset="EUC-KR">
 <title>DeCoCa</title>
@@ -202,7 +70,9 @@
 
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap');
+@import
+	url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap')
+	;
 
 #schedulememo {
 	resize: none;
@@ -216,12 +86,10 @@
 
 </head>
 
-<body class="animsition" onload="initTmap()">
+<body class="animsition">
 	<!-- Header -->
 	<header>
 		<div class="wrap-menu-desktop">
-
-
 			<nav class="limiter-menu-desktop container">
 
 				<!-- Logo desktop -->
@@ -233,9 +101,6 @@
 				<div class="menu-desktop">
 					<ul class="main-menu">
 						<li class="active-menu"><a href="main.mc">HOME</a></li>
-						<!-- <li>
-							<a href="cart.mc">CART</a>
-						</li> -->
 					</ul>
 				</div>
 
@@ -248,8 +113,6 @@
 								<li><a href="">${loginuser.userid} </a></li>
 								<li><a href="logout.mc">LOGOUT</a></li>
 								<li><a href="customerupdate.mc?userid=${loginuser.userid}">회원정보수정</a></li>
-								<li><a href="proregister.mc">PRO REGISTER</a></li>
-								<li><a href="product_list.mc">PRODUCT LIST</a></li>
 							</ul>
 						</c:when>
 						<c:when test="${loginuser.usertype eq null }">
@@ -287,71 +150,105 @@
 				<td align="center" id="page_title"><h1>Reservation</h1> <br></td>
 			</tr>
 		</table>
-    	
+
 		<div class="flex-w flex-tr">
 			<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
-					<label class="stext-102 cl3">예약 날짜</label> 
-					<input
-						class="size-111 bor8 stext-102 cl2 p-lr-20 form-control"
-						id="scheduledate" type="text" name="calDate" required="required">
+						<label class="stext-102 cl3">예약 날짜</label> <input
+						class="size-111 bor8 stext-102 cl2 p-lr-20"
+						id="scheduledate" type="text" name="calDate" required="required"
+						readonly="readonly" value="${sch.calDate } ${sch.sTime}">
 				</div>
-		
+
 
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
-					<label class="stext-102 cl3">일정 이름</label> 
-					<input
-						class="size-111 bor8 stext-102 cl2 p-lr-20"
-						id="schedulename" type="text" name="calName" required="required">
+					<label class="stext-102 cl3">일정 이름</label> <input
+						class="size-111 bor8 stext-102 cl2 p-lr-20" id="schedulename"
+						type="text" name="calName" required="required" readonly="readonly" value="${sch.calName }">
 				</div>
-        
+
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
-					<label class="stext-102 cl3">출발지 정보</label> 
-					<input
+					<label class="stext-102 cl3">출발지 정보</label> <input
 						class="size-111 bor8 stext-102 cl2 p-lr-20"
-						id="schedulelocationstart" type="text" name="sAddress" required="required">
+						id="schedulelocationstart" type="text" name="sAddress"
+						required="required" readonly="readonly" value="${sch.sAddress }">
 				</div>
-	
-		
+
+
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
-					<label class="stext-102 cl3">도착지 정보</label> 
-					<input
+					<label class="stext-102 cl3">도착지 정보</label> <input
 						class="size-111 bor8 stext-102 cl2 p-lr-20"
-						id="schedulelocationend" type="text" name="eAddress" required="required">
+						id="schedulelocationend" type="text" name="eAddress"
+						required="required" readonly="readonly" value="${sch.eAddress }">
 				</div>
-        
+
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
-					<label class="stext-102 cl3">서비스 타입</label> 
-					<select id="scheduletype" class="input size-111 bor8 stext-102 cl2 p-lr-20"
-					name="sStyle" onchange="changeStype()">
-						<!-- 선택된 서비스를 기본서비스로 해볼까? -->
-						<!-- <option value="~~" <c:if test="${stype==1}"> selected </c:if> > ~~ </option> -->
-						<option value="1" <c:if test="${stype==1}"> selected </c:if>>스마트 택시 서비스</option>
-						<option value="2" <c:if test="${stype==2}"> selected </c:if>>픽업 서비스</option>
-						<option value="3" <c:if test="${stype==3}"> selected </c:if>>퀵 서비스</option>					
-				</select>		
+					<label class="stext-102 cl3">서비스 타입</label>
+
+					<c:choose>
+
+					<c:when test="${sch.sStyle==1}">
+					<input id="scheduletype" type="text"
+						class="input size-111 bor8 stext-102 cl2 p-lr-20" name="sStyle" readonly="readonly" value="스마트 택시 서비스">
+					</c:when>
+
+					<c:when test="${sch.sStyle==2}">
+					<input id="scheduletype" type="text"
+						class="input size-111 bor8 stext-102 cl2 p-lr-20" name="sStyle" readonly="readonly" value="픽업 서비스">
+					</c:when>
+
+					<c:when test="${sch.sStyle==3}">
+					<input id="scheduletype" type="text"
+						class="input size-111 bor8 stext-102 cl2 p-lr-20" name="sStyle" readonly="readonly" value="퀵 서비스">
+					</c:when>
+
+					</c:choose>
+					
+
 				</div>
-		
+				
+				<!-- receive id -->				
+				<c:choose>
+				<c:when test="${sch.reuserid eq null }">
+				</c:when>
+				<c:otherwise>
 				<div class="col-sm-6 p-b-5 m-lr-auto" id="receive">
-					<label class="stext-102 cl3">받는 사람</label> 
-					<input
-						class="size-111 bor8 stext-102 cl2 p-lr-20"
-						id="schedulereceiver" type="text" name="reuserid"  >
-          <input type="button"
-					name="idceck" value="사용자확인" /> &nbsp;&nbsp; <span class="idsame"></span>
+					<label class="stext-102 cl3">받는 사람</label>
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20"
+						id="schedulereceiver" type="text" name="reuserid"
+						readonly="readonly" value="${sch.reuserid }">
 				</div>
+				</c:otherwise>
+				</c:choose>
 
-		  	<div class="col-sm-6 p-b-5 m-lr-auto ">
-					<label class="stext-102 cl3">메모</label> 
-					<textarea class="size-111 bor8 stext-102 cl2 p-lr-20" id="schedulememo" name="memo"></textarea>
+
+
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">메모</label>
+					<textarea class="size-111 bor8 stext-102 cl2 p-lr-20"
+						id="schedulememo" name="memo" readonly="readonly">${sch.memo }</textarea>
 				</div>
 			</div>
 		</div>
-		
-			<label class="stext-102 cl3"></label> <input type="submit" id="submitbt" name="schesubmit"
-							class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
-							style="width: 300px; height: 50px" value="등록">
 
+		<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+		<!-- 3 button : list, modify, delete -->
+
+		<label class="stext-102 cl3"></label> <!-- <input type="submit"
+			id="submitbt" name="schesubmit"
+			class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
+			style="width: 300px; height: 50px" value="등록">  -->
+			
+			<input	type="button" id="listBt" name="listBt" value="list" class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
+			style="width: 300px; height: 50px" onclick="location.href='schelist.mc?userid=${sch.userid}'"> 
+			&nbsp;
+			<input type="button" id="modifyBt" name="modifyBt" value="modify" class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
+			style="width: 300px; height: 50px" onclick="location.href='scheupdate.mc?calid=${sch.calid}'"> 
+			&nbsp;
+			<input type="button" id="deleteBt" name="deleteBt" value="delete" class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
+			style="width: 300px; height: 50px" onclick="location.href='schedelete.mc?calid=${sch.calid}'">
+
+		<!-- userid -->
 		<input type="hidden" name="userid" value="${loginuser.userid}">
 	</form>
 
@@ -406,45 +303,7 @@
 
 	<!--===============================================================================================-->
 	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script>
-		$(function() {
-			$('#scheduledate').datetimepicker({
-				/* 날짜 포맷변경 */
-				format : 'YYYY-MM-DD HH:mm',
-
-				/* 오늘, reset, 닫기 버튼 만들기*/
-				showTodayButton : true,
-				showClear : true,
-				showClose : true,
-
-				/* 날짜선택, 시간선택 한번에 나오게 하기 */
-				/* sideBySide: true */
-
-				/* 위치조절 */
-				widgetPositioning : {
-					horizontal : 'left',
-					vertical : 'bottom'
-				}
-
-			});
-		});
-	</script>
-
-	<script>
-		$('.js-pscroll').each(function() {
-			$(this).css('position', 'relative');
-			$(this).css('overflow', 'hidden');
-			var ps = new PerfectScrollbar(this, {
-				wheelSpeed : 1,
-				scrollingThreshold : 1000,
-				wheelPropagation : false,
-			});
-
-			$(window).on('resize', function() {
-				ps.update();
-			})
-		});
-	</script>
+	
 	<!--===============================================================================================-->
 	<script src="js/main.js"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -467,7 +326,6 @@
 
 
 
-	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
 
 </body>
 
