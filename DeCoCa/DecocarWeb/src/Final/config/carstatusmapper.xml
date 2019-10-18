@@ -16,9 +16,11 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		,#{engine},#{handle},#{temperature},#{speed},#{carlng},#{carlat})	
 	</insert>
 	
-	<!-- <update id="update" parameterType="cart">
-		UPDATE CART_TB SET PWD=#{pwd},NAME=#{name} WHERE ID=#{id}
-	</update> -->
+	<update id="update" parameterType="carstatus">
+		UPDATE CAR_STATUS SET BATTERY=#{battery},TIRE=#{tire},DOOR=#{door}, SAFEBELT=#{safebelt},BRAKE=#{brake}
+		, ENGINE=#{engine},HANDLE=#{handle},TEMPERATURE=#{temperature},SPEED=#{speed}
+		, CARLNG=#{carlng},CARLAT=#{carlat} WHERE STATUSID=#{statusid}
+	</update>
 	
 	<delete id="delete" parameterType="Integer">
 		DELETE FROM CAR_STATUS WHERE statusid=#{statusid}

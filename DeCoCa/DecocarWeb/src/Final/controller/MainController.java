@@ -115,7 +115,6 @@ public class MainController {
 		mv.setViewName("main");
 		return mv;
 	}
-
 	@RequestMapping("/mypage.mc")
 	public ModelAndView mypage() {
 		ModelAndView mv = new ModelAndView();
