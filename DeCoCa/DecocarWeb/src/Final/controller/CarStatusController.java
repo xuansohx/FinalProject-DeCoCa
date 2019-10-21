@@ -47,10 +47,13 @@ public class CarStatusController {
 		mv.setViewName("admin/cardetail");
 		return mv;
 	}
+	
 	@RequestMapping("/statusCenter.mc")
-	public ModelAndView getStatusFromAndroid(CarStatus cs) {
+	public ModelAndView getStatusFromAndroid(String carid , String carstatus) {
 		ModelAndView mv = new ModelAndView();
-		System.out.println(cs.toString());		
+		int car_id = Integer.parseInt(carid);
+		CarStatus cs = new CarStatus(car_id,carstatus);
+		System.out.println(carstatus);
 		try {
 			csbiz.modify(cs);		
 		} catch (Exception e) {
@@ -142,4 +145,25 @@ public class CarStatusController {
 			e.printStackTrace();
 		}
 	}
+  
+	@RequestMapping("/getStatus.mc")
+	public ModelAndView getStatus(String carid) {
+		ModelAndView mv = new ModelAndView();
+		CarStatus cs = null;
+		int caridd = Integer.parseInt(carid);
+		System.out.println(caridd);
+		try {
+			cs = csbiz.get(caridd);
+			System.out.println(cs);
+//			csbiz.modify(cs);
+			//csbiz.register(cs);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.setViewName("admin/cardetail");
+		return mv;
+	}
+	
+
 }
