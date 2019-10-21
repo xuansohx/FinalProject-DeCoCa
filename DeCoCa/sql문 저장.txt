@@ -78,7 +78,10 @@ CREATE SEQUENCE CAR_SEQ
 START WITH 2001
 INCREMENT BY 1;
 
-
+create table car_stat(
+car_id number,
+status varchar2(20)
+)
 
 create table car_tb(
  carid  number,
