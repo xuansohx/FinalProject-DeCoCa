@@ -7,7 +7,7 @@
 <html lang="en">
 
 <head>
-<title>DeCoCar</title>
+<title>DeCoCa</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -74,7 +74,7 @@
 
 					</ul>
 				</div>
-
+s
 				<!-- Icon header 로그인(OOO님),회원가입(로그아웃) -->
 				<div class="wrap-icon-header flex-w flex-r-m">
 					<c:choose>

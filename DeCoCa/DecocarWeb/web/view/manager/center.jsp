@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-
+<!-- Manager's main -->
 <style>
 @import
 	url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap')
