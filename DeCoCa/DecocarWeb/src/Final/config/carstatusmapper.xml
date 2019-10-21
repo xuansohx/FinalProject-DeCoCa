@@ -11,15 +11,18 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		<result property="username" column="name"/>
 	</resultMap> -->	
 	
-	<insert id="insert" parameterType="carstatus">
+	<!-- <insert id="insert" parameterType="carstatus">
 		INSERT INTO CAR_STATUS VALUES (#{statusid},#{battery},#{tire},#{door},#{safebelt},#{brake}
 		,#{engine},#{handle},#{temperature},#{speed},#{carlng},#{carlat})	
-	</insert>
+	</insert> -->
 	
-	<update id="update" parameterType="carstatus">
+	<!-- <update id="update" parameterType="carstatus">
 		UPDATE CAR_STATUS SET BATTERY=#{battery},TIRE=#{tire},DOOR=#{door}, SAFEBELT=#{safebelt},BRAKE=#{brake}
 		, ENGINE=#{engine},HANDLE=#{handle},TEMPERATURE=#{temperature},SPEED=#{speed}
 		, CARLNG=#{carlng},CARLAT=#{carlat} WHERE STATUSID=#{statusid}
+	</update> -->
+	<update id="update" parameterType="carstatus">
+		UPDATE CAR_STAT SET status=#{status} WHERE car_id=#{carid}
 	</update>
 	
 	<delete id="delete" parameterType="Integer">
@@ -28,11 +31,11 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	
 	<select id="select" parameterType="Integer" 
 	resultType="carstatus">
-		SELECT * FROM CAR_STATUS WHERE statusid=#{statusid}	
+		SELECT * FROM CAR_STAT WHERE car_id=#{carid}	
 	</select>
 	
 	<select id="selectall" resultType="carstatus" parameterType="Integer">
-		SELECT * FROM CAR_STATUS ORDER BY 1
+		SELECT * FROM CAR_STAT ORDER BY 1
 	</select>	
 </mapper>
 

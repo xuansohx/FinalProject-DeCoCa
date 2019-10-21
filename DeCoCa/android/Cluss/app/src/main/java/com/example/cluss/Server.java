@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Server extends Thread {
+    int carid;
     boolean flag = true;
     ServerSocket serverSocket;
     Map<String, DataOutputStream> map = new HashMap<>();
@@ -47,6 +48,9 @@ public class Server extends Thread {
     }
     public Server(int port) throws IOException {
         this.port = port;
+    }
+    public void setCarid(int carid) {
+        this.carid = carid;
     }
     public void sendMsg(String msg) {
         SendThread s = new SendThread();
@@ -119,7 +123,7 @@ public class Server extends Thread {
                     String str = din.readUTF();
                     System.out.println("str"+str);
                     client.makeStatus(str);
-                    client.httpTask = new HttpTask("http://70.12.60.110/DeCoCa/statusCenter.mc?carstatus="+str);
+                    client.httpTask = new HttpTask("http://70.12.60.110/DeCoCa/statusCenter.mc?carid="+carid+"&carstatus="+str);
                     client.httpTask.execute();
                     if (str == null || str.equals(""))
                         continue;
