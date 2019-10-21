@@ -38,8 +38,9 @@ public class ReservationController {
 		return mv;
 	}
 
+	// Click Reservation OK Button
 	@RequestMapping("/schregisterimpl.mc")
-	public void schregisterimpl(Reservation reserve, HttpServletResponse response) {
+	public void schregisterimpl(Reservation reserve, HttpServletResponse response, HttpSession session) {
 		String dfull = reserve.getCalDate();
 		String ddate = dfull.substring(0, 10);
 		String dtime = dfull.substring(11, 16);
@@ -48,7 +49,7 @@ public class ReservationController {
 		reserve.setsTime(dtime);
 		/* create PinNumber */
 		Random r = new Random();
-		String key = ""; // pinNumber(temp)
+		String key = ""; // pinNumber
 		for(int i=0; i<6; i++) {
 			String ran = Integer.toString(r.nextInt(9)+1);
 			if(!key.contains(ran)) {
@@ -59,16 +60,14 @@ public class ReservationController {
 		}
 		int pinNum = Integer.parseInt(key); // pinNumber(Final) 
 		reserve.setPinNum(pinNum); // set PinNum (DB)
-    System.out.println(reserve.toString());
-		String uid = reserve.getUserid();
+		System.out.println(reserve.toString());
+
+		int calid = reserve.getCalid();
+	 
 		try {
-			rbiz.register(reserve);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			sendPush(reserve);
-			response.sendRedirect("schelist.mc?userid="+uid);
+			session.setAttribute("sch", reserve);
+			
+			response.sendRedirect("allocation.mc?calid="+calid);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -99,8 +98,7 @@ public class ReservationController {
 			e.printStackTrace();
 		}
 		
-		session.setAttribute("sch", reserve);
-		
+		session.setAttribute("sch", reserve);		
 		mv.addObject("center","schedule/schedetail");
 		mv.setViewName("main");
 		return mv;
@@ -170,18 +168,12 @@ public class ReservationController {
 		
 	}
 	
-	public void sendPush(Reservation reserve) {
-		String uid = reserve.getUserid();
-		User u = null;
-		try {
-			u = ubiz.get(uid);
-			String token = u.getUserdevice();
-			int pin = reserve.getPinNum();
-			FcmUtil fcm = new FcmUtil();
-			fcm.send_FCM(token, "decoca", pin + "");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	// Move to CarStatusController.java
+	/*
+	 * public void sendPush(Reservation reserve) { String uid = reserve.getUserid();
+	 * User u = null; try { u = ubiz.get(uid); String token = u.getUserdevice(); int
+	 * pin = reserve.getPinNum(); FcmUtil fcm = new FcmUtil(); fcm.send_FCM(token,
+	 * "decoca", pin + ""); } catch (Exception e) { e.printStackTrace(); } }
+	 */
 	
 }
