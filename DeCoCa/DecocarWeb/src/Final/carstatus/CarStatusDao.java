@@ -35,7 +35,7 @@ public class CarStatusDao implements Dao<Integer, CarStatus> {
 
 	@Override
 	public CarStatus select(Integer k) throws Exception {
-		return null;
+		return carstatusm.select(k);
 	}
 
 	@Override
