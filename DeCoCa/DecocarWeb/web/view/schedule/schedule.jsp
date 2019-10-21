@@ -24,62 +24,202 @@
 
 <!-- Map Function -->
 <script>
-	var map;
-	// 페이지가 로딩이 된 후 호출하는 함수입니다.
-	function initTmap() {
-		// map 생성
-		// Tmap.map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
-		map = new Tmap.Map({
-			div : 'map_div',
-			width : '100%',
-			height : '500px'
-		});
-		var tData = new Tmap.TData();//REST API 에서 제공되는 경로, 교통정보, POI 데이터를 쉽게 처리할 수 있는 클래스입니다.
+//map 생성
+//Tmap.map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
+var map;
+var tData, tData1;
+function initTmap(){
+	$("#map_div").empty();
+map = new Tmap.Map({
+	div : "map_div", // map을 표시해줄 div
+	width : "100%", // map의 width 설정
+	height : "380px", // map의 height 설정
+});
+map.setCenter(new Tmap.LonLat(lon, lat).transform("EPSG:4326", "EPSG:3857"), 15);//설정한 좌표를 "EPSG:3857"로 좌표변환한 좌표값으로 즁심점으로 설정합니다.
+var routeLayer = new Tmap.Layer.Vector("route");//벡터 레이어 생성
+var markerLayer = new Tmap.Layer.Markers("start");// 마커 레이어 생성
+map.addLayer(routeLayer);//map에 벡터 레이어 추가
+map.addLayer(markerLayer);//map에 마커 레이어 추가
+//시작
+var size = new Tmap.Size(24, 38);//아이콘 크기 설정
+var offset = new Tmap.Pixel(-(size.w / 2), -size.h);//아이콘 중심점 설정
+var icon = new Tmap.IconHtml('<img src=http://tmapapis.sktelecom.com/upload/tmap/marker/pin_r_m_s.png />', size, offset);//마커 아이콘 설정
+var marker_s = new Tmap.Marker(new Tmap.LonLat(lon, lat).transform("EPSG:4326", "EPSG:3857"), icon);//설정한 좌표를 "EPSG:3857"로 좌표변환한 좌표값으로 설정합니다.
+markerLayer.addMarker(marker_s);//마커 레이어에 마커 추가
 
-		var sla, slo, ela, elo;
-		sla = 37.508849;
-		slo = 127.063147;
-		ela = 37.493038;
-		elo = 127.013774;
+//도착
+var icon = new Tmap.IconHtml('<img src=http://tmapapis.sktelecom.com/upload/tmap/marker/pin_r_m_e.png />', size, offset);//마커 아이콘 설정
+var marker_e = new Tmap.Marker(new Tmap.LonLat(lon1, lat1).transform("EPSG:4326", "EPSG:3857"), icon);//설정한 좌표를 "EPSG:3857"로 좌표변환한 좌표값으로 설정합니다.
+markerLayer.addMarker(marker_e);//마커 레이어에 마커 추가
 
-		var s_lonLat = new Tmap.LonLat(slo, sla); //시작 좌표입니다.   
-		var e_lonLat = new Tmap.LonLat(elo, ela); //도착 좌표입니다.
-		var optionObj = {
-			reqCoordType : "WGS84GEO", //요청 좌표계 옵셥 설정입니다.
-			resCoordType : "EPSG3857" //응답 좌표계 옵셥 설정입니다.
+var headers = {}; 
+headers["appKey"]="a9ee13e1-cb7e-46a8-b144-14bfd0103a90";//실행을 위한 키 입니다. 발급받으신 AppKey(appKey)를 입력하세요.
+$.ajax({
+	method:"POST",
+	headers : headers,
+	url:"https://apis.openapi.sk.com/tmap/routes?version=1&format=xml",//자동차 경로안내 api 요청 url입니다.
+	async:false,
+	data:{
+		//출발지 위경도 좌표입니다.
+		startX : lon,
+		startY : lat,
+		
+		/* startX : "126.9850380932383",
+		startY : "37.566567545861645", */
+		//목적지 위경도 좌표입니다.
+		endX : lon1,
+		endY : lat1,
+		//출발지, 경유지, 목적지 좌표계 유형을 지정합니다.
+		reqCoordType : "WGS84GEO",
+		resCoordType : "EPSG3857",
+		//경로 탐색 옵션 입니다.
+		searchOption : 1,
+		//교통정보 포함 옵션입니다.
+		trafficInfo : "Y"
+		
+	},
+
+	//데이터 로드가 성공적으로 완료되었을 때 발생하는 함수입니다.
+	success:function(response){
+		prtcl = response;
+		
+		// 결과 출력
+		var innerHtml ="";
+		var prtclString = new XMLSerializer().serializeToString(prtcl);//xml to String	
+		xmlDoc = $.parseXML( prtclString ),
+		$xml = $( xmlDoc ),
+		$intRate = $xml.find("Document");
+ 	
+		var tDistance = " 총 거리 : "+($intRate[0].getElementsByTagName("tmap:totalDistance")[0].childNodes[0].nodeValue/1000).toFixed(1)+"km,";
+		var tTime = " 총 시간 : "+($intRate[0].getElementsByTagName("tmap:totalTime")[0].childNodes[0].nodeValue/60).toFixed(0)+"분,";
+		document.getElementById("eTime").value = ($intRate[0].getElementsByTagName("tmap:totalTime")[0].childNodes[0].nodeValue/60).toFixed(0);
+		var tFare = " 총 요금 : "+$intRate[0].getElementsByTagName("tmap:totalFare")[0].childNodes[0].nodeValue+"원,";	
+		var taxiFare = " 예상 택시 요금 : "+$intRate[0].getElementsByTagName("tmap:taxiFare")[0].childNodes[0].nodeValue+"원";	
+
+		$("#result").text(tDistance+tTime+tFare+taxiFare);
+		
+		routeLayer.removeAllFeatures();//레이어의 모든 도형을 지웁니다.
+				
+		var traffic = $intRate[0].getElementsByTagName("traffic")[0];
+		//교통정보가 포함되어 있으면 교통정보를 포함한 경로를 그려주고
+		//교통정보가 없다면  교통정보를 제외한 경로를 그려줍니다.
+		if(!traffic){
+			var prtclLine = new Tmap.Format.KML({extractStyles:true, extractAttributes:true}).read(prtcl);//데이터(prtcl)를 읽고, 벡터 도형(feature) 목록을 리턴합니다.
+			
+			//표준 데이터 포맷인 KML을 Read/Write 하는 클래스 입니다.
+			//벡터 도형(Feature)이 추가되기 직전에 이벤트가 발생합니다.
+			routeLayer.events.register("beforefeatureadded", routeLayer, onBeforeFeatureAdded);
+	        function onBeforeFeatureAdded(e) {
+		        	var style = {};
+		        	switch (e.feature.attributes.styleUrl) {
+		        	case "#pointStyle":
+			        	style.externalGraphic = "http://topopen.tmap.co.kr/imgs/point.png"; //렌더링 포인트에 사용될 외부 이미지 파일의 url입니다.
+						style.graphicHeight = 16; //외부 이미지 파일의 크기 설정을 위한 픽셀 높이입니다.
+						style.graphicOpacity = 1; //외부 이미지 파일의 투명도 (0-1)입니다.
+						style.graphicWidth = 16; //외부 이미지 파일의 크기 설정을 위한 픽셀 폭입니다.
+		        	break;
+		        	default:
+						style.strokeColor = "#ff0000";//stroke에 적용될 16진수 color
+						style.strokeOpacity = "1";//stroke의 투명도(0~1)
+						style.strokeWidth = "5";//stroke의 넓이(pixel 단위)
+		        	};
+	        	e.feature.style = style;
+	        }
+			
+			routeLayer.addFeatures(prtclLine); //레이어에 도형을 등록합니다.
+		}else{
+			//기존 출발,도착지 마커릉 지웁니다.
+			markerLayer.removeMarker(marker_s); 
+			markerLayer.removeMarker(marker_e);
+			routeLayer.removeAllFeatures();//레이어의 모든 도형을 지웁니다.
+			
+			//-------------------------- 교통정보를 그려주는 부분입니다. -------------------------- 
+			var trafficColors = {
+					extractStyles:true,
+					
+					/* 실제 교통정보가 표출되면 아래와 같은 Color로 Line이 생성됩니다. */
+					trafficDefaultColor:"#000000", //Default
+					trafficType1Color:"#009900", //원할
+					trafficType2Color:"#8E8111", //지체
+					trafficType3Color:"#FF0000"  //정체
+					
+				};    
+			var kmlForm = new Tmap.Format.KML(trafficColors).readTraffic(prtcl);
+			routeLayer = new Tmap.Layer.Vector("vectorLayerID"); //백터 레이어 생성
+			routeLayer.addFeatures(kmlForm); //교통정보를 백터 레이어에 추가   
+			
+			map.addLayer(routeLayer); // 지도에 백터 레이어 추가
+			//-------------------------- 교통정보를 그려주는 부분입니다. -------------------------- 
 		}
-
-		tData.getRoutePlan(s_lonLat, e_lonLat, optionObj);//경로 탐색 데이터를 콜백 함수를 통해 XML로 리턴합니다.
-
-		tData.events.register("onComplete", tData, onComplete);//데이터 로드가 성공적으로 완료되었을 때 발생하는 이벤트를 등록합니다.
-		tData.events.register("onProgress", tData, onProgress);//데이터 로드중에 발생하는 이벤트를 등록합니다.
-		tData.events.register("onError", tData, onError);//데이터 로드가 실패했을 떄 발생하는 이벤트를 등록합니다.
-
+		
+		map.zoomToExtent(routeLayer.getDataExtent());//map의 zoom을 routeLayer의 영역에 맞게 변경합니다.	
+	},
+	//요청 실패시 콘솔창에서 에러 내용을 확인할 수 있습니다.
+	error:function(request,status,error){
+		console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	}
+});
+}/////////////////맵생성하기 
+///////////////////////////////////////////한글값 좌표 받아오기
+function onComplete(){
+	console.log(this.responseXML);
+	var keyword = this.responseXML.getElementsByTagName("keyword")[0].firstChild.data;
+	var gAppKey = "a9ee13e1-cb7e-46a8-b144-14bfd0103a90";//실행을 위한 키 입니다. 발급받으신 AppKey(appKey)를 입력하세요.
+	var url = "https://apis.openapi.sk.com/tmap/pois";//명칭(POI) 통합검색 API 요청 url 입니다.
+	var params = {
+			"version" : "1"//버전 정보입니다.
+			,"searchKeyword" : keyword //자동완성 키워드로 얻은 명칭 중 하나입니다.
+			,"appKey" : gAppKey//위에서 설정한 앱 키(appKey)입니다.
+	
+		};
+	//위에서 설정한 정보를 통하여 api 요청을 보내고, 정보를 받습니다.
+	$.get(url, params, function(data){
+		if(data){
+			if(cnt == 1)
+				{
+			 lon = data.searchPoiInfo.pois.poi[0].noorLon;//data에서 받아온  lon 좌표값 입니다.
+			 lat = data.searchPoiInfo.pois.poi[0].noorLat;//data에서 받아온  lat 좌표값 입니다.
+			 name = data.searchPoiInfo.pois.poi[0].name;//data에서 받아온  명칭입니다.
+			 document.getElementById("sLng").value = lon;
+			 document.getElementById("sLat").value = lat;
+				}
+			if(cnt == 2)
+			{
+		 lon1 = data.searchPoiInfo.pois.poi[0].noorLon;//data에서 받아온  lon 좌표값 입니다.
+		 lat1 = data.searchPoiInfo.pois.poi[0].noorLat;//data에서 받아온  lat 좌표값 입니다.
+		 name1 = data.searchPoiInfo.pois.poi[0].name;//data에 받아온  명칭입니다.
+		 	document.getElementById("eLng").value = lon1;
+		 	document.getElementById("eLat").value = lat1;
+			}
+			 
+		}
+	});
+} 
+var cnt = 0;
+var lon,lon1;
+var lat,lat1;
+var name, name1;
+var temp1;
+var temp2;
 
-	//데이터 로드가 성공적으로 완료되었을 때 발생하는 이벤트 함수 입니다. 
-	function onComplete() {
-		console.log(this.responseXML); //xml로 데이터를 받은 정보들을 콘솔창에서 확인할 수 있습니다.
-
-		var kmlForm = new Tmap.Format.KML({
-			extractStyles : true
-		}).read(this.responseXML);
-		var vectorLayer = new Tmap.Layer.Vector("vectorLayerID");
-		vectorLayer.addFeatures(kmlForm);
-		map.addLayer(vectorLayer);
-		//경로 그리기 후 해당영역으로 줌  
-		map.zoomToExtent(vectorLayer.getDataExtent());
-	}
-	//데이터 로드중 발생하는 이벤트 함수입니다.
-	function onProgress() {
-		//alert("onComplete");
-	}
-	//데이터 로드시 에러가 발생시 발생하는 이벤트 함수입니다.
-	function onError() {
-		alert("onError");
-	}
-	// 맵 생성 실행
-	initTmap();
+function input1(){
+	cnt = 1;
+	var input1 = document.getElementById("schedulelocationstart").value;
+	temp1 = input1;
+	tData = new Tmap.TData();
+	tData.events.register("onComplete", tData, onComplete);
+	tData.getAutoCompleteSearch(temp1, 5);
+}
+function input2(){
+	cnt = 2;
+	var input2 = document.getElementById("schedulelocationend").value;
+	temp2 = input2;
+	tData = new Tmap.TData();
+	tData.events.register("onComplete", tData, onComplete);
+	tData.getAutoCompleteSearch(temp2, 5);
+	setTimeout(function() {initTmap();}, 500);
+	
+}
 </script>
 <!-- select 변경 옵션 -->
 <script>
@@ -216,7 +356,7 @@
 
 </head>
 
-<body class="animsition" onload="initTmap()">
+<body class="animsition">
 	<!-- Header -->
 	<header>
 		<div class="wrap-menu-desktop">
@@ -310,14 +450,21 @@
 					<input
 						class="size-111 bor8 stext-102 cl2 p-lr-20"
 						id="schedulelocationstart" type="text" name="sAddress" required="required">
+						<input type="button" class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
+							onclick="input1()" style="width: 300px; height: 50px" value="등록">
+					<input type="text" name="sLat" id="sLat">
+					<input type="text" name="sLng" id="sLng">
 				</div>
-	
 		
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
 					<label class="stext-102 cl3">도착지 정보</label> 
-					<input
-						class="size-111 bor8 stext-102 cl2 p-lr-20"
-						id="schedulelocationend" type="text" name="eAddress" required="required">
+					<input	class="size-111 bor8 stext-102 cl2 p-lr-20"
+					id="schedulelocationend" type="text" name="eAddress" required="required">
+					<input type="button" class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
+					onclick="input2()"	style="width: 300px; height: 50px" value="등록">
+					<input type="text" name="eLat" id="eLat">
+					<input type="text" name="eLng" id="eLng">
+					<input type="text" name="eTime" id="eTime">
 				</div>
         
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
@@ -347,8 +494,8 @@
 				</div>
 			</div>
 		</div>
-		
-			<label class="stext-102 cl3"></label> <input type="submit" id="submitbt" name="schesubmit"
+			<label class="stext-102 cl3"></label> 
+			<input type="submit" id="submitbt" name="schesubmit"			
 							class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
 							style="width: 300px; height: 50px" value="등록">
 
