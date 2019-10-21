@@ -1954,6 +1954,36 @@ input.num-product::-webkit-inner-spin-button {
   text-align: center;
 }
 
+.table-shopping-cart .column-6 {
+  width: 130px;
+  font-size: 15px;
+  text-align: center;
+}
+
+.table-shopping-cart .column-7 {
+  width: 130px;
+  font-size: 15px;
+  text-align: center;
+}
+
+.table-shopping-cart .column-8 {
+  width: 130px;
+  font-size: 15px;
+  text-align: center;
+}
+
+.table-shopping-cart .column-9 {
+  width: 130px;
+  font-size: 15px;
+  text-align: center;
+}
+
+.table-shopping-cart .column-10 {
+  width: 130px;
+  font-size: 15px;
+  text-align: center;
+}
+
 .table-shopping-cart .table_row {
   height: 100px;
 }

@@ -16,33 +16,31 @@ public class UserBiz implements Biz<String, User> {
 	
 	@Resource(name="udao")
 	Dao<String,User> dao;
+	
 	@Override
 	public void register(User v) throws Exception {
 		dao.insert(v);
 	}
+	
 	@Override
 	public void remove(String k) throws Exception {
-		// TODO Auto-generated method stub
-		
+		dao.delete(k);
 	}
+	
 	@Override
 	public void modify(User v) throws Exception {
 		dao.update(v);
 		
 	}
-	
-
 
 	@Override
 	public User get(String k) throws Exception {
-		
 		return dao.select(k);
 	}
 
 	@Override
 	public ArrayList<User> getAll(String k) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.selectAll(k);
 	}
 
 }

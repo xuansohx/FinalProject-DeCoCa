@@ -13,34 +13,30 @@ import Final.vo.User;
 public class UserDao implements Dao<String, User> {
 	@Autowired
 	UserMapper um;
+	
 	@Override
 	public void insert(User v) throws Exception {
 		um.insert(v);
-		
 	}
 
 	@Override
 	public void update(User v) throws Exception {
 		um.update(v);
-		
 	}
 
 	@Override
 	public void delete(String k) throws Exception {
-		// TODO Auto-generated method stub
-		
+		um.delete(k);
 	}
 
 	@Override
 	public User select(String k) throws Exception {
-		// TODO Auto-generated method stub
 			return um.select(k);
 	}
 
 	@Override
 	public ArrayList<User> selectAll(String k) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return um.selectall(k);
 	}
 
 }

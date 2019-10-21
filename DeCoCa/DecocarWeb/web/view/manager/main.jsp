@@ -7,7 +7,7 @@
 <html lang="en">
 
 <head>
-<title>DeCoCa</title>
+<title>DeCoCar</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -63,14 +63,14 @@
 			<nav class="limiter-menu-desktop container">
 
 				<!-- Logo desktop -->
-				<a href="main.mc" class="logo"> <img src="img/icon.png"
-					alt="IMG-LOGO" href="main.mc">
+				<a href="manmain.mc" class="logo"> <img src="img/icon.png"
+					alt="IMG-LOGO" href="manmain.mc">
 				</a>
 
 				<!-- Menu desktop -->
 				<div class="menu-desktop">
 					<ul class="main-menu">
-						<li class="active-menu"><a href="main.mc">HOME</a></li>
+						<li class="active-menu"><a href="manmain.mc">HOME</a></li>
 
 					</ul>
 				</div>
@@ -82,11 +82,14 @@
 						<%-- 관리자모드 로그인 --%>
 						<c:when test="${loginuser.usertype eq '1'}">
 							<ul class="main-menu">
-								<li><a href="">${loginuser.userid} </a></li>
-								<li><a href="logout.mc">LOGOUT</a></li>
-								
-								<%-- 사용자 관리 페이지 만들어야함 --%>
-								<li><a href="customerupdate.mc?userid=${loginuser.userid}">회원관리</a></li>
+								<li>${loginuser.userid}</li>
+								<%-- user management page --%>
+								<li><a href="manageUser.mc">user</a></li>
+								<%-- car status management page --%>
+								<li><a href="manageCar.mc">car</a></li>
+								<%-- reservation management page --%>
+								<li><a href="manageSche.mc">schedule</a></li>
+								<li><a href="logout.mc">logout</a></li>
 							</ul>
 						</c:when>
 						
@@ -103,6 +106,8 @@
 							<ul class="main-menu">
 								<li><a>${loginuser.userid}</a></li>
 								<li><a href="mypage.mc">MyPage</a></li>
+								<!-- <li><a href="schelist.mc">일정list</a></li> -->
+								<!-- 일정list는 mypage에 넣음 -->
 								<li><a href="logout.mc">LOGOUT</a></li>
 							</ul>
 						</c:otherwise>
@@ -125,27 +130,13 @@
 	<section class="bg0 p-t-23 p-b-140" style="margin-top: 5%;">
 		<c:choose>
 			<c:when test="${center == null }">
-				<jsp:include page="center.jsp"></jsp:include>
+				<%-- <jsp:include page="center.jsp"></jsp:include> --%>
 			</c:when>
 			<c:otherwise>
 				<jsp:include page="${center }.jsp"></jsp:include>
 			</c:otherwise>
 		</c:choose>
 	</section>
-
-
-	<!-- Footer -->
-
-<!-- 	<footer class="bg3 p-t-75 p-b-32"
-		style="position: fixed; bottom: 0; width: 100%; background-color: transparent;">
-		<div class="container">
-			<div class="p-t-40">
-				<p class="stext-107 cl6 txt-center"></p>
-			</div>
-		</div>
-	</footer> -->
-
-
 
 
 	<!--===============================================================================================-->

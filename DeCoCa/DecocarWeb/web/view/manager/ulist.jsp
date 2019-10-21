@@ -32,9 +32,7 @@ a:hover {
 }
 </style>
 
-
-<title>Schedule List</title>
-
+<title>Product List</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -69,88 +67,43 @@ a:hover {
 <link rel="stylesheet" type="text/css" href="css/util.css">
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
-
-<style>
-@import url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap');
-
-#mypage_title {
-	font-family: 'Lalezar', cursive;
-	text-align: center;
-}
-.list {
-	margin: 0 auto;
-}
-.column-4 {
-	padding: 10px;
-}
-</style>
-
 </head>
 
 <body class="animsition">
 
 
 	<form class="bg0 p-t-75 p-b-85">
-		<div class="container" style="text-align:center;">
+		<div class="container">
+
+			<!-- <div class="p-b-10">
+				<h3 class="ltext-103 cl5">예약 리스트</h3>
+			</div> -->
 
 			<div class="row">
-				<!-- <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50"> -->
-					<div class="m-l-25 m-r--38 m-lr-0-xl list">
+				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+					<div class="m-l-25 m-r--38 m-lr-0-xl">
 						<div class="wrap-table-shopping-cart">
 							<table class="table-shopping-cart">
 								<tr class="table_head">
-									<th class="column-1">NUM</th>
-									<th class="column-2">DATE</th>
-									<th class="column-3">일정이름</th>
-									<th class="column-4">출발시간</th>
-									<th class="column-5">출발장소</th>
-									<th class="column-6">도착장소</th>
-									<th class="column-7">진행상태</th>
+									<th class="column-1">USERID</th>
+									<th class="column-2">PWD</th>
+									<th class="column-3">NAME</th>
+									<th class="column-4">PNUMBER</th>
 								</tr>
 
-								<c:forEach var="r" items="${rlist }">
+								<c:forEach var="u" items="${ulist }">
+									<c:if test="${u.usertype eq '0' }">
 									<tr class="table_row">
 										<td class="column-1"><a
-											href="schedetail.mc?calid=${r.calid }">${r.calid } </a></td>
+											href="userdetail.mc?userid=${u.userid }">${u.userid } </a></td>
 										<td class="column-2"><a
-											href="schedetail.mc?calid=${r.calid }">${r.calDate} </a></td>
+											href="userdetail.mc?userid=${u.userid }">${u.pwd} </a></td>
 										<td class="column-3"><a
-											href="schedetail.mc?calid=${r.calid }">${r.calName } </a></td>
+											href="userdetail.mc?userid=${u.userid }">${u.name } </a></td>
 										<td class="column-4"><a
-											href="schedetail.mc?calid=${r.calid }">${r.sTime} </a></td>
-										<td class="column-5"><a
-											href="schedetail.mc?calid=${r.calid }"> ${r.sAddress } </a></td>
-										<td class="column-6"><a
-											href="schedetail.mc?calid=${r.calid }"> ${r.eAddress } </a></td>
-										
-								    <!-- -------------------------------- -->
-									<!-- SHOW 'calstatus'-->
-									<c:choose>
-									<c:when test="${r.calstatus eq '0'}">
-									<td class="column-7">예정</td>
-									</c:when>
-
-									<c:when test="${r.calstatus eq '1'}">
-									<td class="column-7">준비</td>
-									</c:when>
-
-									<c:when test="${r.calstatus eq '2'}">
-									<td class="column-7">진행</td>
-									</c:when>
-
-										<c:when test="${r.calstatus eq '3'}">
-											<td class="column-7">완료</td>	
-											<style> /* reservation completed Check */
-											.table_row {
-											text-decoration-line: line-through;
-											text-decoration-color: #FE2E2E;
-											color: #E6E6E6; /* Font Color */
-											}
-											</style>
-										</c:when>
-									</c:choose>
-									
+											href="userdetail.mc?userid=${u.userid }">${u.pnumber} </a></td>
 									</tr>
+									</c:if>
 								</c:forEach>
 							</table>
 
@@ -158,7 +111,7 @@ a:hover {
 					</div>
 				</div>
 			</div>
-		<!-- </div> -->
+		</div>
 	</form>
 
 

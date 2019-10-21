@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM user_tb WHERE USERID=#{userid}	
 	</select>
 	
-	<select id="selectall" resultType="user">
+	<select id="selectall" resultType="user" parameterType="String">
 		SELECT * FROM user_tb ORDER BY 1
 	</select>
 	
