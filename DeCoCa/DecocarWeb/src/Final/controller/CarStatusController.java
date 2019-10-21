@@ -61,39 +61,85 @@ public class CarStatusController {
 	}
 	
 	@RequestMapping("/allocation.mc")
-	public void allocation(Reservation reserve, Car car,HttpServletResponse response) {
+	public void allocation(HttpServletResponse response, HttpSession session) {
+		// reservation 가져옴
+		Reservation reserve =
+				(Reservation) session.getAttribute("sch");
+	
+		// for My Reservation List
+		// Reservation에서 UserID 가져옴
+		String uid = reserve.getUserid(); 
+				
 		// Reservation
 		int rcarid = reserve.getCarid(); 
 		int rcalid = reserve.getCalid(); 
 		
 		// Car
-		int ccarid = car.getCarid(); 
-		int ccalid = car.getCalid();
 		
-		// for My Reservation List
-		// Reservation에서 UserID 가져옴
-		String uid = reserve.getUserid(); 
-		
+		// List
+		ArrayList<Car> clist = null; 
+		 try { 
+			 rbiz.register(reserve);
+			 reserve = urbiz.get(uid);
+			 rcalid = reserve.getCalid();
+			 clist = carbiz.getAll(1); 
+			 } catch (Exception e) 
+		 { e.printStackTrace(); 
+		 }
+		 
+		// Array
+		 Car[] CarArray = new Car[clist.size()];
+		 int size=0;
+		 // list를 배열에 집어 넣음
+		 for(Car temp : clist) {
+			 CarArray[size++]=temp;
+		 }
+				
 		// Allocation
 		// reservation table에는 carid, car table에는 calid
-		if(rcarid == 0 && ccalid ==0) {
+		 Car car = null;
+			for(int i=0; i<CarArray.length; i++) {
+				car = CarArray[i];
+				if(rcarid == 0) {
+					if(car.getCalid()==0) {
+						reserve.setCarid(car.getCarid());
+						car.setCalid(rcalid);
+						System.out.println(rcalid);
+						break;
+					}
+				}			
+			}
 			
-		}
-		
+		// insert DataBase
 		try {
-			rbiz.register(reserve);
 			
+			carbiz.modify(car);
+			System.out.println(car);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
+		// End Action and Move to other page
 		try {
-			// Reservation의 userid를 통하여 list 생성
+			sendPush(reserve);
 			response.sendRedirect("schelist.mc?userid="+uid);
-			
 		}catch (IOException e) {
 				e.printStackTrace();
 			}
 	
+	}
+	
+	public void sendPush(Reservation reserve) {
+		String uid = reserve.getUserid();
+		User u = null;
+		try {
+			u = ubiz.get(uid);
+			String token = u.getUserdevice();
+			int pin = reserve.getPinNum();
+			FcmUtil fcm = new FcmUtil();
+			fcm.send_FCM(token, "decoca", pin + "");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
