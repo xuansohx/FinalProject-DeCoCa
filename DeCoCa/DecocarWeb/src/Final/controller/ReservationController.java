@@ -72,14 +72,14 @@ public class ReservationController {
 		}
 		int pinNum = Integer.parseInt(key); // pinNumber(Final)
 		reserve.setPinNum(pinNum); // set PinNum (DB)
+		System.out.println(reserve.toString());
 
 		int calid = reserve.getCalid();
-
 		try {
-			session.setAttribute("sch", reserve);
-
-			response.sendRedirect("allocation.mc?calid=" + calid);
-		} catch (IOException e) {
+			rbiz.register(reserve);
+			sendPush(reserve);
+			response.sendRedirect("schelist.mc?userid="+reserve.getUserid());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -177,6 +177,19 @@ public class ReservationController {
 			e.printStackTrace();
 		}
 
+	}
+	public void sendPush(Reservation reserve) {
+		String uid = reserve.getUserid();
+		User u = null;
+		try {
+			u = ubiz.get(uid);
+			String token = u.getUserdevice();
+			int pin = reserve.getPinNum();
+			FcmUtil fcm = new FcmUtil();
+			fcm.send_FCM(token, "decoca", pin + "");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	// Move to CarStatusController.java
