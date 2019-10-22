@@ -17,12 +17,12 @@ public class Loggers {
 			Logger.getLogger("user"); 
 	private Logger data_log = 
 			Logger.getLogger("data"); 	
-	
-	
+		
 	// before
-	@Before("execution(* com.controller..*Controller.*(..))")
+	@Before("execution(* Final.controller..*Controller.*(..))")
 	public void logging(JoinPoint jp) {
 		MDC.put("userid","hi");
+		System.out.println("gi");
 		work_log.debug(jp.getSignature().getName());
 		user_log.debug(jp.getSignature().getName());
 		

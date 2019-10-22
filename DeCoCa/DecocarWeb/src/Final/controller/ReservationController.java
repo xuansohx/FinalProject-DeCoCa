@@ -45,7 +45,6 @@ public class ReservationController {
 		String dfull = reserve.getCalDate();
 		String ddate = dfull.substring(0, 10);
 		String dtime = dfull.substring(11, 16);
-		System.out.println(dfull + " = " + ddate + "" + dtime);
 		reserve.setCalDate(ddate);
 		reserve.setsTime(dtime);
 		String[] time = dtime.split(":");
@@ -60,7 +59,6 @@ public class ReservationController {
 		hour += ehour+uphour;
 		hour = hour % 24;
 		reserve.seteTime(hour+":"+minute);
-		System.out.println(reserve.geteTime());
 		/* create PinNumber */
 		Random r = new Random();
 		String key = ""; // pinNumber
@@ -74,7 +72,6 @@ public class ReservationController {
 		}
 		int pinNum = Integer.parseInt(key); // pinNumber(Final)
 		reserve.setPinNum(pinNum); // set PinNum (DB)
-		System.out.println(reserve.toString());
 
 		int calid = reserve.getCalid();
 
