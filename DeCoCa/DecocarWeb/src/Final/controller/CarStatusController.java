@@ -87,7 +87,8 @@ public class CarStatusController {
 			 rcalid = reserve.getCalid();
 			 clist = carbiz.getAll(1); 
 			 } catch (Exception e) 
-		 { e.printStackTrace(); 
+		 { 
+				 e.printStackTrace(); 
 		 }
 		 
 		// Array
@@ -115,9 +116,10 @@ public class CarStatusController {
 			
 		// insert DataBase
 		try {
-			
 			carbiz.modify(car);
+			rbiz.modify(reserve);
 			System.out.println(car);
+			System.out.println(reserve);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -154,10 +156,7 @@ public class CarStatusController {
 		System.out.println(caridd);
 		try {
 			cs = csbiz.get(caridd);
-			System.out.println(cs);
-//			csbiz.modify(cs);
-			//csbiz.register(cs);
-			
+			System.out.println(cs);			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
