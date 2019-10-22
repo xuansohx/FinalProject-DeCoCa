@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</insert>
 	
 	<update id="update" parameterType="reservation">
-		UPDATE RESERVATION SET CALNAME=#{calName}, CALDATE=#{calDate}, STIME=#{sTime}, SSTYLE=#{sStyle}, REUSERID=#{reuserid}, SADDRESS=#{sAddress}, EADDRESS=#{eAddress}, MEMO=#{memo} WHERE CALID=#{calid}
+		UPDATE RESERVATION SET CALNAME=#{calName}, CALDATE=#{calDate}, STIME=#{sTime}, SSTYLE=#{sStyle}, CARID=#{carid}, REUSERID=#{reuserid}, SADDRESS=#{sAddress}, EADDRESS=#{eAddress}, MEMO=#{memo} WHERE CALID=#{calid}
 	</update>
 	
 	<delete id="delete" parameterType="Integer">

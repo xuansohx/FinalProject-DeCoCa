@@ -230,8 +230,8 @@ function total(){
 		setTimeout(function() {
 			
 		initTmap();
-		}, 500);
-	}, 300);
+		}, 600);
+	}, 600);
 	
 }
 </script>

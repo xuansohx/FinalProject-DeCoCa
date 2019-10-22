@@ -22,15 +22,15 @@ public class CarStatusController {
 	@Resource(name = "ubiz")
 	Biz<String, User> ubiz;
 
-	@Resource(name = "carbiz") 
-	Biz<Integer,Car> carbiz; 
-	 
+	@Resource(name = "carbiz")
+	Biz<Integer, Car> carbiz;
+
 	@Resource(name = "csbiz")
 	Biz<Integer, CarStatus> csbiz;
 
 	@Resource(name = "Ureserbiz") // id's reservation
 	Biz<String, Reservation> urbiz;
-	
+
 	@Resource(name = "reserbiz") // All reservation
 	Biz<Integer, Reservation> rbiz;
 
@@ -47,105 +47,77 @@ public class CarStatusController {
 		mv.setViewName("admin/cardetail");
 		return mv;
 	}
-	
+
 	@RequestMapping("/statusCenter.mc")
-	public ModelAndView getStatusFromAndroid(String carid , String carstatus) {
+	public ModelAndView getStatusFromAndroid(String carid, String carstatus) {
 		ModelAndView mv = new ModelAndView();
 		int car_id = Integer.parseInt(carid);
-		CarStatus cs = new CarStatus(car_id,carstatus);
+		CarStatus cs = new CarStatus(car_id, carstatus);
 		System.out.println(carstatus);
 		try {
-			csbiz.modify(cs);		
+			csbiz.modify(cs);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		mv.setViewName("admin/cardetail");
 		return mv;
 	}
-	
+
 	@RequestMapping("/allocation.mc")
-	public void allocation(HttpServletResponse response, HttpSession session) {
-		// reservation 가져옴
-		Reservation reserve =
-				(Reservation) session.getAttribute("sch");
-	
-		// for My Reservation List
-		// Reservation에서 UserID 가져옴
-		String uid = reserve.getUserid(); 
-				
-		// Reservation
-		int rcarid = reserve.getCarid(); 
-		int rcalid = reserve.getCalid(); 
-		
-		// Car
-		
-		// List
-		ArrayList<Car> clist = null; 
-		 try { 
-			 rbiz.register(reserve);
-			 reserve = urbiz.get(uid);
-			 rcalid = reserve.getCalid();
-			 clist = carbiz.getAll(1); 
-			 } catch (Exception e) 
-		 { e.printStackTrace(); 
-		 }
-		 
+	public void allocation(String calid) {
+		System.out.println(calid + "배차중!");
+		ArrayList<Car> clist = null;
+		Reservation reserve = null;
+		String uid = null;
+		int rcarid =0;
+		int rcalid =0;
+		int cal_id = Integer.parseInt(calid);
+		try {
+			reserve = rbiz.get(cal_id);
+			//reserve = urbiz.get(uid);
+			uid = reserve.getUserid();
+			rcarid = reserve.getCarid();
+			rcalid = reserve.getCalid();			
+			rcalid = reserve.getCalid();
+			clist = carbiz.getAll(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		// Array
-		 Car[] CarArray = new Car[clist.size()];
-		 int size=0;
-		 // list를 배열에 집어 넣음
-		 for(Car temp : clist) {
-			 CarArray[size++]=temp;
-		 }
-				
+		Car[] CarArray = new Car[clist.size()];
+		int size = 0;
+		// list를 배열에 집어 넣음
+		for (Car temp : clist) {
+			CarArray[size++] = temp;
+		}
+
 		// Allocation
 		// reservation table에는 carid, car table에는 calid
-		 Car car = null;
-			for(int i=0; i<CarArray.length; i++) {
-				car = CarArray[i];
-				if(rcarid == 0) {
-					if(car.getCalid()==0) {
-						reserve.setCarid(car.getCarid());
-						car.setCalid(rcalid);
-						System.out.println(rcalid);
-						break;
-					}
-				}			
+		Car car = null;
+		for (int i = 0; i < CarArray.length; i++) {
+			car = CarArray[i];
+			if (rcarid == 0) {
+				if (car.getCalid() == 0) {
+					reserve.setCarid(car.getCarid());
+					car.setCalid(rcalid);
+					System.out.println(rcalid +"차량 배차 with "+car.getCarid());
+					break;
+				}
 			}
-			
+		}
+		reserve.setReuserid("None");		
 		// insert DataBase
 		try {
-			
+			//reuid 가 null이 뜬다
 			carbiz.modify(car);
-			System.out.println(car);
+			rbiz.modify(reserve);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		// End Action and Move to other page
-		try {
-			sendPush(reserve);
-			response.sendRedirect("schelist.mc?userid="+uid);
-		}catch (IOException e) {
-				e.printStackTrace();
-			}
-	
 	}
-	
-	public void sendPush(Reservation reserve) {
-		String uid = reserve.getUserid();
-		User u = null;
-		try {
-			u = ubiz.get(uid);
-			String token = u.getUserdevice();
-			int pin = reserve.getPinNum();
-			FcmUtil fcm = new FcmUtil();
-			fcm.send_FCM(token, "decoca", pin + "");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-  
+
 	@RequestMapping("/getStatus.mc")
 	public ModelAndView getStatus(String carid) {
 		ModelAndView mv = new ModelAndView();
@@ -156,14 +128,13 @@ public class CarStatusController {
 			cs = csbiz.get(caridd);
 			System.out.println(cs);
 //			csbiz.modify(cs);
-			//csbiz.register(cs);
-			
+			// csbiz.register(cs);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		mv.setViewName("admin/cardetail");
 		return mv;
 	}
-	
 
 }
