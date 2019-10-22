@@ -30,6 +30,10 @@ a:hover {
 	color: blue;
 	text-decoration: underline;
 }
+#page_title {
+	font-family: 'Lalezar', cursive;
+	text-align: center;
+}
 </style>
 
 <title>Product List</title>
@@ -70,7 +74,7 @@ a:hover {
 </head>
 
 <body class="animsition">
-
+<h1  id="page_title">CAR LIST<br></h1>
 
 	<form class="bg0 p-t-75 p-b-85">
 		<div class="container">
@@ -80,14 +84,14 @@ a:hover {
 			</div> -->
 
 			<div class="row">
-				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+				<!-- <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50"> -->
 					<div class="m-l-25 m-r--38 m-lr-0-xl">
 						<div class="wrap-table-shopping-cart">
 							<table class="table-shopping-cart">
 								<tr class="table_head">
 									<th class="column-1">ID</th>
 									<th class="column-2">STATUSID</th>
-									<th class="column-3">CENTERID</th>
+									<th class="column-3">CARTYPE</th>
 									<th class="column-4">CALID</th>
 									<th class="column-5">CARTYPE</th>
 									<th class="column-6">CARNUMBER</th>
@@ -95,12 +99,18 @@ a:hover {
 
 								<c:forEach var="c" items="${clist }">
 									<tr class="table_row">
-										<td class="column-1">${c.carid }</td>
-										<td class="column-2">${c.statusid }</td>
-										<td class="column-3">${c.centerid }</td>
-										<td class="column-4">${c.calid }</td>
-										<td class="column-5">${c.carnumber }</td>
-										<td class="column-6">${c.calid }</td>
+										<td class="column-1"><a
+											href="cardetailM.mc?carid=${c.carid }">${c.carid }</a></td>
+										<td class="column-2"><a
+											href="cardetailM.mc?carid=${c.carid }">${c.statusid }</a></td>
+										<td class="column-3"><a
+											href="cardetailM.mc?carid=${c.carid }">${c.cartype }</a></td>
+										<td class="column-4"><a
+											href="cardetailM.mc?carid=${c.carid }">${c.calid }</a></td>
+										<td class="column-5"><a
+											href="cardetailM.mc?carid=${c.carid }">${c.carnumber }</a></td>
+										<td class="column-6"><a
+											href="cardetailM.mc?carid=${c.carid }">${c.calid }</a></td>
 									</tr>
 								</c:forEach>
 							</table>
@@ -108,7 +118,7 @@ a:hover {
 						</div>
 					</div>
 				</div>
-			</div>
+		<!-- 	</div> -->
 		</div>
 	</form>
 

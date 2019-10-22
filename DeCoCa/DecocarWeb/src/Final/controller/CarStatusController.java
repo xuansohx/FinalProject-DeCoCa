@@ -52,8 +52,7 @@ public class CarStatusController {
 	public ModelAndView getStatusFromAndroid(String carid, String carstatus) {
 		ModelAndView mv = new ModelAndView();
 		int car_id = Integer.parseInt(carid);
-		CarStatus cs = new CarStatus(car_id, carstatus);
-		System.out.println(carstatus);
+		CarStatus cs = new CarStatus(car_id,carstatus);
 		try {
 			csbiz.modify(cs);
 		} catch (Exception e) {
@@ -93,15 +92,17 @@ public class CarStatusController {
 
 		// Allocation
 		// reservation table에는 carid, car table에는 calid
-		Car car = null;
-		for (int i = 0; i < CarArray.length; i++) {
-			car = CarArray[i];
-			if (rcarid == 0) {
-				if (car.getCalid() == 0) {
-					reserve.setCarid(car.getCarid());
-					car.setCalid(rcalid);
-					System.out.println(rcalid +"차량 배차 with "+car.getCarid());
-					break;
+
+		 Car car = null;
+			for(int i=0; i<CarArray.length; i++) {
+				car = CarArray[i];
+				if(rcarid == 0) {
+					if(car.getCalid()==0) {
+						reserve.setCarid(car.getCarid());
+						car.setCalid(rcalid);
+						System.out.println("calid로 가져온 스케줄"+rcalid);
+						break;
+					}
 				}
 			}
 		}
@@ -111,7 +112,6 @@ public class CarStatusController {
 			//reuid 가 null이 뜬다
 			carbiz.modify(car);
 			rbiz.modify(reserve);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -123,10 +123,10 @@ public class CarStatusController {
 		ModelAndView mv = new ModelAndView();
 		CarStatus cs = null;
 		int caridd = Integer.parseInt(carid);
-		System.out.println(caridd);
+		System.out.println("getStatus.mc 이후의 carid : "+caridd);
 		try {
 			cs = csbiz.get(caridd);
-			System.out.println(cs);
+			System.out.println("carid로 가져온 cat stat : "+cs);
 //			csbiz.modify(cs);
 			// csbiz.register(cs);
 		} catch (Exception e) {

@@ -496,7 +496,7 @@ function total(){
 
 		  	<div class="col-sm-6 p-b-5 m-lr-auto ">
 					<label class="stext-102 cl3">메모</label> 
-					<textarea class="size-111 bor8 stext-102 cl2 p-lr-20" id="schedulememo" name="memo"></textarea>
+					<textarea class="size-111 bor8 stext-102 cl2 p-lr-20" id="schedulememo" name="memo" required="required"></textarea>
 				</div>
 			</div>
 		</div>

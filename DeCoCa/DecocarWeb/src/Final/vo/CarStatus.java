@@ -20,17 +20,17 @@ public class CarStatus {
 
 	}
 
-	public CarStatus(int catid, String status) {
-		this.carid = catid;
+	public CarStatus(int carid, String status) {
+		this.carid = carid;
 		this.status = status;
 	}
 
-	public int getCatid() {
+	public int getCarid() {
 		return carid;
 	}
 
-	public void setCatid(int catid) {
-		this.carid = catid;
+	public void setCarid(int carid) {
+		this.carid = carid;
 	}
 
 	public String getStatus() {
@@ -43,6 +43,6 @@ public class CarStatus {
 
 	@Override
 	public String toString() {
-		return "CarStatus [catid=" + carid + ", status=" + status + "]";
+		return "CarStatus [carid=" + carid + ", status=" + status + "]";
 	}	
 }

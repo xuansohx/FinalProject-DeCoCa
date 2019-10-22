@@ -37,7 +37,7 @@ a:hover {
 }
 </style>
 
-<title></title>
+<title>Schedule List[admin]</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -75,48 +75,49 @@ a:hover {
 </head>
 
 <body class="animsition">
-	<h1 id="page_title">
-		USER LIST<br>
-	</h1>
 
+	<h1 id="page_title">
+		RESERVATION DETAIL<br>
+	</h1>
 	<form class="bg0 p-t-75 p-b-85">
 		<div class="container">
 
-			<div class="row">
-				<!-- <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50"> -->
-				<div class="m-l-25 m-r--38 m-lr-0-xl">
-					<div class="wrap-table-shopping-cart">
-						<table class="table-shopping-cart">
-							<tr class="table_head">
-								<th class="column-1">USERID</th>
-								<th class="column-2">PWD</th>
-								<th class="column-3">NAME</th>
-								<th class="column-4">PNUMBER</th>
-							</tr>
+			<div class="m-l-25 m-r--38 m-lr-0-xl">
+				<div class="wrap-table-shopping-cart">
+					<table class="table-shopping-cart">
+						<tr class="table_head">
+							<th class="column-1">CALID</th>
+							<th class="column-2">CARID</th>
+							<th class="column-3">SERVICE</th>
+							<th class="column-4">USERID</th>
+							<th class="column-5">DATE</th>
+							<th class="column-6">STIME</th>
+							<th class="column-7">ETIME</th>
+							<th class="column-8">SADDRESS</th>
+							<th class="column-9">EADDRESS</th>
+							<th class="column-10">RECEIVERID</th>
+						</tr>
 
-							<c:forEach var="u" items="${ulist }">
-								<c:if test="${u.usertype eq '0' }">
-									<tr class="table_row">
-										<td class="column-1"><a
-											href="userschelistM.mc?userid=${u.userid }">${u.userid }
-										</a></td>
-										<td class="column-2"><a
-											href="userschelistM.mc?userid=${u.userid }">${u.pwd} </a></td>
-										<td class="column-3"><a
-											href="userschelistM.mc?userid=${u.userid }">${u.name } </a></td>
-										<td class="column-4"><a
-											href="userschelistM.mc?userid=${u.userid }">${u.pnumber}
-										</a></td>
-									</tr>
-								</c:if>
-							</c:forEach>
-						</table>
+						<tr class="table_row">
+							<td class="column-1">${r.calid }</td>
+							<td class="column-2">${r.carid }</td>
+							<td class="column-3">${r.sStyle }</td>
+							<td class="column-4">${r.userid }</td>
+							<td class="column-5">${r.calDate }</td>
+							<td class="column-6">${r.sTime }</td>
+							<td class="column-7">${r.eTime }</td>
+							<td class="column-8">${r.sAddress }</td>
+							<td class="column-9">${r.eAddress }</td>
+							<td class="column-10">${r.reuserid }</td>
+							<td class="column-13">${r.pinNum }</td>
+							<td class="column-14">${r.calstatus}</td>
+						</tr>
+					</table>
 
-					</div>
 				</div>
 			</div>
-			<!-- </div> -->
 		</div>
+
 	</form>
 
 
