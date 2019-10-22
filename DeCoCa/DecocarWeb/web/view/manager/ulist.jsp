@@ -16,6 +16,9 @@
 
 <!-- a 링크 속성 없애기 -->
 <style type="text/css">
+@import url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap');
+
+
 a:link {
 	color: inherit;
 	text-decoration: none;

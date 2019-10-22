@@ -8,6 +8,8 @@
 
 <head>
 <style>
+@import url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap');
+
 .column-4 {
 	padding: 10px;
 }
@@ -96,6 +98,8 @@ a:hover {
 							<th class="column-8">SADDRESS</th>
 							<th class="column-9">EADDRESS</th>
 							<th class="column-10">RECEIVERID</th>
+							<th class="column-11">PINNUMBER</th>
+							<th class="column-12">CALSTATUS</th>
 						</tr>
 
 						<tr class="table_row">
@@ -109,8 +113,8 @@ a:hover {
 							<td class="column-8">${r.sAddress }</td>
 							<td class="column-9">${r.eAddress }</td>
 							<td class="column-10">${r.reuserid }</td>
-							<td class="column-13">${r.pinNum }</td>
-							<td class="column-14">${r.calstatus}</td>
+							<td class="column-11">${r.pinNum }</td>
+							<td class="column-12">${r.calstatus}</td>
 						</tr>
 					</table>
 

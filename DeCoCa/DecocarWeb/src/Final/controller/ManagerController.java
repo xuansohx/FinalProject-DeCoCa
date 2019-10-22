@@ -101,8 +101,8 @@ public class ManagerController {
 			e.printStackTrace();
 		}
 		mv.addObject("slist", slist);
-		mv.addObject("center", "slist");
-		mv.setViewName("manager/main");
+		mv.addObject("center", "manager/slist");
+		mv.setViewName("main");
 		return mv;
 	}	
   
@@ -116,8 +116,8 @@ public class ManagerController {
 			e.printStackTrace();
 		}
 		mv.addObject("r", reserve);
-		mv.addObject("center", "sdetail");
-		mv.setViewName("manager/main");
+		mv.addObject("center", "manager/sdetail");
+		mv.setViewName("main");
 		return mv;
 	}
   
@@ -135,8 +135,8 @@ public class ManagerController {
 			e.printStackTrace();
 		}
 		mv.addObject("cs", cs);
-		mv.addObject("center", "cdetail");
-		mv.setViewName("manager/main");
+		mv.addObject("center", "manager/cdetail");
+		mv.setViewName("main");
 		return mv;
 	}	
 }
