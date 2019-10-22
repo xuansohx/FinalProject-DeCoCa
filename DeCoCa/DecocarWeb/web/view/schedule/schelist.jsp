@@ -71,15 +71,19 @@ a:hover {
 <!--===============================================================================================-->
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap');
+@import
+	url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap')
+	;
 
-#mypage_title {
+#page_title {
 	font-family: 'Lalezar', cursive;
 	text-align: center;
 }
+
 .list {
 	margin: 0 auto;
 }
+
 .column-4 {
 	padding: 10px;
 }
@@ -89,75 +93,77 @@ a:hover {
 
 <body class="animsition">
 
+	<h1 id="page_title">
+		My Reservation List<br>
+	</h1>
 
 	<form class="bg0 p-t-75 p-b-85">
-		<div class="container" style="text-align:center;">
-
+		<div class="container" style="text-align: center;">
 			<div class="row">
 				<!-- <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50"> -->
-					<div class="m-l-25 m-r--38 m-lr-0-xl list">
-						<div class="wrap-table-shopping-cart">
-							<table class="table-shopping-cart">
-								<tr class="table_head">
-									<th class="column-1">NUM</th>
-									<th class="column-2">DATE</th>
-									<th class="column-3">일정이름</th>
-									<th class="column-4">출발시간</th>
-									<th class="column-5">출발장소</th>
-									<th class="column-6">도착장소</th>
-									<th class="column-7">진행상태</th>
-								</tr>
+				<div class="m-l-25 m-r--38 m-lr-0-xl list">
+					<div class="wrap-table-shopping-cart">
+						<table class="table-shopping-cart">
+							<tr class="table_head">
+								<th class="column-1">NUM</th>
+								<th class="column-2">DATE</th>
+								<th class="column-3">일정이름</th>
+								<th class="column-4">출발시간</th>
+								<th class="column-5">출발장소</th>
+								<th class="column-6">도착장소</th>
+								<th class="column-7">진행상태</th>
+							</tr>
 
-								<c:forEach var="r" items="${rlist }">
-									<tr class="table_row">
-										<td class="column-1"><a
-											href="schedetail.mc?calid=${r.calid }">${r.calid } </a></td>
-										<td class="column-2"><a
-											href="schedetail.mc?calid=${r.calid }">${r.calDate} </a></td>
-										<td class="column-3"><a
-											href="schedetail.mc?calid=${r.calid }">${r.calName } </a></td>
-										<td class="column-4"><a
-											href="schedetail.mc?calid=${r.calid }">${r.sTime} </a></td>
-										<td class="column-5"><a
-											href="schedetail.mc?calid=${r.calid }"> ${r.sAddress } </a></td>
-										<td class="column-6"><a
-											href="schedetail.mc?calid=${r.calid }"> ${r.eAddress } </a></td>
-										
-								    <!-- -------------------------------- -->
+							<c:forEach var="r" items="${rlist }">
+								<tr class="table_row">
+									<td class="column-1"><a
+										href="schedetail.mc?calid=${r.calid }">${r.calid } </a></td>
+									<td class="column-2"><a
+										href="schedetail.mc?calid=${r.calid }">${r.calDate} </a></td>
+									<td class="column-3"><a
+										href="schedetail.mc?calid=${r.calid }">${r.calName } </a></td>
+									<td class="column-4"><a
+										href="schedetail.mc?calid=${r.calid }">${r.sTime} </a></td>
+									<td class="column-5"><a
+										href="schedetail.mc?calid=${r.calid }"> ${r.sAddress } </a></td>
+									<td class="column-6"><a
+										href="schedetail.mc?calid=${r.calid }"> ${r.eAddress } </a></td>
+
+									<!-- -------------------------------- -->
 									<!-- SHOW 'calstatus'-->
 									<c:choose>
-									<c:when test="${r.calstatus eq '0'}">
-									<td class="column-7">예정</td>
-									</c:when>
+										<c:when test="${r.calstatus eq '0'}">
+											<td class="column-7">예정</td>
+										</c:when>
 
-									<c:when test="${r.calstatus eq '1'}">
-									<td class="column-7">준비</td>
-									</c:when>
+										<c:when test="${r.calstatus eq '1'}">
+											<td class="column-7">준비</td>
+										</c:when>
 
-									<c:when test="${r.calstatus eq '2'}">
-									<td class="column-7">진행</td>
-									</c:when>
+										<c:when test="${r.calstatus eq '2'}">
+											<td class="column-7">진행</td>
+										</c:when>
 
 										<c:when test="${r.calstatus eq '3'}">
-											<td class="column-7">완료</td>	
+											<td class="column-7">완료</td>
 											<style> /* reservation completed Check */
-											.table_row {
-											text-decoration-line: line-through;
-											text-decoration-color: #FE2E2E;
-											color: #E6E6E6; /* Font Color */
-											}
-											</style>
+.table_row {
+	text-decoration-line: line-through;
+	text-decoration-color: #FE2E2E;
+	color: #E6E6E6; /* Font Color */
+}
+</style>
 										</c:when>
 									</c:choose>
-									
-									</tr>
-								</c:forEach>
-							</table>
 
-						</div>
+								</tr>
+							</c:forEach>
+						</table>
+
 					</div>
 				</div>
 			</div>
+		</div>
 		<!-- </div> -->
 	</form>
 

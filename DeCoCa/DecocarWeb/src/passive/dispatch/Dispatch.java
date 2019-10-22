@@ -17,7 +17,6 @@ import java.util.Queue;
 
 public class Dispatch {
 	static Queue<Integer> q = new LinkedList<>();
-
 	public static void main(String[] args) {
 		int n=0;
 		while (true) {
