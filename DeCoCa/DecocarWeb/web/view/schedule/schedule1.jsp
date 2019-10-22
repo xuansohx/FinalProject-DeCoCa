@@ -217,21 +217,7 @@ function input2(){
 	tData = new Tmap.TData();
 	tData.events.register("onComplete", tData, onComplete);
 	tData.getAutoCompleteSearch(temp2, 5);
-	
-
-	
-}
-
-function total(){
-	input1();
-	setTimeout(function() {
-		input2();
-		
-		setTimeout(function() {
-			
-		initTmap();
-		}, 500);
-	}, 300);
+	setTimeout(function() {initTmap();}, 500);
 	
 }
 </script>
@@ -464,10 +450,10 @@ function total(){
 					<input
 						class="size-111 bor8 stext-102 cl2 p-lr-20"
 						id="schedulelocationstart" type="text" name="sAddress" required="required">
-						<!-- <input type="button" class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
-							onclick="input1()" style="width: 300px; height: 50px" value="등록"> -->
-					<input type="hidden" name="sLat" id="sLat">
-					<input type="hidden" name="sLng" id="sLng">  
+						<input type="button" class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
+							onclick="input1()" style="width: 300px; height: 50px" value="등록">
+					<input type="text" name="sLat" id="sLat">
+					<input type="text" name="sLng" id="sLng">
 				</div>
 		
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
@@ -475,10 +461,10 @@ function total(){
 					<input	class="size-111 bor8 stext-102 cl2 p-lr-20"
 					id="schedulelocationend" type="text" name="eAddress" required="required">
 					<input type="button" class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
-					onclick="total()"	style="width: 300px; height: 50px" value="경로등록">
-					<input type="hidden" name="eLat" id="eLat">
-					<input type="hidden" name="eLng" id="eLng">
-					<input type="hidden" name="eTime" id="eTime">   
+					onclick="input2()"	style="width: 300px; height: 50px" value="등록">
+					<input type="text" name="eLat" id="eLat">
+					<input type="text" name="eLng" id="eLng">
+					<input type="text" name="eTime" id="eTime">
 				</div>
         
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
