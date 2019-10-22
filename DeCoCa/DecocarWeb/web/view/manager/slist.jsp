@@ -30,6 +30,11 @@ a:hover {
 	color: blue;
 	text-decoration: underline;
 }
+
+#page_title {
+	font-family: 'Lalezar', cursive;
+	text-align: center;
+}
 </style>
 
 <title>Schedule List[admin]</title>
@@ -71,59 +76,51 @@ a:hover {
 
 <body class="animsition">
 
-
+	<h1 id="page_title">
+		RESERVATION LIST<br>
+	</h1>
 	<form class="bg0 p-t-75 p-b-85">
 		<div class="container">
 
-				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
-					<div class="m-l-25 m-r--38 m-lr-0-xl">
-						<div class="wrap-table-shopping-cart">
-							<table class="table-shopping-cart">
-								<tr class="table_head">
-									<th class="column-1">ID</th>
-									<th class="column-2">CARID</th>
-									<th class="column-3">SERVICE</th>
-									<th class="column-4">USERID</th>
-									<th class="column-5">DATE</th>
-									<th class="column-6">STIME</th>
-									<th class="column-7">ETIME</th>
-									<th class="column-8">SADDRESS</th>
-									<th class="column-9">EADDRESS</th>
-									<th class="column-10">MEMO</th>
-								</tr>
+			<div class="m-l-25 m-r--38 m-lr-0-xl">
+				<div class="wrap-table-shopping-cart">
+					<table class="table-shopping-cart">
+						<tr class="table_head">
+							<th class="column-1">CALID</th>
+							<th class="column-2">CARID</th>
+							<th class="column-3">SERVICE</th>
+							<th class="column-4">USERID</th>
+							<th class="column-5">DATE</th>
+							<th class="column-6">STIME</th>
+							<th class="column-7">ETIME</th>
+							<th class="column-8">SADDRESS</th>
+							<th class="column-9">EADDRESS</th>
+						</tr>
 
-								<c:forEach var="s" items="${slist }">
-									<tr class="table_row">
-										<%-- <td class="column-1"><a
-											href="schedetail.mc?calid=${r.calid }">${r.calid } </a></td>
-										<td class="column-2"><a
-											href="schedetail.mc?calid=${r.calid }">${r.calDate} </a></td>
-										<td class="column-3"><a
-											href="schedetail.mc?calid=${r.calid }">${r.calName } </a></td>
-										<td class="column-4"><a
-											href="schedetail.mc?calid=${r.calid }">${r.sTime} </a></td>
-										<td class="column-5"><a
-											href="schedetail.mc?calid=${r.calid }"> ${r.sAddress } </a></td>
-										<td class="column-6"><a
-											href="schedetail.mc?calid=${r.calid }"> ${r.eAddress } </a></td>
-										<td class="column-7"><a
-											href="schedetail.mc?calid=${r.calid }"> ${r.memo } </a></td> --%>
-											<td class="column-1">${s.calid }</td>
-											<td class="column-2">${s.carid }</td>
-											<td class="column-3">${s.sStyle }</td>
-											<td class="column-4">${s.userid }</td>
-											<td class="column-5">${s.calDate }</td>
-											<td class="column-6">${s.sTime }</td>
-											<td class="column-7">${s.eTime }</td>
-											<td class="column-8">${s.sAddress }</td>
-											<td class="column-9">${s.eAddress }</td>
-											<td class="column-10">${s.memo }</td>
-									</tr>
-								</c:forEach>
-							</table>
+						<c:forEach var="s" items="${slist }">
+							<tr class="table_row">
+								<td class="column-1"><a
+									href="schedetailM.mc?calid=${s.calid }">${s.calid }</a></td>
+								<td class="column-2"><a
+									href="schedetailM.mc?calid=${s.calid }">${s.carid }</a></td>
+								<td class="column-3"><a
+									href="schedetailM.mc?calid=${s.calid }">${s.sStyle }</a></td>
+								<td class="column-4"><a
+									href="schedetailM.mc?calid=${s.calid }">${s.userid }</a></td>
+								<td class="column-5"><a
+									href="schedetailM.mc?calid=${s.calid }">${s.calDate }</a></td>
+								<td class="column-6"><a
+									href="schedetailM.mc?calid=${s.calid }">${s.sTime }</a></td>
+								<td class="column-7"><a
+									href="schedetailM.mc?calid=${s.calid }">${s.eTime }</a></td>
+								<td class="column-8"><a
+									href="schedetailM.mc?calid=${s.calid }">${s.sAddress }</a></td>
+								<td class="column-9"><a
+									href="schedetailM.mc?calid=${s.calid }">${s.eAddress }</a></td>
+							</tr>
+						</c:forEach>
+					</table>
 
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
