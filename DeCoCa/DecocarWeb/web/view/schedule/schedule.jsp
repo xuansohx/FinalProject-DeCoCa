@@ -444,6 +444,7 @@ function total(){
     	
 		<div class="flex-w flex-tr">
 			<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+			
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
 					<label class="stext-102 cl3">예약 날짜</label> 
 					<input
@@ -459,15 +460,18 @@ function total(){
 						id="schedulename" type="text" name="calName" required="required">
 				</div>
         
-				<div class="col-sm-6 p-b-5 m-lr-auto ">
+				<div class="col-sm-6 p-b-5 m-lr-auto">
 					<label class="stext-102 cl3">출발지 정보</label> 
+					<div class="button">
 					<input
 						class="size-111 bor8 stext-102 cl2 p-lr-20"
+
 						id="schedulelocationstart" type="text" name="sAddress" required="required">
 						<!-- <input type="button" class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
 							onclick="input1()" style="width: 300px; height: 50px" value="등록"> -->
 					<input type="hidden" name="sLat" id="sLat">
 					<input type="hidden" name="sLng" id="sLng">  
+
 				</div>
 		
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
@@ -475,10 +479,12 @@ function total(){
 					<input	class="size-111 bor8 stext-102 cl2 p-lr-20"
 					id="schedulelocationend" type="text" name="eAddress" required="required">
 					<input type="button" class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
+
 					onclick="total()"	style="width: 300px; height: 50px" value="경로등록">
 					<input type="hidden" name="eLat" id="eLat">
 					<input type="hidden" name="eLng" id="eLng">
 					<input type="hidden" name="eTime" id="eTime">   
+         
 				</div>
         
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
