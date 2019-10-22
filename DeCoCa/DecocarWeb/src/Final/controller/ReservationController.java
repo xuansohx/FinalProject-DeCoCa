@@ -41,21 +41,13 @@ public class ReservationController {
 	// Click Reservation OK Button
 	@RequestMapping("/schregisterimpl.mc")
 	public void schregisterimpl(Reservation reserve, HttpServletResponse response, HttpSession session) {
-//		System.out.println(reserve);
-		
 		String reusid = reserve.getReuserid();
-		System.out.println("받는사람ID //"+reusid+"//");
-		
 		if(reusid.equals("") || reusid==null) {
 			reserve.setReuserid("none");
-			System.out.println("##"+reserve.getReuserid()+"##");
-		}
-		
-		
+		}		
 		String dfull = reserve.getCalDate();
 		String ddate = dfull.substring(0, 10);
 		String dtime = dfull.substring(11, 16);
-//		System.out.println(dfull + " = " + ddate + "" + dtime);
 		reserve.setCalDate(ddate);
 		reserve.setsTime(dtime);
 		String[] time = dtime.split(":");
@@ -69,8 +61,7 @@ public class ReservationController {
 		minute%=60;
 		hour += ehour+uphour;
 		hour = hour % 24;
-		reserve.seteTime(hour+":"+minute);
-//		System.out.println(reserve.geteTime());
+    
 		/* create PinNumber */
 		Random r = new Random();
 		String key = ""; // pinNumber
@@ -84,15 +75,12 @@ public class ReservationController {
 		}
 		int pinNum = Integer.parseInt(key); // pinNumber(Final)
 		reserve.setPinNum(pinNum); // set PinNum (DB)
-		System.out.println("예약 확인 핀넘버까지 "+reserve.toString());
-
 		int calid = reserve.getCalid();
-
 		try {
-			session.setAttribute("sch", reserve);
-
-			response.sendRedirect("allocation.mc?calid=" + calid);
-		} catch (IOException e) {
+			rbiz.register(reserve);
+			sendPush(reserve);
+			response.sendRedirect("schelist.mc?userid="+reserve.getUserid());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -115,13 +103,11 @@ public class ReservationController {
 	@RequestMapping("/schedetail.mc")
 	public ModelAndView schedetail(Reservation reserve, int calid, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-
 		try {
 			reserve = rbiz.get(calid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		session.setAttribute("sch", reserve);
 		mv.addObject("center", "schedule/schedetail");
 		mv.setViewName("main");
@@ -130,39 +116,32 @@ public class ReservationController {
 
 	@RequestMapping("/schedelete.mc")
 	public void schedelete(Reservation reserve, int calid, HttpServletResponse response) {
-
 		try {
 			reserve = rbiz.get(calid);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 		String uid = reserve.getUserid();
-
 		try {
 			rbiz.remove(calid);
-//			System.out.println("DELETED : " + calid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		try {
 			response.sendRedirect("schelist.mc?userid=" + uid);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@RequestMapping("/scheupdate.mc")
 	public ModelAndView scheupdate(Reservation reserve, int calid, HttpSession session, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
-
 		try {
 			reserve = rbiz.get(calid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		session.setAttribute("sch", reserve);
 		mv.setViewName("schedule/scheupdate");
 		return mv;
@@ -170,34 +149,34 @@ public class ReservationController {
 
 	@RequestMapping("/scheupdateimpl.mc")
 	public void scheupdateimpl(Reservation reserve, int calid, HttpServletResponse response) {
-
 		String dfull = reserve.getCalDate();
 		String ddate = dfull.substring(0, 10);
 		String dtime = dfull.substring(11, 16);
-//		System.out.println(dfull + " = " + ddate + "" + dtime);
 		reserve.setCalDate(ddate);
 		reserve.setsTime(dtime);
-
 		try {
 			rbiz.modify(reserve);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		System.out.println("modified : " + reserve);
 		try {
 			response.sendRedirect("schedetail.mc?calid=" + calid);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
-
-	// Move to CarStatusController.java
-	/*
-	 * public void sendPush(Reservation reserve) { String uid = reserve.getUserid();
-	 * User u = null; try { u = ubiz.get(uid); String token = u.getUserdevice(); int
-	 * pin = reserve.getPinNum(); FcmUtil fcm = new FcmUtil(); fcm.send_FCM(token,
-	 * "decoca", pin + ""); } catch (Exception e) { e.printStackTrace(); } }
-	 */
-
+  
+	public void sendPush(Reservation reserve) {
+		String uid = reserve.getUserid();
+		User u = null;
+		try {
+			u = ubiz.get(uid);
+			String token = u.getUserdevice();
+			int pin = reserve.getPinNum();
+			FcmUtil fcm = new FcmUtil();
+			fcm.send_FCM(token, "decoca", pin + "");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

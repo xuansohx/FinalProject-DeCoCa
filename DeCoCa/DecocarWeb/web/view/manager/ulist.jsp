@@ -37,7 +37,7 @@ a:hover {
 }
 </style>
 
-<title>Product List</title>
+<title></title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -81,10 +81,6 @@ a:hover {
 
 	<form class="bg0 p-t-75 p-b-85">
 		<div class="container">
-
-			<!-- <div class="p-b-10">
-				<h3 class="ltext-103 cl5">예약 리스트</h3>
-			</div> -->
 
 			<div class="row">
 				<!-- <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50"> -->

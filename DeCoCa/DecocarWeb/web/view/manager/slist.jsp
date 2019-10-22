@@ -81,7 +81,6 @@ a:hover {
 	</h1>
 	<form class="bg0 p-t-75 p-b-85">
 		<div class="container">
-
 			<div class="m-l-25 m-r--38 m-lr-0-xl">
 				<div class="wrap-table-shopping-cart">
 					<table class="table-shopping-cart">
@@ -120,18 +119,11 @@ a:hover {
 							</tr>
 						</c:forEach>
 					</table>
-
 				</div>
 			</div>
 		</div>
 	</form>
-
-
-
-
-
-
-
+  
 	<!--===============================================================================================-->
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 	<!--===============================================================================================-->
@@ -171,7 +163,5 @@ a:hover {
 	<!--===============================================================================================-->
 	<script src="js/main.js"></script>
 
-
 </body>
-
 </html>

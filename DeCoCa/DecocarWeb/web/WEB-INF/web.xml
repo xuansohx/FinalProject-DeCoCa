@@ -33,8 +33,20 @@
 			<param-value>UTF-8</param-value>
 		</init-param>
 	</filter>
-	
-	
+	 <listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/config/log4j.properties</param-value>
+	</context-param>
+  <listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/config/springex.xml</param-value>
+	</context-param>	
 	<filter-mapping>
 		<filter-name>enc</filter-name>
 		<url-pattern>/*</url-pattern>

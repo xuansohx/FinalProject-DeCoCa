@@ -13,7 +13,9 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 	<context:component-scan base-package="Final.*" />
 	<mvc:annotation-driven />
-	<tx:annotation-driven transaction-manager="txManager"/>
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	<tx:annotation-driven
+		transaction-manager="txManager" />
 
 	<!-- ViewResolver -->
 	<bean id="viewResolver"
@@ -23,15 +25,15 @@
 		<property name="order" value="0" />
 	</bean>
 	<!-- ViewResolver END -->
-	
-	
+
+
 	<!-- File Upload -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="500000000" />
 	</bean>
-	
-		<!-- Multi language -->
+
+	<!-- Multi language -->
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
@@ -49,7 +51,7 @@
 			<property name="paramName" value="lang" />
 		</bean>
 	</mvc:interceptors>
-	
+
 	<!-- 1. Database Setting -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">

@@ -34,7 +34,7 @@ public class ManagerController {
 	@RequestMapping("/manmain.mc")
 	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("manager/main");
+		mv.setViewName("main");
 		return mv;
 	}
 	
@@ -50,17 +50,16 @@ public class ManagerController {
 			e.printStackTrace();
 		}
 		System.out.println(ulist);
-		mv.addObject("ulist", ulist);
-		mv.addObject("center", "ulist");
-		mv.setViewName("manager/main");
+		mv.addObject("center","manager/ulist");
+		mv.addObject("ulist",ulist); 
+		mv.setViewName("main");
 		return mv;
 	}
 
 	// manager version. All car list
 	@RequestMapping("/manageCar.mc")
 	public ModelAndView manageC() {
-		ModelAndView mv = new ModelAndView();
-		
+		ModelAndView mv = new ModelAndView();		
 		ArrayList<Car> clist = null;
 		try {
 			clist = cbiz.getAll(1);
@@ -68,17 +67,16 @@ public class ManagerController {
 			e.printStackTrace();
 		}
 		System.out.println(clist);
-		mv.addObject("clist", clist);
-		mv.addObject("center", "clist");
-		mv.setViewName("manager/main");
+		mv.addObject("center","manager/clist");
+		mv.addObject("clist",clist);
+		mv.setViewName("main");
 		return mv;
 	}
 	
 	// manager version. All schedule list
 	@RequestMapping("/manageSche.mc")
 	public ModelAndView manageS() {
-		ModelAndView mv = new ModelAndView();
-		
+		ModelAndView mv = new ModelAndView();		
 		ArrayList<Reservation> slist = null;
 		try {
 			slist = rbiz.getAll(1);
@@ -86,13 +84,12 @@ public class ManagerController {
 			e.printStackTrace();
 		}
 		System.out.println(slist);
-		mv.addObject("slist", slist);
-		mv.addObject("center", "slist");
-		mv.setViewName("manager/main");
+		mv.addObject("center","manager/slist");
+		mv.addObject("slist",slist); 
+		mv.setViewName("main");
 		return mv;
 	}
-	
-	
+  
 	// manager version. schedule list per user
 	@RequestMapping("/userschelistM.mc")
 	public ModelAndView userschelistM(Reservation reserve, String userid) {
@@ -107,8 +104,8 @@ public class ManagerController {
 		mv.addObject("center", "slist");
 		mv.setViewName("manager/main");
 		return mv;
-	}
-	
+	}	
+  
 	// manager version. schedule list per user
 	@RequestMapping("/schedetailM.mc")
 	public ModelAndView schedetailM(Reservation reserve, int calid) {
@@ -123,8 +120,7 @@ public class ManagerController {
 		mv.setViewName("manager/main");
 		return mv;
 	}
-	
-	
+  
 	// manager version. schedule list per user
 	@RequestMapping("/cardetailM.mc")
 	public ModelAndView cardetailM(int carid) {
@@ -134,10 +130,7 @@ public class ManagerController {
 		try {
 			car = cbiz.get(carid);
 			cs = csbiz.get(carid);
-//			System.out.println("##"+car);
-//			System.out.println("##"+cs);
 			cs.setCarid(carid);
-//			System.out.println("**"+cs);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -145,6 +138,5 @@ public class ManagerController {
 		mv.addObject("center", "cdetail");
 		mv.setViewName("manager/main");
 		return mv;
-	}
-	
+	}	
 }

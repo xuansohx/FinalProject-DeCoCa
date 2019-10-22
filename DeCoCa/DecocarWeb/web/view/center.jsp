@@ -43,7 +43,7 @@
 
 		<div class="row isotope-grid">
 			<c:choose>
-				<%-- 사용자모드 --%>
+				<%-- user mode --%>
 				<c:when test="${loginuser.usertype eq '0' }">
 					<div class="homepackage">
 						<a href="schedule.mc?type=1"><img src="img/taxi.png"
@@ -76,7 +76,35 @@
 					</div>
 				</c:when>
 
-				<%-- 일반모드 --%>
+				<%-- manager mode --%>
+				<c:when test="${loginuser.usertype eq '1' }">
+					<div class="homepackage">
+					<a href="manageUser.mc"> <img src="img/manage_user.png"
+							class="homebtimg"></a>
+						<div class="homebttext">
+							<a href="manageUser.mc"><h1>User</h1></a>
+						</div>
+					</div>
+
+					<div class="homepackage">
+					<a href="manageSche.mc"> <img src="img/manage_calendar.png"
+							class="homebtimg"></a>
+						<div class="homebttext">
+							<a href="manageSche.mc"><h1>Reservation</h1></a>
+						</div>
+					</div>
+
+
+					<div class="homepackage" style="margin-bottom: 100px;">
+						<a href="manageCar.mc"> <img src="img/manage_car.png"
+							class="homebtimg"></a>
+						<div class="homebttext">
+							<a href="manageCar.mc"><h1>Car</h1></a>
+						</div>
+					</div>
+				</c:when>
+
+				<%-- general --%>
 				<c:otherwise>
 					<div class="homepackage">
 						<a href="login.mc"><img src="img/taxi.png" class="homebtimg"></a>
