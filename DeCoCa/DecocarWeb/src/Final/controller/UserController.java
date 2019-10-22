@@ -33,18 +33,20 @@ public class UserController {
 	}
 
 	@RequestMapping("/userregister.mc")
-	public ModelAndView user_register(User user) {
+	public void user_register(User user, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		try {
 			ubiz.register(user);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		mv.addObject("center", "login");
-		mv.setViewName("main");
-		return mv;
+		try {
+			response.sendRedirect("login.mc");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	@RequestMapping("/usercheckId.mc")

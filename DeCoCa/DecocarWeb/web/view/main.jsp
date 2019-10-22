@@ -80,13 +80,18 @@
 					<c:choose>
 						
 						<%-- 관리자모드 로그인 --%>
-						<c:when test="${loginuser.usertype eq '1'}">
+					<c:when test="${loginuser.usertype eq '1'}">
 							<ul class="main-menu">
-								<li><a href="">${loginuser.userid} </a></li>
-								<li><a href="logout.mc">LOGOUT</a></li>
-								
-								<%-- 사용자 관리 페이지 만들어야함 --%>
-								<li><a href="customerupdate.mc?userid=${loginuser.userid}">회원관리</a></li>
+								<li>${loginuser.userid}</li>
+								<!--  
+								<%-- user management page --%>
+								<li><a href="manageUser.mc">user</a></li>
+								car status management page
+								<li><a href="manageCar.mc">car</a></li>
+								reservation management page
+								<li><a href="manageSche.mc">schedule</a></li>
+								--> 
+								<li><a href="logout.mc">logout</a></li>
 							</ul>
 						</c:when>
 						

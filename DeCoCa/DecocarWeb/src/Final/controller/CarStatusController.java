@@ -83,7 +83,6 @@ public class CarStatusController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		// Array
 		Car[] CarArray = new Car[clist.size()];
 		int size = 0;
@@ -112,6 +111,7 @@ public class CarStatusController {
 			//reuid 가 null이 뜬다
 			carbiz.modify(car);
 			rbiz.modify(reserve);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -129,7 +129,6 @@ public class CarStatusController {
 			System.out.println(cs);
 //			csbiz.modify(cs);
 			// csbiz.register(cs);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

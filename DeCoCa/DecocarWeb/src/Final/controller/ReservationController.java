@@ -45,7 +45,6 @@ public class ReservationController {
 		String dfull = reserve.getCalDate();
 		String ddate = dfull.substring(0, 10);
 		String dtime = dfull.substring(11, 16);
-		System.out.println(dfull + " = " + ddate + "" + dtime);
 		reserve.setCalDate(ddate);
 		reserve.setsTime(dtime);
 		String[] time = dtime.split(":");
@@ -60,7 +59,6 @@ public class ReservationController {
 		hour += ehour+uphour;
 		hour = hour % 24;
 		reserve.seteTime(hour+":"+minute);
-		System.out.println(reserve.geteTime());
 		/* create PinNumber */
 		Random r = new Random();
 		String key = ""; // pinNumber
@@ -72,14 +70,10 @@ public class ReservationController {
 				i -= 1;
 			}
 		}
-		//사용자가 등록 할 때 배차가 된다
-		//-> 일정 시작 20분전에 배차한다.
-		//-> 일정 시작 20분전에 쿼리를 날릴거니까
-		// 그걸 그냥 받아서 실행시키는 녀석만 만들자.
-		// 호호
 		int pinNum = Integer.parseInt(key); // pinNumber(Final)
 		reserve.setPinNum(pinNum); // set PinNum (DB)
 		System.out.println(reserve.toString());
+
 		int calid = reserve.getCalid();
 		try {
 			rbiz.register(reserve);

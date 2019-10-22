@@ -294,7 +294,7 @@ function total(){
 																'<span style="color:red"></span>');
 												return false;
 											} else if (result == '0') {
-												alert("존재하지 않는 사용자입니다.");
+												/* alert("존재하지 않는 사용자입니다."); */
 												$('input[name="schesubmit"]')
 														.attr('disabled',
 																'disabled');
@@ -397,21 +397,13 @@ function total(){
 				<div class="wrap-icon-header flex-w flex-r-m">
 
 					<c:choose>
-						<c:when test="${loginuser.usertype eq '1' }">
-							<ul class="main-menu">
-								<li><a href="">${loginuser.userid} </a></li>
-								<li><a href="logout.mc">LOGOUT</a></li>
-								<li><a href="customerupdate.mc?userid=${loginuser.userid}">회원정보수정</a></li>
-								<li><a href="proregister.mc">PRO REGISTER</a></li>
-								<li><a href="product_list.mc">PRODUCT LIST</a></li>
-							</ul>
-						</c:when>
 						<c:when test="${loginuser.usertype eq null }">
 							<ul class="main-menu">
 								<li><a href="login.mc">LOGIN</a></li>
 								<li><a href="uregister.mc">REGISTER</a></li>
 							</ul>
 						</c:when>
+						
 						<c:otherwise>
 							<ul class="main-menu">
 								<li><a>${loginuser.userid} </a></li>
@@ -444,6 +436,7 @@ function total(){
     	
 		<div class="flex-w flex-tr">
 			<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+			
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
 					<label class="stext-102 cl3">예약 날짜</label> 
 					<input
@@ -459,26 +452,25 @@ function total(){
 						id="schedulename" type="text" name="calName" required="required">
 				</div>
         
-				<div class="col-sm-6 p-b-5 m-lr-auto ">
+				<div class="col-sm-6 p-b-5 m-lr-auto">
 					<label class="stext-102 cl3">출발지 정보</label> 
-					<input
-						class="size-111 bor8 stext-102 cl2 p-lr-20"
-						id="schedulelocationstart" type="text" name="sAddress" required="required">
-						<!-- <input type="button" class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
-							onclick="input1()" style="width: 300px; height: 50px" value="등록"> -->
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="schedulelocationstart" type="text" name="sAddress" required="required">
 					<input type="hidden" name="sLat" id="sLat">
 					<input type="hidden" name="sLng" id="sLng">  
-				</div>
+					</div>
+
+	
 		
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
 					<label class="stext-102 cl3">도착지 정보</label> 
 					<input	class="size-111 bor8 stext-102 cl2 p-lr-20"
 					id="schedulelocationend" type="text" name="eAddress" required="required">
-					<input type="button" class="flex-c-m m-lr-auto stext-101 cl0 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
-					onclick="total()"	style="width: 300px; height: 50px" value="경로등록">
+					<input type="button" onclick="total()" value="경로등록" />
+		
 					<input type="hidden" name="eLat" id="eLat">
 					<input type="hidden" name="eLng" id="eLng">
 					<input type="hidden" name="eTime" id="eTime">   
+         
 				</div>
         
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
