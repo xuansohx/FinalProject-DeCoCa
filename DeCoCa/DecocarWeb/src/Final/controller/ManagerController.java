@@ -134,7 +134,28 @@ public class ManagerController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		mv.addObject("cs", cs);
+		// Cutting status and String -> Integer
+		/* mv.addObject("cs", cs); */
+		String status = cs.getStatus(); // get Status
+		int battery = Integer.parseInt(status.substring(0,3));
+		int speed = Integer.parseInt(status.substring(3,6));
+		int pressure = Integer.parseInt(status.substring(6,8));
+		int temperature = Integer.parseInt(status.substring(8,10));
+		int door = Integer.parseInt(status.substring(10,11));
+		int seatbelt = Integer.parseInt(status.substring(11,12));
+		int brake = Integer.parseInt(status.substring(12,13));
+		int engine = Integer.parseInt(status.substring(13));
+		
+		mv.addObject("battery",battery);
+		mv.addObject("speed",speed);
+		mv.addObject("pressure",pressure);
+		mv.addObject("temperature",temperature);
+		mv.addObject("door",door);
+		mv.addObject("seatbelt",seatbelt);
+		mv.addObject("brake",brake);
+		mv.addObject("engine",engine);
+		
+		mv.addObject("car",car);
 		mv.addObject("center", "manager/cdetail");
 		mv.setViewName("main");
 		return mv;

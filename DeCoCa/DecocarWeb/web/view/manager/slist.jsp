@@ -80,7 +80,7 @@ a:hover {
 <body class="animsition">
 
 	<h1 id="page_title">
-		RESERVATION LIST<br>
+		Reservation List<br>
 	</h1>
 	<form class="bg0 p-t-75 p-b-85">
 		<div class="container">

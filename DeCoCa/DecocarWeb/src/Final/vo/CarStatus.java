@@ -3,18 +3,6 @@ package Final.vo;
 public class CarStatus {
 	int carid;
 	String status;
-//	int statusid;
-//	int battery;
-//	int tire;
-//	int door;
-//	int safebelt;
-//	int brake;
-//	int engine;
-//	int handle;
-//	String temperature;
-//	String speed;
-//	String carlng;
-//	String carlat;
 
 	public CarStatus() {
 

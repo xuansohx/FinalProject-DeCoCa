@@ -147,12 +147,12 @@ a:hover {
 										<c:when test="${r.calstatus eq '3'}">
 											<td class="column-7">완료</td>
 											<style> /* reservation completed Check */
-.table_row {
-	text-decoration-line: line-through;
-	text-decoration-color: #FE2E2E;
-	color: #E6E6E6; /* Font Color */
-}
-</style>
+											.table_row {
+											text-decoration-line: line-through;
+											text-decoration-color: #FE2E2E;
+											color: #E6E6E6; /* Font Color */
+											}
+											</style>
 										</c:when>
 									</c:choose>
 
