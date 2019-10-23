@@ -49,10 +49,13 @@ public class CarStatusController {
 	}
 
 	@RequestMapping("/statusCenter.mc")
-	public ModelAndView getStatusFromAndroid(String carid, String carstatus) {
+	public ModelAndView getStatusFromAndroid(String carid, String carstatus,String lat, String lng) {
 		ModelAndView mv = new ModelAndView();
 		int car_id = Integer.parseInt(carid);
-		CarStatus cs = new CarStatus(car_id,carstatus);
+		double la = Double.parseDouble(lat);
+		double ln = Double.parseDouble(lng);
+		CarStatus cs = new CarStatus(car_id, carstatus,la,ln);
+		System.out.println(cs);
 		try {
 			csbiz.modify(cs);
 		} catch (Exception e) {
@@ -68,15 +71,15 @@ public class CarStatusController {
 		ArrayList<Car> clist = null;
 		Reservation reserve = null;
 		String uid = null;
-		int rcarid =0;
-		int rcalid =0;
+		int rcarid = 0;
+		int rcalid = 0;
 		int cal_id = Integer.parseInt(calid);
 		try {
 			reserve = rbiz.get(cal_id);
-			//reserve = urbiz.get(uid);
+			// reserve = urbiz.get(uid);
 			uid = reserve.getUserid();
 			rcarid = reserve.getCarid();
-			rcalid = reserve.getCalid();			
+			rcalid = reserve.getCalid();
 			rcalid = reserve.getCalid();
 			clist = carbiz.getAll(1);
 		} catch (Exception e) {
@@ -93,23 +96,23 @@ public class CarStatusController {
 		// Allocation
 		// reservation table에는 carid, car table에는 calid
 
-		 Car car = null;
-			for(int i=0; i<CarArray.length; i++) {
-				car = CarArray[i];
-				if(rcarid == 0) {
-					if(car.getCalid()==0) {
-						reserve.setCarid(car.getCarid());
-						car.setCalid(rcalid);
-						System.out.println("calid로 가져온 스케줄"+rcalid);
-						break;
-					}
+		Car car = null;
+		for (int i = 0; i < CarArray.length; i++) {
+			car = CarArray[i];
+			if (rcarid == 0) {
+				if (car.getCalid() == 0) {
+					reserve.setCarid(car.getCarid());
+					car.setCalid(rcalid);
+					System.out.println("calid로 가져온 스케줄" + rcalid);
+					break;
 				}
 			}
 		}
-		reserve.setReuserid("None");		
+
+		reserve.setReuserid("None");
 		// insert DataBase
 		try {
-			//reuid 가 null이 뜬다
+			// reuid 가 null이 뜬다
 			carbiz.modify(car);
 			rbiz.modify(reserve);
 		} catch (Exception e) {
@@ -123,10 +126,10 @@ public class CarStatusController {
 		ModelAndView mv = new ModelAndView();
 		CarStatus cs = null;
 		int caridd = Integer.parseInt(carid);
-		System.out.println("getStatus.mc 이후의 carid : "+caridd);
+		System.out.println("getStatus.mc 이후의 carid : " + caridd);
 		try {
 			cs = csbiz.get(caridd);
-			System.out.println("carid로 가져온 cat stat : "+cs);
+			System.out.println("carid로 가져온 cat stat : " + cs);
 //			csbiz.modify(cs);
 			// csbiz.register(cs);
 		} catch (Exception e) {
