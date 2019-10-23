@@ -5,9 +5,7 @@
 
 
 <style>
-@import
-	url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap')
-	;
+@import url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap');
 
 .homepackage {
 	width: 250px;

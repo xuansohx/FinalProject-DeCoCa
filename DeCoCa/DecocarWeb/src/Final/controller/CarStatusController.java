@@ -108,7 +108,6 @@ public class CarStatusController {
 				}
 			}
 		}
-
 		reserve.setReuserid("None");
 		// insert DataBase
 		try {
