@@ -49,10 +49,13 @@ public class CarStatusController {
 	}
 
 	@RequestMapping("/statusCenter.mc")
-	public ModelAndView getStatusFromAndroid(String carid, String carstatus) {
+	public ModelAndView getStatusFromAndroid(String carid, String carstatus,String lat, String lng) {
 		ModelAndView mv = new ModelAndView();
 		int car_id = Integer.parseInt(carid);
-		CarStatus cs = new CarStatus(car_id, carstatus);
+		double la = Double.parseDouble(lat);
+		double ln = Double.parseDouble(lng);
+		CarStatus cs = new CarStatus(car_id, carstatus,la,ln);
+		System.out.println(cs);
 		try {
 			csbiz.modify(cs);
 		} catch (Exception e) {
