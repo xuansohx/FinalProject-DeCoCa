@@ -1,9 +1,14 @@
 package Final.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -139,4 +144,107 @@ public class ManagerController {
 		mv.setViewName("main");
 		return mv;
 	}	
+	
+	// highcharts
+	@RequestMapping("/showchart.mc")
+	public ModelAndView showchart() {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("center", "manager/showchart");
+		mv.setViewName("main");
+		return mv;
+	}
+	
+	@RequestMapping("/chartStype.mc")
+	public void chartStype(HttpServletResponse rep) {
+		ArrayList<Reservation> slist = null;
+		try {
+			slist = rbiz.getAll(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		int typecnt1 = 0;
+		int typecnt2 = 0;
+		int typecnt3 = 0;
+		for(int i=0; i<slist.size(); i++) {
+			if(slist.get(i).getsStyle() == 1) {
+				typecnt1++;
+			}else if(slist.get(i).getsStyle() == 2) {
+				typecnt2++;
+			}else if(slist.get(i).getsStyle() == 3) {
+				typecnt3++;
+			}
+		}
+		// JSON
+		JSONArray jb = new JSONArray();
+		JSONObject jo = new JSONObject(); 
+		jb.put(typecnt1);
+		jb.put(typecnt2);
+		jb.put(typecnt3);
+		System.out.println(jb);
+		PrintWriter out = null;
+		rep.setCharacterEncoding("EUC-KR");
+		rep.setContentType("text/json;charset=UTF-8");
+		try {
+			out = rep.getWriter();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		out.print(jb.toString());
+	}
+	
+	@RequestMapping("/chartStime.mc")
+	public void chartStime(HttpServletResponse rep) {
+		ArrayList<Reservation> slist = null;
+		try {
+			slist = rbiz.getAll(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		int t1 = 0, t2 = 0, t3 = 0, t4 = 0, t5 = 0, t6 = 0, t7 = 0, t8 = 0;
+		for(int i=0; i<slist.size(); i++) {
+			String dtime = slist.get(i).getsTime();
+			String[] time = dtime.split(":");
+			int hour = Integer.parseInt(time[0]);
+			int minute = Integer.parseInt(time[1]);
+			if(0<=hour && hour<3) {
+				t1++;
+			}else if(3<=hour && hour<6) {
+				t2++;
+			}else if(6<=hour && hour<9) {
+				t3++;
+			}else if(9<=hour && hour<12) {
+				t4++;
+			}else if(12<=hour && hour<15) {
+				t5++;
+			}else if(15<=hour && hour<18) {
+				t6++;
+			}else if(18<=hour && hour<21) {
+				t7++;
+			}else if(21<=hour && hour<24) {
+				t8++;
+			}
+		}
+		// JSON
+		JSONArray jb = new JSONArray();
+		JSONObject jo = new JSONObject(); 
+		jb.put(t1);
+		jb.put(t2);
+		jb.put(t3);
+		jb.put(t4);
+		jb.put(t5);
+		jb.put(t6);
+		jb.put(t7);
+		jb.put(t8);
+		System.out.println(jb);
+		PrintWriter out = null;
+		rep.setCharacterEncoding("EUC-KR");
+		rep.setContentType("text/json;charset=UTF-8");
+		try {
+			out = rep.getWriter();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		out.print(jb.toString());
+	}
+	
 }

@@ -91,6 +91,7 @@
 								reservation management page
 								<li><a href="manageSche.mc">schedule</a></li>
 								--> 
+								<li><a href="showchart.mc">chart</a></li>
 								<li><a href="logout.mc">logout</a></li>
 							</ul>
 						</c:when>
