@@ -4,8 +4,7 @@ public class CarStatus {
 	int carid;
 	String status;
 	double lat;
-	double lng;
-	
+	double lng;	
 //	int statusid;
 //	int battery;
 //	int tire;
