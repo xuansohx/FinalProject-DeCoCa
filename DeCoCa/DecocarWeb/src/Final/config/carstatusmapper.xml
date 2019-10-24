@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		, CARLNG=#{carlng},CARLAT=#{carlat} WHERE STATUSID=#{statusid}
 	</update> -->
 	<update id="update" parameterType="carstatus">
-		UPDATE CAR_STAT SET status=#{status} WHERE car_id=#{carid}
+		UPDATE CAR_STAT SET status=#{status},LAT=#{lat}, LNG=#{lng} WHERE car_id=#{carid}
 	</update>
 	
 	<delete id="delete" parameterType="Integer">

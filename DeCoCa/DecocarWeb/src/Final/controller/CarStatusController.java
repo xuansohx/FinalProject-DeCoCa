@@ -1,6 +1,7 @@
 package Final.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
@@ -48,11 +49,34 @@ public class CarStatusController {
 		return mv;
 	}
 
+	
+	@RequestMapping("/getPincode.mc")
+	public String getPincode(HttpServletResponse response, String carid) {
+		PrintWriter out = null;
+		int car_id = Integer.parseInt(carid);
+		Car car = null;
+		int pincode =0;
+		try {
+			car= carbiz.get(car_id);
+			int calid =car.getCalid();
+			Reservation res = rbiz.get(calid);
+			pincode= res.getPinNum();
+			out = response.getWriter();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		out.println(pincode);
+		out.flush();
+		return "str";
+	}
 	@RequestMapping("/statusCenter.mc")
-	public ModelAndView getStatusFromAndroid(String carid, String carstatus) {
+	public ModelAndView getStatusFromAndroid(String carid, String carstatus,String lat, String lng) {
 		ModelAndView mv = new ModelAndView();
 		int car_id = Integer.parseInt(carid);
-		CarStatus cs = new CarStatus(car_id, carstatus);
+		double la = Double.parseDouble(lat);
+		double ln = Double.parseDouble(lng);
+		CarStatus cs = new CarStatus(car_id, carstatus,la,ln);
+		System.out.println(cs);
 		try {
 			csbiz.modify(cs);
 		} catch (Exception e) {

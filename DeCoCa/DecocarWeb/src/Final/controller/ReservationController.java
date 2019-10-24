@@ -41,6 +41,19 @@ public class ReservationController {
 	// Click Reservation OK Button
 	@RequestMapping("/schregisterimpl.mc")
 	public void schregisterimpl(Reservation reserve, HttpServletResponse response, HttpSession session) {
+		
+		//Add Log
+		Reservation rr = null;
+		ArrayList<Reservation> relist = null; 
+		
+		try {
+			relist = rbiz.getAll(1);
+			session.setAttribute("rr", relist);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
+		
 		String reusid = reserve.getReuserid();
 		if(reusid.equals("") || reusid==null) {
 			reserve.setReuserid("none");
