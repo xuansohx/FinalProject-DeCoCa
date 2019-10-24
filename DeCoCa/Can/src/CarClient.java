@@ -26,11 +26,13 @@ public class CarClient implements SerialPortEventListener {
 	static String str;
 	static CarClient st;
 	static CarClient client;
-	String checkData;	
-	static String [] status = new String[13];
+	String checkData;
+	static String[] status = new String[13];
+
 	public CarClient() {
 
 	}
+
 	public CarClient(String ip, int port) throws IOException {
 		boolean flag = true;
 		while (flag) {
@@ -52,12 +54,13 @@ public class CarClient implements SerialPortEventListener {
 	}
 
 	public String statustoString() {
-		String str="";
-		for(int i=1;i<13;i++) {
-			str+=status[i];
+		String str = "";
+		for (int i = 1; i < 13; i++) {
+			str += status[i];
 		}
 		return str;
 	}
+
 	public void sendMsg(String msg) throws IOException {
 		Sender sender = null;
 		sender = new Sender(socket);
@@ -116,45 +119,55 @@ public class CarClient implements SerialPortEventListener {
 			in = socket.getInputStream();
 			din = new DataInputStream(in);
 		}
+
 		public void run() {
 			try {
 				while (rflag) {
 					str = din.readUTF();
 					System.out.println(str);
+					if (str.charAt(0) == 't') {
+						String tmp = str.substring(1);
+						status[3] = tmp;
+						st.sendData("W28" + statustoString());
+					}
 					if (str.equals("1")) { // 정보를 cluster 한테 보낸다.
 						System.out.println(statustoString());
 						sendMsg(statustoString());
-					}else if(str.equals("2")) { // 문 열고 닫기
-						if(status[9].equals("1")) //열려있다면 
-							status[9]="0"; // 잠궈라
-						else if (status[9].equals("")) //닫혀있으면 
-							status[9]="1"; // 열어라
-						st.sendData("W28"+statustoString());
-					}else if(str.equals("3")) {// 시동관리
-						if(status[12].equals("1"))  
-							status[12]="0"; // 꺼라						
-						else if (status[12].equals("0")) 
-							status[12]="1"; // 켜라
-						st.sendData("W28"+statustoString());
+					} else if (str.equals("2")) { // 문 열고 닫기
+						if (status[5].equals("1")) // 열려있다면
+							status[5] = "0"; // 잠궈라
+						else if (status[5].equals("0")) // 닫혀있으면
+							status[5] = "1"; // 열어라
+						st.sendData("W28" + statustoString());
 					}
 				}
 			} catch (Exception e) {
 			}
 		}
-	}	
+	}
+
 	public boolean checkSerialData(String data) {
 		boolean check = false;
 		// :U2800000050000000000000002046
 		checkData = data.substring(1, 28);
 		String checkSum = data.substring(28, 30);
-		for(int i=1;i<=3;i++) {
-			status[i]=data.substring(i*3+1,i*3+4);
+		if (data.charAt(1) == 'U') {
+			for (int i = 1; i <= 2; i++) {
+				status[i] = data.substring(i * 3 + 1, i * 3 + 4);
+			}
+			for (int i = 1; i <= 2; i++) {
+				status[i + 2] = data.substring(i * 2 + 8, i * 2 + 10);
+			}
+			for (int i=1;i<=4;i++) {
+				status[i+4]=data.substring(i + 13,i+1 + 13);
+			}
+			for (int i = 1; i <= 2; i++) {
+				status[i+8] = data.substring(i * 3 + 15, i * 3 + 18);
+			}
+			for (int i = 1; i <= 2; i++) {
+				status[i + 10] = data.substring(i * 2 +22, i * 2 + 24);
+			}
 		}
-		for(int i=1;i<=5;i++) {
-			status[i+3]=data.substring(i*2+11,i*2+13);
-		}
-		for(int j=9,i=23;i<=26;i++,j++)
-			status[j]=data.substring(i,i+1);
 		char c[] = checkData.toCharArray();
 		int cdata = 0;
 		for (char cc : c) {
@@ -191,7 +204,7 @@ public class CarClient implements SerialPortEventListener {
 				boolean result = checkSerialData(ss);
 				System.out.println("Result:" + result);
 				System.out.println("Receive Low Data:" + ss + "||");
-								
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -229,9 +242,11 @@ public class CarClient implements SerialPortEventListener {
 
 	private class SerialWriter implements Runnable {
 		String data;
+
 		public SerialWriter() {
 			this.data = ":G11A9\r"; // 나도 같이 참가 하겠습니다 .
 		}
+
 		public SerialWriter(String serialData) {
 			// W28 00000000 000000000000
 			// :W28 00000000 000000000000 53 \r : \r 시작과 끝 53 체크섬
@@ -239,6 +254,7 @@ public class CarClient implements SerialPortEventListener {
 			System.out.println(sdata);
 			this.data = sdata;
 		}
+
 		public String sendDataFormat(String serialData) {
 			serialData = serialData.toUpperCase();
 			char c[] = serialData.toCharArray();
@@ -253,6 +269,7 @@ public class CarClient implements SerialPortEventListener {
 			returnData += "\r";
 			return returnData;
 		}
+
 		public void run() {
 			try {
 				byte[] inputData = data.getBytes();
@@ -262,6 +279,7 @@ public class CarClient implements SerialPortEventListener {
 			}
 		}
 	}
+
 	public CarClient(String portName) throws NoSuchPortException {
 		portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
 		// 포트가 정상이면 CONNECT
@@ -275,16 +293,16 @@ public class CarClient implements SerialPortEventListener {
 			e.printStackTrace();
 		}
 	}
+
 	public static void main(String[] args) throws Exception {
-		client = null;		
+		client = null;
 		try {
 			// CarClient st = new CarClient("COM5");
-			//st = new CarClient("COM5");
+			// st = new CarClient("COM5");
 			st = new CarClient("COM12");
 			client = new CarClient("70.12.225.81", 1234);
 			client.start();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
