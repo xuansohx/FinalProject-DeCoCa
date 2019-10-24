@@ -217,9 +217,6 @@ function input2(){
 	tData = new Tmap.TData();
 	tData.events.register("onComplete", tData, onComplete);
 	tData.getAutoCompleteSearch(temp2, 5);
-	
-
-	
 }
 
 function total(){
@@ -466,11 +463,9 @@ function total(){
 					<input	class="size-111 bor8 stext-102 cl2 p-lr-20"
 					id="schedulelocationend" type="text" name="eAddress" required="required">
 					<input type="button" onclick="total()" value="경로등록" />
-		
 					<input type="hidden" name="eLat" id="eLat">
 					<input type="hidden" name="eLng" id="eLng">
 					<input type="hidden" name="eTime" id="eTime">   
-         
 				</div>
         
 				<div class="col-sm-6 p-b-5 m-lr-auto ">
