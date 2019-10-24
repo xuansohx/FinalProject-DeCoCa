@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import Final.frame.Biz;
 import Final.vo.Car;
 import Final.vo.CarStatus;
+import Final.vo.Client;
 import Final.vo.Reservation;
 import Final.vo.User;
 
@@ -49,7 +50,6 @@ public class CarStatusController {
 		return mv;
 	}
 
-	
 	@RequestMapping("/getPincode.mc")
 	public String getPincode(HttpServletResponse response, String carid) {
 		PrintWriter out = null;
@@ -135,6 +135,9 @@ public class CarStatusController {
 			// reuid 가 null이 뜬다
 			carbiz.modify(car);
 			rbiz.modify(reserve);
+			sendSche(car.getCarid(), car.getCalid()); 
+			//배차가 완료 되면 배차를 시키고 그 차에 일정의 eTime을 보내준다 
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -158,5 +161,46 @@ public class CarStatusController {
 		mv.setViewName("admin/cardetail");
 		return mv;
 	}
-
+	@RequestMapping("/abcd.mc")
+	public ModelAndView getS(String carid , String calid) {
+		ModelAndView mv = new ModelAndView();
+		CarStatus cs = null;
+		int caridd = Integer.parseInt(carid);
+		int callid = Integer.parseInt(calid);
+		try {
+			sendSche(caridd, callid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.setViewName("main");
+		return mv;
+	}
+	public void sendSche(int carid, int calid){
+		Client c = new Client("70.12.60.110", 9999);
+		try {
+			String etime = rbiz.get(calid).geteTime();
+			c.setMsg(0, carid, etime);
+			c.startClient();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping("/getcarEtime.mc")
+	public void getCarsEtime(HttpServletResponse response, String carid) {
+		PrintWriter out = null;
+		int car_id = Integer.parseInt(carid);
+		Car car = null;
+		String etime = null;
+		try {
+			car= carbiz.get(car_id);
+			int calid =car.getCalid();
+			Reservation res = rbiz.get(calid);
+			etime = res.geteTime();
+			out = response.getWriter();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		out.println(etime);
+		out.flush();
+	}
 }

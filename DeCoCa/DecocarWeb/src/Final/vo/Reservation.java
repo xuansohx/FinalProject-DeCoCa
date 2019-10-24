@@ -229,7 +229,10 @@ public class Reservation {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
-
+	public String toStatus() {
+		String str="";
+		return str;
+	}
 
 	@Override
 	public String toString() {

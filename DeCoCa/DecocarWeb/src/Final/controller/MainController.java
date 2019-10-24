@@ -147,7 +147,7 @@ public class MainController {
 	public ModelAndView updateOnecar(ModelAndView mv, String car) {
 		int car_id = Integer.parseInt(car);
 		Client c = new Client("70.12.60.110", 9999);
-		c.setMsg(0, car_id, 0000);
+		c.setMsg(2, car_id, 0000);
 		try {
 			c.startClient();
 		} catch (Exception e) {
