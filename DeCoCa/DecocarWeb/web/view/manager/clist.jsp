@@ -38,7 +38,7 @@ a:hover {
 }
 </style>
 
-<title>Product List</title>
+<title>Car List</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -76,27 +76,23 @@ a:hover {
 </head>
 
 <body class="animsition">
-<h1  id="page_title">CAR LIST<br></h1>
+<h1  id="page_title">Car List<br><br></h1>
 
-	<form class="bg0 p-t-75 p-b-85">
+	<form class="bg0 p-b-85">
 		<div class="container">
 
-			<!-- <div class="p-b-10">
-				<h3 class="ltext-103 cl5">예약 리스트</h3>
-			</div> -->
-
 			<div class="row">
-				<!-- <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50"> -->
+				 <div class="m-lr-auto m-b-50">
+				 <!-- col-lg-10 col-xl-7 (remove) --> 
 					<div class="m-l-25 m-r--38 m-lr-0-xl">
-						<div class="wrap-table-shopping-cart">
+						<div class="wrap-table-shopping-cart" style="overflow: hidden">
 							<table class="table-shopping-cart">
 								<tr class="table_head">
 									<th class="column-1">ID</th>
-									<th class="column-2">STATUSID</th>
-									<th class="column-3">CARTYPE</th>
-									<th class="column-4">CALID</th>
-									<th class="column-5">CARTYPE</th>
-									<th class="column-6">CARNUMBER</th>
+									<th class="column-2">NUMBER</th>
+									<th class="column-3">TYPE</th>
+									<!-- <th class="column-4">CENTER</th> -->
+									<th class="column-5">CALID</th>
 								</tr>
 
 								<c:forEach var="c" items="${clist }">
@@ -104,14 +100,24 @@ a:hover {
 										<td class="column-1"><a
 											href="cardetailM.mc?carid=${c.carid }">${c.carid }</a></td>
 										<td class="column-2"><a
-											href="cardetailM.mc?carid=${c.carid }">${c.statusid }</a></td>
-										<td class="column-3"><a
-											href="cardetailM.mc?carid=${c.carid }">${c.cartype }</a></td>
-										<td class="column-4"><a
-											href="cardetailM.mc?carid=${c.carid }">${c.calid }</a></td>
-										<td class="column-5"><a
 											href="cardetailM.mc?carid=${c.carid }">${c.carnumber }</a></td>
-										<td class="column-6"><a
+											
+										<!-- Car Type -->
+										<c:choose>
+										<c:when test="${c.cartype == 0}">
+											<td class="column-3"><a
+											href="cardetailM.mc?carid=${c.carid }">승용차</a></td>
+										</c:when>
+
+										<c:when test="${c.cartype == 1}">
+											<td class="column-3"><a
+											href="cardetailM.mc?carid=${c.carid }">화물차</a></td>
+										</c:when>
+										</c:choose>
+
+										<%-- <td class="column-4"><a
+											href="cardetailM.mc?carid=${c.carid }">${c.centerid }</a></td> --%>
+										<td class="column-5"><a
 											href="cardetailM.mc?carid=${c.carid }">${c.calid }</a></td>
 									</tr>
 								</c:forEach>
@@ -120,7 +126,7 @@ a:hover {
 						</div>
 					</div>
 				</div>
-		<!-- 	</div> -->
+		 	</div>
 		</div>
 	</form>
 

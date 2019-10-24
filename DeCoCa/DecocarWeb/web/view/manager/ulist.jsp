@@ -79,7 +79,7 @@ a:hover {
 
 <body class="animsition">
 	<h1 id="page_title">
-		USER LIST<br>
+		User List<br>
 	</h1>
 
 	<form class="bg0 p-t-75 p-b-85">

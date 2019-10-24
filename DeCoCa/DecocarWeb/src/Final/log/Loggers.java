@@ -21,69 +21,64 @@ import Final.vo.Reservation;
 public class Loggers {
 	private Logger work_log = Logger.getLogger("work");
 	private Logger user_log = Logger.getLogger("user");
+	private Logger admin_log = Logger.getLogger("admin");
 	private Logger data_log = Logger.getLogger("data");
-
+	static String userid;
+	
 	// before
 	@Before("execution(* Final..*Controller.*(..))")
 	public void logging(JoinPoint jp) {
 		HttpSession session = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest()
 				.getSession();
 		String viewName = null;
-
-		// System.out.println(session);
-		// System.out.println(session.getAttribute("loginuser"));
 		if (jp.getSignature().getName() == "setView") {
 			viewName = (String) jp.getArgs()[1];
 		}
-
 		if (session.getAttribute("loginuser") != null) {
 			User user = (User) session.getAttribute("loginuser");
-			// MDC.put("pnumber", user.getPnumber());
-			// MDC.put("userid", user.getUserid());
-
-			System.out.println(user.getUserid());
-			System.out.println(user.getPnumber());
-
 		}
-		// MDC.put("userid","hi");
-		// System.out.println("gi");
-		work_log.debug(jp.getSignature().getName());
-		user_log.debug(jp.getSignature().getName());
-		data_log.debug(jp.getSignature().getName());
-
+		// work_log.debug(jp.getSignature().getName());
+		// user_log.debug(jp.getSignature().getName());
+		// data_log.debug(jp.getSignature().getName());
 	}
 
-	@After("execution(* Final.controller..*Controller.*(..))")
+	@After("execution(* Final.controller..*Controller.loginimpl(..))")
 	public void loggingAfter(JoinPoint jp) {
 		HttpSession session = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest()
 				.getSession();
 		String viewName = null;
 		if (session.getAttribute("loginuser") != null) {
 			User user = (User) session.getAttribute("loginuser");
-			// Reservation r = (Reservation) session.getAttribute("rr");
+			
+			userid = user.getUserid();
+			MDC.put("pnumber", user.getPnumber());
+			MDC.put("userid", user.getUserid());
 
-			// MDC.put("pnumber", user.getPnumber());
-			// MDC.put("userid", user.getUserid());
-
-			System.out.println(user.getUserid());
-			System.out.println(user.getPnumber());
-			// System.out.println(r.getCalDate());
-
-			// work_log.debug(jp.getSignature().getName());
-			// user_log.debug(jp.getSignature().getName());
-			// data_log.debug(jp.getSignature().getName());
+			if(user.getUsertype() == 0) {
+				
+				user_log.debug(jp.getSignature().getName());
+			}
+			else {
+				admin_log.debug(jp.getSignature().getName());
+				
+			}
 		}
 	}
-	
-	//return type, location, last sentance, mc
+
+	// return type, location, last sentance, mc
 	@After("execution(* Final.controller..*Controller.schregisterimpl(..))")
 	public void scheduleAfter(JoinPoint jp) {
-		HttpSession session = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest().getSession();
-		
-		
+		HttpSession session = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest()
+				.getSession();
 		Reservation re = (Reservation) jp.getArgs()[0];
-		System.out.println(re.geteAddress());
-		System.out.println(re.getMemo());
+		
+		MDC.put("userid", userid);
+		MDC.put("schedule", re.getCalDate());
+		MDC.put("sTime", re.getsTime());
+		MDC.put("eTime", re.geteTime());
+		
+		
+		user_log.debug(jp.getSignature().getName());
 	}
 
 	// after
