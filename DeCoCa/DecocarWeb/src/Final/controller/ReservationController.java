@@ -74,7 +74,7 @@ public class ReservationController {
 		minute%=60;
 		hour += ehour+uphour;
 		hour = hour % 24;
-    
+		reserve.seteTime(hour+":"+minute);
 		/* create PinNumber */
 		Random r = new Random();
 		String key = ""; // pinNumber
