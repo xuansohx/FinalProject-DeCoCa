@@ -167,6 +167,18 @@ public class ReservationController {
 		String dtime = dfull.substring(11, 16);
 		reserve.setCalDate(ddate);
 		reserve.setsTime(dtime);
+		String[] time = dtime.split(":");
+		int hour = Integer.parseInt(time[0]);
+		int minute = Integer.parseInt(time[1]);
+		int eTime = Integer.parseInt(reserve.geteTime());
+		int emin = eTime % 60;
+		int ehour = eTime / 60;
+		minute+=emin;
+		int uphour = minute/60;
+		minute%=60;
+		hour += ehour+uphour;
+		hour = hour % 24;
+		reserve.seteTime(hour+":"+minute);
 		try {
 			rbiz.modify(reserve);
 		} catch (Exception e) {
