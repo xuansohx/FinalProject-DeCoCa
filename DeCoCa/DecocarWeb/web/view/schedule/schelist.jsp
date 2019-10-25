@@ -115,7 +115,7 @@ a:hover {
 							</tr>
 
 							<c:forEach var="r" items="${rlist }">
-								<tr class="table_row">
+								<tr class="table_row t${r.calid}">
 									<td class="column-1"><a
 										href="schedetail.mc?calid=${r.calid }">${r.calid } </a></td>
 									<td class="column-2"><a
@@ -134,6 +134,7 @@ a:hover {
 									<c:choose>
 										<c:when test="${r.calstatus eq '0'}">
 											<td class="column-7">예정</td>
+											
 										</c:when>
 
 										<c:when test="${r.calstatus eq '1'}">
@@ -147,7 +148,7 @@ a:hover {
 										<c:when test="${r.calstatus eq '3'}">
 											<td class="column-7">완료</td>
 											<style> /* reservation completed Check */
-											.table_row {
+											.t${r.calid} {
 											text-decoration-line: line-through;
 											text-decoration-color: #FE2E2E;
 											color: #E6E6E6; /* Font Color */
