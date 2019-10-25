@@ -5,7 +5,9 @@
 
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap');
+@import
+	url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap')
+	;
 
 .homepackage {
 	width: 250px;
@@ -27,11 +29,11 @@
 	margin-bottom: 10px;
 }
 
-.homebttext> a > h1 {
+.homebttext>a>h1 {
 	font-family: 'Lalezar', cursive;
 }
 
-.homebttext > h6 {
+.homebttext>h6 {
 	font-family: 'Noto Sans KR', sans-serif;
 }
 </style>
@@ -77,7 +79,7 @@
 				<%-- manager mode --%>
 				<c:when test="${loginuser.usertype eq '1' }">
 					<div class="homepackage">
-					<a href="manageUser.mc"> <img src="img/manage_user.png"
+						<a href="manageUser.mc"> <img src="img/manage_user.png"
 							class="homebtimg"></a>
 						<div class="homebttext">
 							<a href="manageUser.mc"><h1>User</h1></a>
@@ -85,7 +87,7 @@
 					</div>
 
 					<div class="homepackage">
-					<a href="manageSche.mc"> <img src="img/manage_calendar.png"
+						<a href="manageSche.mc"> <img src="img/manage_calendar.png"
 							class="homebtimg"></a>
 						<div class="homebttext">
 							<a href="manageSche.mc"><h1>Reservation</h1></a>
@@ -100,6 +102,11 @@
 							<a href="manageCar.mc"><h1>Car</h1></a>
 						</div>
 					</div>
+
+					<%-- CAR MAP --%>
+					<div id="map_div"></div>
+					<p id="result"></p>
+
 				</c:when>
 
 				<%-- general --%>
