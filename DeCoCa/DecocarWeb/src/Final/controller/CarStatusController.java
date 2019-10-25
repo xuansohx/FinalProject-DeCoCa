@@ -179,7 +179,8 @@ public class CarStatusController {
 		Client c = new Client("70.12.60.110", 9999);
 		try {
 			String etime = rbiz.get(calid).geteTime();
-			c.setMsg(0, carid, etime);
+			c.setMsg(carid, etime);
+			System.out.println("sendSche "+carid+" "+etime);
 			c.startClient();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -202,5 +203,25 @@ public class CarStatusController {
 		}
 		out.println(etime);
 		out.flush();
+	}
+	@RequestMapping("/getcarEnd.mc")
+	public ModelAndView getCarEnd(String carid) {
+		ModelAndView mv = new ModelAndView();
+		int car_id = Integer.parseInt(carid);
+		Car car = null;
+		Reservation res = null;
+		try {
+			car = carbiz.get(car_id);
+			res=rbiz.get(car.getCalid());			
+			car.setCalid(0);
+			carbiz.modify(car);
+			res.setCalstatus(3);
+			rbiz.modify(res);
+			System.out.println(car_id+" 종료 "+res.getCalid());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.setViewName("admin/cardetail");
+		return mv;
 	}
 }

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import Final.frame.Biz;
 import Final.vo.Car;
 import Final.vo.CarStatus;
+import Final.vo.Path;
 import Final.vo.Reservation;
 import Final.vo.User;
 import Final.vo.Path;
@@ -37,11 +38,8 @@ public class ManagerController {
 	@Resource(name = "Ureserbiz")
 	Biz<String, Reservation> uresbiz;
 	
-	// add simulation
 	@Resource(name = "pbiz")
 	Biz<Integer, Path> pbiz;
-	
-
 	@RequestMapping("/manmain.mc")
 	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView();
@@ -142,11 +140,9 @@ public class ManagerController {
 		
 		Car car = null;
 		CarStatus cs = null;
-		ArrayList<Path> path = null;
-		
+		ArrayList<Path> plist = null;	
 		try {
-			// 여기에 들어가는 string 값이 몰까?
-			
+			plist = pbiz.getAll(carid);
 			car = cbiz.get(carid);
 			cs = csbiz.get(carid);
 			path = pbiz.getAll(carid);
@@ -180,7 +176,10 @@ public class ManagerController {
 		mv.addObject("engine",engine);
 		
 		mv.addObject("car",car);
-		mv.addObject("center", "manager/cdetail");
+
+		mv.addObject("plist",plist);
+		System.out.println(plist);
+		mv.addObject("center", "manager/cdetail2");
 		mv.setViewName("main");
 		
 		return mv;

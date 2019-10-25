@@ -112,7 +112,7 @@ public class Server {
 	public void sendWhisper(String msg, String ip) {
 		SendThread s = new SendThread();
 		s.setMsg(msg);
-		s.setTarget(ip);
+		s.setTarget(ip);		
 		s.setCmd(1);
 		s.start();
 	}
@@ -120,7 +120,7 @@ public class Server {
 		String msg;
 		int cmd = 0;
 		String target;
-
+		
 		public void setMsg(String msg) {
 			this.msg = msg;
 		}
@@ -143,7 +143,8 @@ public class Server {
 				}
 			} else if (cmd == 1) {
 				DataOutputStream doutt;
-				doutt = map.get(target);
+				String ip = nickip.get(target);
+				doutt = map.get(ip);
 				try {
 					doutt.writeUTF(msg);
 				} catch (IOException e) {
@@ -192,15 +193,21 @@ public class Server {
 					// 3. N 번 차량의 정보를 알려줘!
 					// select-차량id
 					String[] cmd = str.split("-");
+					System.out.println(cmd[0]+"first cmd");
 					if (str.equals("selectAll")) {// 2.
 						sendMsg("updateState");
 					} else if (cmd[0].equals("select")) {// 3.
 						String target = cmd[1];
 						sendWhisper("updateState", target);
-					} else if (cmd[0].equals("sendSche")) { // 1.
+					} else if (cmd[0].equals("sche")) { // 1.
 						String target = cmd[1];
-						String scheduleId = cmd[2];
-						sendWhisper("setSche-" + scheduleId, target);
+						String schedule = cmd[2];
+						System.out.println(target+" "+schedule);
+						sendWhisper("sche-" + schedule, target);
+					}else if(cmd[0].equals("nick")) {
+						nick.put(ip, cmd[1]);
+						nickip.put(cmd[1],ip);
+						System.out.println(ip+"'s carid is "+cmd[1]);
 					}
 				}
 			} catch (Exception e) {
@@ -209,22 +216,9 @@ public class Server {
 				map.remove(ip);
 				nickip.remove(nick.get(ip));
 				nick.remove(ip);
-				System.out.println("나간후접속자수:" + map.size());
-				if (din != null) {
-					try {
-						din.close();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				}
+				System.out.println("나간후접속자수:" + map.size());				
 			} finally {
-				if (socket != null) {
-					try {
-						socket.close();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				}
+				
 			}
 		}
 		public String getClients() {

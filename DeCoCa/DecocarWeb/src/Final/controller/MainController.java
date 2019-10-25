@@ -3,7 +3,6 @@ package Final.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import Final.frame.Biz;
 import Final.vo.CarStatus;
 import Final.vo.Client;
+import Final.vo.Path;
 import Final.vo.Reservation;
 import Final.vo.User;
 
@@ -34,9 +34,22 @@ public class MainController {
 	@Resource(name = "Ureserbiz")
 	Biz<String, Reservation> uresbiz;
 	
+	@Resource(name = "pbiz")
+	Biz<Integer, Path> pbiz;
+	
 	@RequestMapping("/main.mc")
 	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView();
+//		Path path = null;
+		ArrayList<Path> plist = null;
+		
+		try {
+			plist = pbiz.getAll(2040);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(plist);
+//		System.out.println();
 		mv.addObject("center", "center");
 		mv.setViewName("main");
 		// mv.setViewName("map2");
@@ -77,7 +90,7 @@ public class MainController {
 			PrintWriter out;
 			try {
 				out = response.getWriter();
-				out.println("<script>alert('check'); location.href='login.mc'</script>");
+				out.println("<script>alert('WARNING'); location.href='login.mc'</script>");
 				out.flush();
 			} catch (IOException e1) {
 				e1.printStackTrace();
