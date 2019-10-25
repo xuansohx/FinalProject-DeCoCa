@@ -5,15 +5,19 @@
 
 <!DOCTYPE html>
 <html lang="en">
+<script
+	src="https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=a9ee13e1-cb7e-46a8-b144-14bfd0103a90"></script>
+<script type="text/javascript"></script>
+
+
 
 <head>
-
-
 <style type="text/css">
-@import url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap');
+@import
+	url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap')
+	;
 
-<!-- a 링크 속성 없애기 -->
-a:link {
+a 링크 속성 없애기 -->a:link {
 	color: inherit;
 	text-decoration: none;
 }
@@ -37,18 +41,17 @@ a:hover {
 	padding: 10px;
 }
 
-.table_image{
-width: 100px;
-height: 100px;
-text-align: center;
-margin: 0 auto;
+.table_image {
+	width: 100px;
+	height: 100px;
+	text-align: center;
+	margin: 0 auto;
 }
 
-table > tr > td{
-margin: 0 auto;
-vertical-align:center;
+table>tr>td {
+	margin: 0 auto;
+	vertical-align: center;
 }
-
 </style>
 
 <title>Car Status Detail[admin]</title>
@@ -86,35 +89,44 @@ vertical-align:center;
 <link rel="stylesheet" type="text/css" href="css/util.css">
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
+
 </head>
+
+
+
+
+
 
 <body class="animsition">
 
-	<h1 id="page_title">Car Status Detail<br><br></h1>
-	
+	<h1 id="page_title">
+		Car Status Detail<br> <br>
+	</h1>
+
 	<form class="bg0  p-b-85">
 		<div class="container">
 
 			<div class="row">
 				<div class="m-lr-auto m-b-50">
-				<!-- col-lg-10 col-xl-7 (remove) -->
+					<!-- col-lg-10 col-xl-7 (remove) -->
 					<div class="m-l-25 m-r--38 m-lr-0-xl">
 						<div class="wrap-table-shopping-cart" style="overflow: hidden">
 
-                            <!-- #################################################################################### -->
-							<!-- Table One --> <!-- Car's basic information -->
+							<!-- #################################################################################### -->
+							<!-- Table One -->
+							<!-- Car's basic information -->
 							<table class="table-shopping-cart">
 								<tr class="table_row">
-								<!-- Car Type -->
+									<!-- Car Type -->
 									<c:choose>
 										<c:when test="${car.cartype == 0}">
-											<td class="column-1" rowspan="2"><br>
-											<img src="img/CarStatus/car.png" class="table_image"></td>
+											<td class="column-1" rowspan="2"><br> <img
+												src="img/CarStatus/car.png" class="table_image"></td>
 										</c:when>
 
 										<c:when test="${car.cartype == 1}">
-											<td class="column-1" rowspan="2"><br>
-											<img src="img/CarStatus/carBox.png" class="table_image"></td>
+											<td class="column-1" rowspan="2"><br> <img
+												src="img/CarStatus/carBox.png" class="table_image"></td>
 										</c:when>
 									</c:choose>
 
@@ -132,7 +144,7 @@ vertical-align:center;
 
 							</table>
 							<br>
-							
+
 							<!-- #################################################################################### -->
 							<!-- Table Two -->
 							<!-- HEAD -->
@@ -144,65 +156,66 @@ vertical-align:center;
 									<th class="column-4">Speed</th>
 								</tr>
 
-                                <!-- IMAGE -->
+								<!-- IMAGE -->
 								<tr class="table_row">
-									
+
 									<!-- Engine -->
 									<c:choose>
 										<c:when test="${engine == 0}">
-											<td class="column-1"><br><img
+											<td class="column-1"><br> <img
 												src="img/CarStatus/off.png" class="table_image"></td>
 										</c:when>
 
 										<c:when test="${engine == 1}">
-											<td class="column-1"><br><img
+											<td class="column-1"><br> <img
 												src="img/CarStatus/on.png" class="table_image"></td>
 										</c:when>
-										</c:choose>
+									</c:choose>
 
 									<!-- Door -->
 									<c:choose>
 										<c:when test="${door == 0}">
-											<td class="column-2"><br><img
+											<td class="column-2"><br> <img
 												src="img/CarStatus/locked.png" class="table_image"></td>
 										</c:when>
 
 										<c:when test="${door == 1}">
-											<td class="column-2"><br><img
+											<td class="column-2"><br> <img
 												src="img/CarStatus/unlocked.png" class="table_image"></td>
 										</c:when>
-										</c:choose>
-										
-									
+									</c:choose>
+
+
 									<!-- Battery -->
 									<c:choose>
 										<c:when test="${battery == 0}">
-											<td class="column-3"><br><img
+											<td class="column-3"><br> <img
 												src="img/CarStatus/battery/zero.png" class="table_image"></td>
 										</c:when>
 
 										<c:when test="${0 < battery && battery <= 25}">
-											<td class="column-3"><br><img
+											<td class="column-3"><br> <img
 												src="img/CarStatus/battery/one.png" class="table_image"></td>
 										</c:when>
 
 										<c:when test="${25 < battery  && battery <= 75}">
-											<td class="column-3"><br><img
+											<td class="column-3"><br> <img
 												src="img/CarStatus/battery/two.png" class="table_image"></td>
 										</c:when>
 
 										<c:when test="${75 < battery && battery <= 100}">
-											<td class="column-7"><br><img
+											<td class="column-7"><br> <img
 												src="img/CarStatus/battery/full.png" class="table_image"></td>
 										</c:when>
 									</c:choose>
-									
+
 									<!-- Speed -->
-									<td class="column-4"><img src="img/CarStatus/speed.png" class="table_image"></td>
+									<td class="column-4"><img src="img/CarStatus/speed.png"
+										class="table_image"></td>
 								</tr>
 								<!-- ----------------------------------------------------------------------------- -->
-								    <!-- DATA -->
-									<tr class="table_row">
+								<!-- DATA -->
+								<tr class="table_row">
 									<!-- Engine -->
 									<c:choose>
 										<c:when test="${engine == 0}">
@@ -212,7 +225,7 @@ vertical-align:center;
 										<c:when test="${engine == 1}">
 											<td class="column-1">ON</td>
 										</c:when>
-										</c:choose>
+									</c:choose>
 
 									<!-- Door -->
 									<c:choose>
@@ -226,14 +239,14 @@ vertical-align:center;
 									</c:choose>
 
 									<!-- Battery -->
-									<td class="column-3">${battery } %</td> 
+									<td class="column-3">${battery }%</td>
 									<!-- Speed -->
-									<td class="column-4">${speed } km/h</td> 
+									<td class="column-4">${speed }km/h</td>
 								</tr>
-								
+
 							</table>
 							<br>
-							
+
 							<!-- #################################################################################### -->
 							<!-- Table Three -->
 							<table class="table-shopping-cart">
@@ -249,17 +262,17 @@ vertical-align:center;
 
 								<tr class="table_row">
 									<!-- SeatBelt -->
-									<td class="column-1"><br><img
+									<td class="column-1"><br> <img
 										src="img/CarStatus/seat-belt.png" class="table_image"></td>
 									<!-- Temperature -->
-									<td class="column-1"><br><img
+									<td class="column-1"><br> <img
 										src="img/CarStatus/thermometer.png" class="table_image"></td>
 									<!-- Pressure -->
-									<td class="column-3"><br><img src="img/CarStatus/wheel.png"
-										class="table_image"></td>
+									<td class="column-3"><br> <img
+										src="img/CarStatus/wheel.png" class="table_image"></td>
 									<!-- Brake -->
-									<td class="column-4"><br><img src="img/CarStatus/brake.png"
-										class="table_image"></td>
+									<td class="column-4"><br> <img
+										src="img/CarStatus/brake.png" class="table_image"></td>
 								</tr>
 								<!-- ----------------------------------------------------------------------------- -->
 								<!-- DATA -->
@@ -276,10 +289,10 @@ vertical-align:center;
 									</c:choose>
 
 									<!-- Temperature -->
-									<td class="column-2">${temperature } ℃</td>
+									<td class="column-2">${temperature }℃</td>
 
 									<!-- Pressure -->
-									<td class="column-3">${pressure} kPa</td>
+									<td class="column-3">${pressure}kPa</td>
 
 									<!-- Brake -->
 									<c:choose>
@@ -293,16 +306,36 @@ vertical-align:center;
 									</c:choose>
 								</tr>
 							</table>
+
+
+
+
 						</div>
+
+						여기다....
+						<c:forEach var="p" items="${path }">${p.LNG } ${p.LAT }</c:forEach>
+						<div id="map_div">
+						
+						</div>
+
 					</div>
+
+
+
 				</div>
+
+
+
 			</div>
+
+
+
+
 		</div>
+
+
+
 	</form>
-
-
-
-
 
 
 
@@ -345,7 +378,49 @@ vertical-align:center;
 	<!--===============================================================================================-->
 	<script src="js/main.js"></script>
 
+	<!-- Map Function -->
+	<script>									
+	var map;
+	var show;
+	var la = null;
+	var lo = null;
+	// 페이지가 로딩이 된 후 호출하는 함수입니다.
+	function initTmap() { 
+		// map 생성
+		// Tmap.map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
+		map = new Tmap.Map({div:'map_div', // map을 표시해줄 div
+							width:'100%',  // map의 width 설정
+							height:'400px' // map의 height 설정
+							}); 
+		
+		var markers = new Tmap.Layer.Markers( "MarkerLayer" );//마커 레이어 생성
+	
+		la = 127.039844;
+		lo = 37.50161;
+		// 위도경도를 받아서 함수로 넣기 
+			
+		var lonlat = new Tmap.LonLat(la, lo).transform("EPSG:4326", "EPSG:3857");//좌표 설정
+		
+		map.addLayer(markers);//map에 마커 레이어 추가
+		map.setCenter(lonlat,17);//map 중심 좌표 설정
+		
+		var size = new Tmap.Size(24,38);//아이콘 크기
+		var offset = new Tmap.Pixel(-(size.w/2), -size.h);//아이콘 중심점
+		var icon = new Tmap.Icon('http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_a.png', size, offset);//마커 아이콘 설정  
+		
+		var marker = new Tmap.Marker(lonlat, icon);//마커 생성
+		markers.addMarker(marker);//마커 레이어에 마커 추가
+		
+		show = marker.isDrawn();//마커의 표출 여부를 확인
+	} 
+	// 맵 생성 실행
+	initTmap();
+</script>
+
+
+
 
 </body>
+
 
 </html>
