@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import Final.frame.Biz;
 import Final.vo.Car;
 import Final.vo.CarStatus;
+import Final.vo.Path;
 import Final.vo.Reservation;
 import Final.vo.User;
 
@@ -35,6 +36,9 @@ public class ManagerController {
 
 	@Resource(name = "Ureserbiz")
 	Biz<String, Reservation> uresbiz;
+	
+	@Resource(name = "pbiz")
+	Biz<Integer, Path> pbiz;
 	
 	@RequestMapping("/manmain.mc")
 	public ModelAndView main() {
@@ -132,7 +136,11 @@ public class ManagerController {
 		ModelAndView mv = new ModelAndView();
 		Car car = null;
 		CarStatus cs = null;
+		ArrayList<Path> plist = null;
+		
+		
 		try {
+			plist = pbiz.getAll(carid);
 			car = cbiz.get(carid);
 			cs = csbiz.get(carid);
 			cs.setCarid(carid);
@@ -161,7 +169,10 @@ public class ManagerController {
 		mv.addObject("engine",engine);
 		
 		mv.addObject("car",car);
-		mv.addObject("center", "manager/cdetail");
+
+		mv.addObject("plist",plist);
+		System.out.println(plist);
+		mv.addObject("center", "manager/cdetail2");
 		mv.setViewName("main");
 		return mv;
 	}	
