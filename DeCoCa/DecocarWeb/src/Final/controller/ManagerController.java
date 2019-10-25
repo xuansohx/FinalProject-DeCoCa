@@ -19,6 +19,7 @@ import Final.vo.CarStatus;
 import Final.vo.Path;
 import Final.vo.Reservation;
 import Final.vo.User;
+import Final.vo.Path;
 
 @Controller
 public class ManagerController {
@@ -39,7 +40,6 @@ public class ManagerController {
 	
 	@Resource(name = "pbiz")
 	Biz<Integer, Path> pbiz;
-	
 	@RequestMapping("/manmain.mc")
 	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView();
@@ -130,23 +130,27 @@ public class ManagerController {
 		return mv;
 	}
   
+	// add here ( simulation )
+	
+	
 	// manager version. schedule list per user
 	@RequestMapping("/cardetailM.mc")
 	public ModelAndView cardetailM(int carid) {
 		ModelAndView mv = new ModelAndView();
+		
 		Car car = null;
 		CarStatus cs = null;
-		ArrayList<Path> plist = null;
-		
-		
+		ArrayList<Path> plist = null;	
 		try {
 			plist = pbiz.getAll(carid);
 			car = cbiz.get(carid);
 			cs = csbiz.get(carid);
+			path = pbiz.getAll(carid);
 			cs.setCarid(carid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println(path);
 		// Cutting status and String -> Integer
 		/* mv.addObject("cs", cs); */
 		String status = cs.getStatus(); // get Status
@@ -158,6 +162,9 @@ public class ManagerController {
 		int seatbelt = Integer.parseInt(status.substring(11,12));
 		int brake = Integer.parseInt(status.substring(12,13));
 		int engine = Integer.parseInt(status.substring(13));
+		
+		//path add
+		mv.addObject("path", path);
 		
 		mv.addObject("battery",battery);
 		mv.addObject("speed",speed);
@@ -174,6 +181,7 @@ public class ManagerController {
 		System.out.println(plist);
 		mv.addObject("center", "manager/cdetail2");
 		mv.setViewName("main");
+		
 		return mv;
 	}	
 	

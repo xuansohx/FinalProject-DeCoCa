@@ -22,7 +22,6 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		
 		SELECT * FROM map_tb ORDER BY 1
 	</select>
-	
 	<select id="selectall" resultType="path" parameterType="Integer">
 		SELECT * FROM path_tb where carid=#{carid} ORDER BY idx
 	</select>
