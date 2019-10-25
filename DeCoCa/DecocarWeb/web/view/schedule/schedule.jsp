@@ -191,7 +191,6 @@ function onComplete(){
 		 	document.getElementById("eLng").value = lon1;
 		 	document.getElementById("eLat").value = lat1;
 			}
-			 
 		}
 	});
 } 
