@@ -1,5 +1,4 @@
 package Final.vo;
-
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -34,32 +33,21 @@ public class Client {
 			break;
 		}
 	}
-	public void setMsg(int cmd, int carId, String msg) {
-		this.cmd = cmd;
-		switch (this.cmd) {
-		case 0: // 1. N번의 차량 에게 일정 전달하기
-			this.msg = "sche-"+carId+"-"+msg;
-			break;
-		case 1:// 2. 모든 차량에게 상태를 업데이트 하라고 하기
-			this.msg = "selectAll";
-			break;
-		case 2:// 3. N번의 차량에게 상태를 업데이트 하라고 하기
-			this.msg = "select-"+carId;
-			break;
-		}
+
+	public void setMsg(int carId, String msg) {
+		this.msg = "sche-"+carId+"-"+msg;
 	}
 	public void sendMsg() throws Exception {
 		try {			
 			out = socket.getOutputStream();
 			dout = new DataOutputStream(out);
-			System.out.println(msg);
 			dout.writeUTF(msg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			
-		}
-			
+			if(dout!=null)
+				dout.close();
+		}			
 	}
 
 	public void startClient() throws Exception {
@@ -71,14 +59,11 @@ public class Client {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			if (socket != null)
-				socket.close();
 		}
 	}
-
 	public static void main(String[] args) {
 		Client c = new Client("70.12.60.110", 9999);
-		c.setMsg(0, 1234, 5678);
+		c.setMsg(2037, "10:52");
 		try {
 			c.startClient();
 		} catch (Exception e) {

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Final.mapper.PathMapper">
+
+	<!-- <insert id="insert" parameterType="map">
+		INSERT INTO user_tb VALUES (#{userid},#{pwd},#{name},#{pnumber},0,'1234567890')	
+		INSERT INTO user_tb VALUES (#{userid},#{pwd},#{name},#{pnumber},'0','1234567890')	
+	</insert>
+	
+	<update id="update" parameterType="user">
+		UPDATE user_tb SET PWD=#{pwd},NAME=#{name},PNUMBER=#{pnumber},USERTYPE='0',USERDEVICE=#{userdevice} WHERE USERID=#{userid}
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM user_tb WHERE USERID=#{userid}
+	</delete> -->
+	
+	<select id="select" parameterType="String" 
+	resultType="path">
+		
+		SELECT * FROM map_tb ORDER BY 1
+	</select>
+	<select id="selectall" resultType="path" parameterType="Integer">
+		SELECT * FROM path_tb where carid=#{carid} ORDER BY idx
+	</select>
+	
+</mapper>
+
+
+
+
+
+

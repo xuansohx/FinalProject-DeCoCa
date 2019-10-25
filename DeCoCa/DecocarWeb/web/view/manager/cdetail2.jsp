@@ -313,10 +313,9 @@ table>tr>td {
 						</div>
 
 						여기다....
-						<c:forEach var="p" items="${path }">${p.LNG } ${p.LAT }</c:forEach>
-						<div id="map_div">
-						
-						</div>
+						<div id="map_div"></div>
+
+
 
 					</div>
 
@@ -393,12 +392,17 @@ table>tr>td {
 							height:'400px' // map의 height 설정
 							}); 
 		
+		
 		var markers = new Tmap.Layer.Markers( "MarkerLayer" );//마커 레이어 생성
-	
+		
+		
+		
+		
 		la = 127.039844;
 		lo = 37.50161;
 		// 위도경도를 받아서 함수로 넣기 
-			
+		
+		
 		var lonlat = new Tmap.LonLat(la, lo).transform("EPSG:4326", "EPSG:3857");//좌표 설정
 		
 		map.addLayer(markers);//map에 마커 레이어 추가
