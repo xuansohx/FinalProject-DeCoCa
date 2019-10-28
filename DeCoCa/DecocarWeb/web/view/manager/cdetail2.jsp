@@ -219,7 +219,9 @@ table>tr>td {
 									<!-- Engine -->
 									<c:choose>
 										<c:when test="${engine == 0}">
-											<td class="column-1">OFF</td>
+											<td class="column-1">
+												<a href="changeStatus.mc?carid=${car.carid}&msg=engine">OFF</a>
+											</td>
 										</c:when>
 
 										<c:when test="${engine == 1}">
@@ -230,11 +232,11 @@ table>tr>td {
 									<!-- Door -->
 									<c:choose>
 										<c:when test="${door == 0}">
-											<td class="column-2">Locked</td>
+											<td class="column-2"><a href="changeStatus.mc?carid=${car.carid}&msg=door">Locked</a></td>
 										</c:when>
 
 										<c:when test="${door == 1}">
-											<td class="column-2">UnLocked</td>
+											<td class="column-2"><a href="changeStatus.mc?carid=${car.carid}&msg=door">UnLocked</a></td>
 										</c:when>
 									</c:choose>
 
@@ -289,7 +291,10 @@ table>tr>td {
 									</c:choose>
 
 									<!-- Temperature -->
-									<td class="column-2">${temperature }℃</td>
+									<td class="column-2">
+										<a href="changeStatus.mc?carid=${car.carid}&msg=temp_60">${temperature }℃</a>										
+										<input type="range" name="temper" min="18" max="28">
+									</td>
 
 									<!-- Pressure -->
 									<td class="column-3">${pressure}kPa</td>

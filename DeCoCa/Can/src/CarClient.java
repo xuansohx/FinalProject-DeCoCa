@@ -125,23 +125,34 @@ public class CarClient implements SerialPortEventListener {
 				while (rflag) {
 					str = din.readUTF();
 					System.out.println(str);
-					if (str.charAt(0) == 't') {
-						String tmp = str.substring(1);
-						status[3] = tmp;
-						st.sendData("W28" + statustoString());
-					}
+					String[] spl = str.split("-");
 					if (str.equals("1")) { // 정보를 cluster 한테 보낸다.
 						System.out.println(statustoString());
 						sendMsg(statustoString());
-					} else if (str.equals("2")) { // 문 열고 닫기
-						if (status[5].equals("1")) // 열려있다면
-							status[5] = "0"; // 잠궈라
-						else if (status[5].equals("0")) // 닫혀있으면
-							status[5] = "1"; // 열어라
+					} else if (str.equals("2") || str.equals("door")) { // 문 열고 닫기
+						if (status[5] != null) {
+							if (status[5].equals("1")) // 열려있다면
+								status[5] = "0"; // 잠궈라
+							else if (status[5].equals("0")) // 닫혀있으면
+								status[5] = "1"; // 열어라
+							st.sendData("W28" + statustoString());
+						}
+					} else if (str.charAt(0) == 't') { // 온도 변경
+						String tmp = str.substring(1);
+						status[4] = tmp;
 						st.sendData("W28" + statustoString());
+					}else if (str.equals("engine")) { // 시동 끄기 / 켜기
+						if(status[8].equals("1")){
+							status[8]="0";
+						}
+						else if(status[8].equals("0")){
+							status[8]="1";
+						}
+						st.sendData("W28"+ statustoString());					
 					}
 				}
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -158,14 +169,14 @@ public class CarClient implements SerialPortEventListener {
 			for (int i = 1; i <= 2; i++) {
 				status[i + 2] = data.substring(i * 2 + 8, i * 2 + 10);
 			}
-			for (int i=1;i<=4;i++) {
-				status[i+4]=data.substring(i + 13,i+1 + 13);
+			for (int i = 1; i <= 4; i++) {
+				status[i + 4] = data.substring(i + 13, i + 1 + 13);
 			}
 			for (int i = 1; i <= 2; i++) {
-				status[i+8] = data.substring(i * 3 + 15, i * 3 + 18);
+				status[i + 8] = data.substring(i * 3 + 15, i * 3 + 18);
 			}
 			for (int i = 1; i <= 2; i++) {
-				status[i + 10] = data.substring(i * 2 +22, i * 2 + 24);
+				status[i + 10] = data.substring(i * 2 + 22, i * 2 + 24);
 			}
 		}
 		char c[] = checkData.toCharArray();
@@ -300,7 +311,7 @@ public class CarClient implements SerialPortEventListener {
 			// CarClient st = new CarClient("COM5");
 			// st = new CarClient("COM5");
 			st = new CarClient("COM12");
-			client = new CarClient("70.12.225.81", 1234);
+			client = new CarClient("70.12.227.106", 1234);
 			client.start();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
