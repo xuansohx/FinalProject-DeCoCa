@@ -145,12 +145,12 @@ public class ManagerController {
 			plist = pbiz.getAll(carid);
 			car = cbiz.get(carid);
 			cs = csbiz.get(carid);
-			path = pbiz.getAll(carid);
+			plist = pbiz.getAll(carid);
 			cs.setCarid(carid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(path);
+		System.out.println(plist);
 		// Cutting status and String -> Integer
 		/* mv.addObject("cs", cs); */
 		String status = cs.getStatus(); // get Status
@@ -163,9 +163,6 @@ public class ManagerController {
 		int brake = Integer.parseInt(status.substring(12,13));
 		int engine = Integer.parseInt(status.substring(13));
 		
-		//path add
-		mv.addObject("path", path);
-		
 		mv.addObject("battery",battery);
 		mv.addObject("speed",speed);
 		mv.addObject("pressure",pressure);
@@ -174,9 +171,9 @@ public class ManagerController {
 		mv.addObject("seatbelt",seatbelt);
 		mv.addObject("brake",brake);
 		mv.addObject("engine",engine);
-		
 		mv.addObject("car",car);
 
+		//path add
 		mv.addObject("plist",plist);
 		System.out.println(plist);
 		mv.addObject("center", "manager/cdetail2");
