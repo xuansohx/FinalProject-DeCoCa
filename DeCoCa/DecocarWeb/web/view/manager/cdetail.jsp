@@ -91,12 +91,6 @@ table>tr>td {
 <!--===============================================================================================-->
 
 </head>
-
-
-
-
-
-
 <body class="animsition">
 
 	<h1 id="page_title">
@@ -307,13 +301,10 @@ table>tr>td {
 								</tr>
 							</table>
 
-
-
-
 						</div>
 
 						여기다....
-						<c:forEach var="p" items="${path }">${p.LNG } ${p.LAT }</c:forEach>
+						<c:forEach var="p" items="${path }">${p.lng } ${p.lat }</c:forEach>
 						<div id="map_div">
 						
 						</div>
@@ -395,8 +386,6 @@ table>tr>td {
 		
 		var markers = new Tmap.Layer.Markers( "MarkerLayer" );//마커 레이어 생성
 	
-		la = 127.039844;
-		lo = 37.50161;
 		// 위도경도를 받아서 함수로 넣기 
 			
 		var lonlat = new Tmap.LonLat(la, lo).transform("EPSG:4326", "EPSG:3857");//좌표 설정

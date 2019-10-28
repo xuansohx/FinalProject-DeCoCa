@@ -144,6 +144,10 @@ public class ManagerController {
 		CarStatus cs = null;
 		ArrayList<Path> path = null;
 		
+		String la = "37.50065733";
+		String lo = "127.03643428";
+		
+		
 		try {
 			// 여기에 들어가는 string 값이 몰까?
 			
@@ -154,7 +158,7 @@ public class ManagerController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(path);
+		
 		// Cutting status and String -> Integer
 		/* mv.addObject("cs", cs); */
 		String status = cs.getStatus(); // get Status
