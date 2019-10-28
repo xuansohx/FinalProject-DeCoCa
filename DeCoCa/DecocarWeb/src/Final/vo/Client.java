@@ -37,6 +37,9 @@ public class Client {
 	public void setMsg(int carId, String msg) {
 		this.msg = "sche-"+carId+"-"+msg;
 	}
+	public void setMsg2(int carId,String msg) {
+		this.msg = "ctl-" + carId+"-"+msg;
+	}
 	public void sendMsg() throws Exception {
 		try {			
 			out = socket.getOutputStream();
