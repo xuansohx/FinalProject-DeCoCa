@@ -159,7 +159,7 @@ public class ManagerController {
 		int door = Integer.parseInt(status.substring(10,11));
 		int seatbelt = Integer.parseInt(status.substring(11,12));
 		int brake = Integer.parseInt(status.substring(12,13));
-		int engine = Integer.parseInt(status.substring(13));
+		int engine = Integer.parseInt(status.substring(13,14));
 		
 		//path add
 		mv.addObject("path", plist);		
