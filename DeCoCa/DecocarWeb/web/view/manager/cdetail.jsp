@@ -364,6 +364,9 @@ table>tr>td {
 
 	<!-- Map Function -->
 	<script>
+	
+	
+	
 		var map;
 		var la;
 		var lo;
