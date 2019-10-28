@@ -209,10 +209,12 @@ public class CarStatusController {
 		ModelAndView mv = new ModelAndView();
 		int car_id = Integer.parseInt(carid);
 		Car car = null;
+		String uid=null;
 		Reservation res = null;
 		try {
 			car = carbiz.get(car_id);
-			res=rbiz.get(car.getCalid());			
+			res=rbiz.get(car.getCalid());
+			uid=res.getUserid();
 			car.setCalid(0);
 			carbiz.modify(car);
 			res.setCalstatus(3);
