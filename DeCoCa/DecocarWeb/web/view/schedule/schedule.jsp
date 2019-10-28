@@ -282,18 +282,13 @@ function total(){
 										method : "POST",
 										success : function(result) {
 											if (result == '1') {
-												alert("확인되었습니다.");
-												$('input[name="schesubmit"]')
-														.removeAttr('disabled');
-												$('.idsame')
-														.html(
-																'<span style="color:red"></span>');
+												//alert("확인되었습니다.");
+												$('input[name="schesubmit"]').removeAttr('disabled');
+												$('.idsame').html('<span style="color:blue">확인되었습니다.</span>');
 												return false;
 											} else if (result == '0') {
 												/* alert("존재하지 않는 사용자입니다."); */
-												$('input[name="schesubmit"]')
-														.attr('disabled',
-																'disabled');
+												$('input[name="schesubmit"]').attr('disabled','disabled');
 												$('.idsame')
 														.html(
 																'<span style="color:red">존재하지 않는 사용자입니다.</span>');
