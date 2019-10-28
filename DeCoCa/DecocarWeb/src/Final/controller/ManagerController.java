@@ -140,9 +140,8 @@ public class ManagerController {
 		
 		Car car = null;
 		CarStatus cs = null;
-		ArrayList<Path> plist = null;	
+		ArrayList<Path> path = null;	
 		try {
-			plist = pbiz.getAll(carid);
 			car = cbiz.get(carid);
 			cs = csbiz.get(carid);
 			cs.setCarid(carid);
@@ -173,7 +172,6 @@ public class ManagerController {
 		mv.addObject("engine",engine);
 		mv.addObject("car",car);
 		mv.addObject("plist",plist);
-		System.out.println(plist);
 		mv.addObject("center", "manager/cdetail2");
 		mv.setViewName("main");
 		return mv;
