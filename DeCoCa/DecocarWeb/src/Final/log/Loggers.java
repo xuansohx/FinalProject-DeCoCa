@@ -64,7 +64,6 @@ public class Loggers {
 			}
 		}
 	}
-
 	// return type, location, last sentance, mc
 	@After("execution(* Final.controller..*Controller.schregisterimpl(..))")
 	public void scheduleAfter(JoinPoint jp) {
@@ -75,12 +74,12 @@ public class Loggers {
 		MDC.put("userid", userid);
 		MDC.put("schedule", re.getCalDate());
 		MDC.put("sTime", re.getsTime());
-		MDC.put("eTime", re.geteTime());
+		MDC.put("eTime", re.geteTime());	
+		
 		
 		
 		user_log.debug(jp.getSignature().getName());
 	}
-
 	// after
 //	@AfterReturning(
 //		pointcut="execution(* com.sds.component..*Service.*(..))"	
@@ -91,7 +90,6 @@ public class Loggers {
 		System.out.println(jp.getArgs()[0].toString());
 		System.out.println("RESULT:" + obj.toString());
 	}
-
 	@Around("execution(* com.sds.component..*Service.*(..))")
 	public Object aroundLogger(ProceedingJoinPoint pjp) throws Throwable {
 		System.out.println("함수 실행 전");

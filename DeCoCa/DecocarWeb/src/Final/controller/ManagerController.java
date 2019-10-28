@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+
 import Final.frame.Biz;
 import Final.vo.Car;
 import Final.vo.CarStatus;
@@ -132,25 +134,20 @@ public class ManagerController {
 		return mv;
 	}
   
-	// add here ( simulation )
-	
-	
 	// manager version. schedule list per user
 	@RequestMapping("/cardetailM.mc")
-	public ModelAndView cardetailM(int carid) {
+	public ModelAndView cardetailM(int carid, HttpServletResponse rep ) {
 		ModelAndView mv = new ModelAndView();
 		
 		Car car = null;
 		CarStatus cs = null;
 		ArrayList<Path> path = null;
 		
-		String la = "37.50065733";
-		String lo = "127.03643428";
-		
+		String ssivar = "좀되라..";
+		//arraylist를 jason으로 변환
 		
 		try {
 			// 여기에 들어가는 string 값이 몰까?
-			
 			car = cbiz.get(carid);
 			cs = csbiz.get(carid);
 			path = pbiz.getAll(carid);
@@ -158,7 +155,16 @@ public class ManagerController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		//path add
+		mv.addObject("path", path);	
 		
+		mv.addObject("ssi", ssivar);
+		//arraylist값을 json으로 만들기 (object)
+		Gson gson = new Gson();
+		String json = gson.toJson(path);
+		
+		//System.out.println(json.toString());
+		mv.addObject("json", json);
 		// Cutting status and String -> Integer
 		/* mv.addObject("cs", cs); */
 		String status = cs.getStatus(); // get Status
@@ -169,11 +175,8 @@ public class ManagerController {
 		int door = Integer.parseInt(status.substring(10,11));
 		int seatbelt = Integer.parseInt(status.substring(11,12));
 		int brake = Integer.parseInt(status.substring(12,13));
-		int engine = Integer.parseInt(status.substring(13));
-		
-		//path add
-		mv.addObject("path", path);
-		
+		int engine = Integer.parseInt(status.substring(13,14));
+
 		mv.addObject("battery",battery);
 		mv.addObject("speed",speed);
 		mv.addObject("pressure",pressure);
@@ -185,8 +188,7 @@ public class ManagerController {
 		
 		mv.addObject("car",car);
 		mv.addObject("center", "manager/cdetail");
-		mv.setViewName("main");
-		
+		mv.setViewName("main");			
 		return mv;
 	}	
 	
