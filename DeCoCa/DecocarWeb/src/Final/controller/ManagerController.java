@@ -140,7 +140,7 @@ public class ManagerController {
 		Car car = null;
 		CarStatus cs = null;
 		ArrayList<Path> path = null;
-		ArrayList<Path> path = null;	
+
 		try {
       car = cbiz.get(carid);
 			cs = csbiz.get(carid);
@@ -151,8 +151,7 @@ public class ManagerController {
 		//path add
 		mv.addObject("path", path);	
 		
-		mv.addObject("ssi", ssivar);
-		//arraylist��� json��� ����� (object)
+		//arraylist占쏙옙占� json占쏙옙占� 占쏙옙占쏙옙占� (object)
 		Gson gson = new Gson();
 		String json = gson.toJson(path);
 		

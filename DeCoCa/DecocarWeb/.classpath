@@ -17,6 +17,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/kh/new/new/FinalProject/DeCoCa/DecocarWeb/src/passive/ojdbc6_g.jar"/>
+	<classpathentry kind="lib" path="C:/PJT_gitclone/FinalProject_b8/DeCoCa/DecocarWeb/src/passive/ojdbc6_g.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

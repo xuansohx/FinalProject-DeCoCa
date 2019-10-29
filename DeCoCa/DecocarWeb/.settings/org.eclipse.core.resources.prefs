@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/Final/controller/CarStatusController.java=UTF-8
 encoding//src/Final/controller/MainController.java=UTF-8
+encoding//src/Final/controller/ManagerController.java=UTF-8
 encoding//web/view/admin/cardetail.jsp=UTF-8
 encoding//web/view/car/cal.jsp=UTF-8
 encoding//web/view/car/carlocation3.jsp=UTF-8
