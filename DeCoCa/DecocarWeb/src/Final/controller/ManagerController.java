@@ -145,6 +145,7 @@ public class ManagerController {
       car = cbiz.get(carid);
 			cs = csbiz.get(carid);
 			cs.setCarid(carid);
+			path = pbiz.getAll(carid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
