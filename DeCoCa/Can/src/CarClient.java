@@ -151,7 +151,7 @@ public class CarClient implements SerialPortEventListener {
 						st.sendData("W28"+ statustoString());					
 					}else if(spl[0].equals("stat")) {
 						//spl[1] 을 status로 넣자
-						String data ="IN"+spl[1]+"99999999999999";						
+						String data ="IN28"+spl[1]+"999999999999";
 						System.out.println(data);						
 							for (int i = 1; i <= 2; i++) {
 								status[i] = data.substring(i * 3 + 1, i * 3 + 4);
