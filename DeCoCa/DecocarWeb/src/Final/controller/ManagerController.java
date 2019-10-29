@@ -158,7 +158,6 @@ public class ManagerController {
 		//path add
 		mv.addObject("path", path);	
 		
-		mv.addObject("ssi", ssivar);
 		//arraylist값을 json으로 만들기 (object)
 		Gson gson = new Gson();
 		String json = gson.toJson(path);
