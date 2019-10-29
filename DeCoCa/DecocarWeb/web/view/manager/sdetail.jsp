@@ -5,7 +5,8 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
+<!--===============================================================================================-->
+<!-- Manager's Schedule List Detail -->
 <head>
 <style>
 @import url('https://fonts.googleapis.com/css?family=Lalezar|Noto+Sans+KR&display=swap');
@@ -78,55 +79,126 @@ a:hover {
 
 <body class="animsition">
 
-	<h1 id="page_title">
-		Reservation Detail<br>
-	</h1>
-	<form class="bg0 p-t-75 p-b-85">
-		<div class="container">
+	<h1 id="page_title">Reservation Detail<br><br></h1>
+	
+		<form class="bg0  p-b-85">
+		<div class="flex-w flex-tr">
+			<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
 
-			<div class="m-l-25 m-r--38 m-lr-0-xl">
-				<div class="wrap-table-shopping-cart">
-					<table class="table-shopping-cart">
-						<tr class="table_head">
-							<th class="column-1">CALID</th>
-							<th class="column-2">CARID</th>
-							<th class="column-3">SERVICE</th>
-							<th class="column-4">USERID</th>
-							<th class="column-5">DATE</th>
-							<th class="column-6">STIME</th>
-							<th class="column-7">ETIME</th>
-							<th class="column-8">SADDRESS</th>
-							<th class="column-9">EADDRESS</th>
-							<th class="column-10">RECEIVERID</th>
-							<th class="column-11">PINNUMBER</th>
-							<th class="column-12">CALSTATUS</th>
-						</tr>
-
-						<tr class="table_row">
-							<td class="column-1">${r.calid }</td>
-							<td class="column-2">${r.carid }</td>
-							<td class="column-3">${r.sStyle }</td>
-							<td class="column-4">${r.userid }</td>
-							<td class="column-5">${r.calDate }</td>
-							<td class="column-6">${r.sTime }</td>
-							<td class="column-7">${r.eTime }</td>
-							<td class="column-8">${r.sAddress }</td>
-							<td class="column-9">${r.eAddress }</td>
-							<td class="column-10">${r.reuserid }</td>
-							<td class="column-11">${r.pinNum }</td>
-							<td class="column-12">${r.calstatus}</td>
-						</tr>
-					</table>
-
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">일정 상태</label> 
+					
+					<c:choose>
+					<c:when test="${r.calstatus == 0}">
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20"
+					type="text"readonly="readonly" value="예정">
+					</c:when>
+					
+					<c:when test="${r.calstatus == 1}">
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20"
+					type="text"readonly="readonly" value="준비">
+					</c:when>
+					
+					<c:when test="${r.calstatus == 2}">
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20"
+					type="text"readonly="readonly" value="진행">
+					</c:when>
+					
+					<c:when test="${r.calstatus ==3}">
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20"
+					type="text"readonly="readonly" value="완료">
+					</c:when>
+					
+					</c:choose>
 				</div>
+				
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">사용자정보</label> 
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20" 
+					type="text" readonly="readonly" value="${r.userid }">
+				</div>
+
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">일정 번호</label> 
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20"
+					type="text"readonly="readonly" value="${r.calid}">
+				</div>
+
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">배차 차량</label> 
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20"
+					type="text" readonly="readonly" value="${r.carid}">
+				</div>
+
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">서비스 타입</label>
+
+					<c:choose>
+					<c:when test="${r.sStyle == 1 }">
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20"
+					type="text"readonly="readonly" value="스마트택시">
+					</c:when>
+					
+					<c:when test="${r.sStyle == 2 }">
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20"
+					type="text"readonly="readonly" value="픽업">
+					</c:when>
+					
+					<c:when test="${r.sStyle == 3 }">
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20"
+					type="text"readonly="readonly" value="퀵">
+					</c:when>
+					</c:choose>
+					
+				</div>
+
+
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">예약 날짜</label> 
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20"
+					type="text" readonly="readonly" value="${r.calDate }">
+				</div>
+
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">출발 시간</label> 
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20"
+					type="text" readonly="readonly" value="${r.sTime }">
+				</div>
+
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">도착 시간</label> 
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20"
+					type="text" readonly="readonly"  value="${r.eTime }">
+				</div>
+
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">출발지</label> 
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20"
+					type="text" readonly="readonly" value="${r.sAddress }">
+				</div>
+
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">도착지</label> 
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20"
+					type="text" readonly="readonly" value="${r.eAddress }">
+				</div>
+
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">받는 사람</label> 
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20" 
+					type="text" readonly="readonly" value="${r.reuserid }">
+				</div>
+
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">인증 번호</label> 
+					<input class="size-111 bor8 stext-102 cl2 p-lr-20"
+					type="text" readonly="readonly"value="${r.pinNum }">
+				</div>
+
+				
 			</div>
-		</div>
 
 	</form>
-
-
-
-
 
 
 

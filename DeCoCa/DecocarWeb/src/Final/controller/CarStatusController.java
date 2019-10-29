@@ -135,7 +135,7 @@ public class CarStatusController {
 			// reuid 가 null이 뜬다
 			carbiz.modify(car);
 			rbiz.modify(reserve);
-			sendSche(car.getCarid(), car.getCalid()); 
+			sendSche(car.getCarid(), car.getCalid());
 			//배차가 완료 되면 배차를 시키고 그 차에 일정의 eTime을 보내준다 
 			
 		} catch (Exception e) {
@@ -179,7 +179,8 @@ public class CarStatusController {
 		Client c = new Client("70.12.60.110", 9999);
 		try {
 			String etime = rbiz.get(calid).geteTime();
-			c.setMsg(0, carid, etime);
+			c.setMsg(carid, etime);
+			System.out.println("sendSche "+carid+" "+etime);
 			c.startClient();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -202,5 +203,44 @@ public class CarStatusController {
 		}
 		out.println(etime);
 		out.flush();
+	}
+	@RequestMapping("/getcarEnd.mc")
+	public ModelAndView getCarEnd(String carid) {
+		ModelAndView mv = new ModelAndView();
+		int car_id = Integer.parseInt(carid);
+		Car car = null;
+		String uid=null;
+		Reservation res = null;
+		try {
+			car = carbiz.get(car_id);
+			res=rbiz.get(car.getCalid());
+			uid=res.getUserid();
+			car.setCalid(0);
+			carbiz.modify(car);
+			res.setCalstatus(3);
+			rbiz.modify(res);
+			System.out.println(car_id+" 종료 "+res.getCalid());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.setViewName("admin/cardetail");
+		return mv;
+	}
+	@RequestMapping("/changeStatus.mc")
+	public void changeStatus(HttpServletResponse response,int carid , String msg) {
+		ModelAndView mv = new ModelAndView();
+		Client c= new Client("70.12.60.110",9999);
+		c.setMsg2(carid, msg);		
+		try {
+			c.startClient();
+			Thread.sleep(1000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			response.sendRedirect("cardetailM.mc?carid="+carid);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
