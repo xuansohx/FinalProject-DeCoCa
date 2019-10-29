@@ -285,4 +285,42 @@ public class ManagerController {
 		out.print(jb.toString());
 	}
 	
+	// show Car Location
+	@RequestMapping("/showCarLoc.mc")
+	public ModelAndView showCarLoc() {
+		ModelAndView mv = new ModelAndView();
+		
+		ArrayList<Path> path1 = null;
+		ArrayList<Path> path2 = null;
+		ArrayList<Path> path3 = null;
+		try {
+			path1 = pbiz.getAll(2038);
+			path2 = pbiz.getAll(2040);
+			path3 = pbiz.getAll(2041);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		//path add
+		mv.addObject("path1", path1);	
+		mv.addObject("path2", path2);	
+		mv.addObject("path3", path3);	
+				
+		//arraylist��� json��� ����� (object)
+		Gson gson = new Gson();
+		String json1 = gson.toJson(path1);
+		String json2 = gson.toJson(path2);
+		String json3 = gson.toJson(path3);
+				
+		//System.out.println(json.toString());
+		mv.addObject("json1", json1);
+		mv.addObject("json2", json2);
+		mv.addObject("json3", json3);
+		
+		mv.addObject("center", "manager/showcarloc");
+		mv.setViewName("main");
+		return mv;
+	}
+	
 }

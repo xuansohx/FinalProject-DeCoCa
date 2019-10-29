@@ -310,9 +310,6 @@ table>tr>td {
 
 						</div>
 
-						<%-- 여기다....
-						<c:forEach var="p" items="${path }">${p.lng } ${p.lat }</c:forEach>
-						여기다2....${json } --%>
 						<div id="map_div"></div>
 					</div>
 
@@ -390,7 +387,6 @@ table>tr>td {
 				width : '100%', // map의 width 설정
 				height : '400px' // map의 height 설정
 			});
-
 			markerLayer = new Tmap.Layer.Markers();//마커 레이어 생성
 			map.addLayer(markerLayer);//map에 마커 레이어 추가
 			
@@ -404,7 +400,6 @@ table>tr>td {
 					//makers.clearMarkers();
 			var size = new Tmap.Size(24, 38);//아이콘 크기 설정
 			map.setCenter(lonlat, 15);//map의 중심 좌표 설정
-
 			var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
 			var icon = new Tmap.Icon(
 					'http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_a.png',
@@ -417,8 +412,8 @@ table>tr>td {
 				setTimeout(function() {
 					markerLayer.removeMarker(arr[x-1])
 					markerLayer.addMarker(arr[x]);//레이어에 마커 추가
-					map.setCenter(arr2[x], 15);//map의 중심 좌표 설정
-					}, 1000 * x);
+					map.setCenter(arr2[x], 13.5);//map의 중심 좌표 설정
+					}, 2000 * x);
 			}
 			for (i = 1; i < arr.length; i++) {
 				loop(i);
@@ -428,7 +423,23 @@ table>tr>td {
 		// 맵 생성 실행
 		initTmap();
 	</script>
+	
+<!-- temperature slide value -->
+<script>
 
+function ShowSliderVal(sVal){
+	var obValView = document.getElementById("slider_val_view");
+	obValView.innerHTML = sVal;
+}
+
+var RangeSlider = function(){
+	var range = $('.slider_range');
+	range.on('input',function(){
+		ShowSliderVal(this.value);
+	});
+};
+RangeSlider();
+</script>
 
 </body>
 
