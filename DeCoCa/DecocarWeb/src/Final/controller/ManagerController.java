@@ -152,7 +152,7 @@ public class ManagerController {
 		//path add
 		mv.addObject("path", path);	
 		
-		//arraylist占쏙옙占� json占쏙옙占� 占쏙옙占쏙옙占� (object)
+		//arraylist��� json��� ����� (object)
 		Gson gson = new Gson();
 		String json = gson.toJson(path);
 		

@@ -364,18 +364,24 @@ table>tr>td {
 
 	<!-- Map Function -->
 	<script>
-	
-	
-	
 		var map;
 		var la;
 		var lo;
 		var result;
 		var test = "${path}";
 		var obj = JSON.parse('${json}');
+		var marker;
+		var cnt=0;
+		var markerLayer;
+		var markerLayer2;
 		// 페이지가 로딩이 된 후 호출하는 함수입니다.
-
+		var arr = new Array();
+		var arr2 = new Array();
 		var result = '';
+		var i=0;
+		var runAction = function(itv) {
+			console.log('Called!! ' + itv + 'th');
+		}
 		function initTmap() {
 			// map 생성
 			// Tmap.map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
@@ -387,31 +393,45 @@ table>tr>td {
 
 			markerLayer = new Tmap.Layer.Markers();//마커 레이어 생성
 			map.addLayer(markerLayer);//map에 마커 레이어 추가
-
+			
 			//index와 아이템
 			$(obj).each(function(index, item){
-						la = item.lat;
-						lo = item.lng;
-						var lonlat = new Tmap.LonLat(la, lo).transform("EPSG:4326",
-						"EPSG:3857");//좌표 설정
-				var size = new Tmap.Size(24, 38);//아이콘 크기 설정
-				map.setCenter(lonlat, 15);//map의 중심 좌표 설정
+					la = item.lat;
+					lo = item.lng;
+					result = item.idx;
+					var lonlat = new Tmap.LonLat(la, lo).transform("EPSG:4326","EPSG:3857");//좌표 설정
+					arr2[index] = lonlat;
+					//makers.clearMarkers();
+			var size = new Tmap.Size(24, 38);//아이콘 크기 설정
+			map.setCenter(lonlat, 15);//map의 중심 좌표 설정
 
-				var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
-				var icon = new Tmap.Icon(
-						'http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_a.png',
-						size, offset);//마커 아이콘 설정
-
-				marker = new Tmap.Marker(lonlat, icon);//마커 생성
-				markerLayer.addMarker(marker);//레이어에 마커 추가
-					
-				}); 
+			var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
+			var icon = new Tmap.Icon(
+					'http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_a.png',
+					size, offset);//마커 아이콘 설정
+			arr[index] = new Tmap.Marker(lonlat, icon);//마커 생성
+			//markerLayer.addMarker(arr[index]);//레이어에 마커 추가
+			// marker = new Tmap.Marker(lonlat, icon);//마커 생성
+			});
+			function loop(x) {
+				setTimeout(function() {
+					markerLayer.removeMarker(arr[x-1])
+					markerLayer.addMarker(arr[x]);//레이어에 마커 추가
+					map.setCenter(arr2[x], 15);//map의 중심 좌표 설정
+					}, 1000 * x);
+			}
+			for (i = 1; i < arr.length; i++) {
+				loop(i);
+			}
+			//markerLayer.removeMarker(marker); // 기존 마커 삭제
 		}
 		// 맵 생성 실행
 		initTmap();
 	</script>
 
+
 </body>
+
 
 
 </html>

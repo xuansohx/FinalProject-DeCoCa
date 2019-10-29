@@ -3,11 +3,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+
+<!-- java에서 array list 가져오기 -->
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <script
 	src="https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=a9ee13e1-cb7e-46a8-b144-14bfd0103a90"></script>
 <script type="text/javascript"></script>
+
+<!-- Jquery JS-->
+<script src="vendor/jquery-3.2.1.min.js"></script>
 
 
 
@@ -56,6 +66,7 @@ table>tr>td {
 #div_temp {
 text-align: -webkit-center;
 }
+
 </style>
 
 <title>Car Status Detail[admin]</title>
@@ -95,12 +106,7 @@ text-align: -webkit-center;
 <!--===============================================================================================-->
 
 </head>
-
-
-
-
-
-
+  
 <body class="animsition">
 
 	<h1 id="page_title">
@@ -223,9 +229,11 @@ text-align: -webkit-center;
 									<!-- Engine -->
 									<c:choose>
 										<c:when test="${engine == 0}">
+
 											<td class="column-1">
 												<a href="changeStatus.mc?carid=${car.carid}&msg=engine">OFF</a>
 											</td>
+
 										</c:when>
 
 										<c:when test="${engine == 1}">
@@ -236,11 +244,13 @@ text-align: -webkit-center;
 									<!-- Door -->
 									<c:choose>
 										<c:when test="${door == 0}">
+
 											<td class="column-2"><a href="changeStatus.mc?carid=${car.carid}&msg=door">Locked</a></td>
 										</c:when>
 
 										<c:when test="${door == 1}">
 											<td class="column-2"><a href="changeStatus.mc?carid=${car.carid}&msg=door">UnLocked</a></td>
+
 										</c:when>
 									</c:choose>
 
@@ -305,6 +315,7 @@ text-align: -webkit-center;
 									</div>
 									</td>
 
+
 									<!-- Pressure -->
 									<td class="column-3">${pressure}kPa</td>
 
@@ -322,35 +333,19 @@ text-align: -webkit-center;
 							</table>
 
 
-
-
 						</div>
-
-						여기다....
+            
+            <!-- MAP car location -->
 						<div id="map_div"></div>
-
-
-
 					</div>
-
-
 
 				</div>
 
-
-
 			</div>
-
-
-
 
 		</div>
 
-
-
 	</form>
-
-
 
 	<!--===============================================================================================-->
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
@@ -392,48 +387,59 @@ text-align: -webkit-center;
 	<script src="js/main.js"></script>
 
 	<!-- Map Function -->
-	<script>									
-	var map;
-	var show;
-	var la = null;
-	var lo = null;
-	// 페이지가 로딩이 된 후 호출하는 함수입니다.
-	function initTmap() { 
-		// map 생성
-		// Tmap.map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
-		map = new Tmap.Map({div:'map_div', // map을 표시해줄 div
-							width:'100%',  // map의 width 설정
-							height:'400px' // map의 height 설정
-							}); 
-		
-		
-		var markers = new Tmap.Layer.Markers( "MarkerLayer" );//마커 레이어 생성
-		
-		
-		
-		
-		la = 127.039844;
-		lo = 37.50161;
-		// 위도경도를 받아서 함수로 넣기 
-		
-		
-		var lonlat = new Tmap.LonLat(la, lo).transform("EPSG:4326", "EPSG:3857");//좌표 설정
-		
-		map.addLayer(markers);//map에 마커 레이어 추가
-		map.setCenter(lonlat,17);//map 중심 좌표 설정
-		
-		var size = new Tmap.Size(24,38);//아이콘 크기
-		var offset = new Tmap.Pixel(-(size.w/2), -size.h);//아이콘 중심점
-		var icon = new Tmap.Icon('http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_a.png', size, offset);//마커 아이콘 설정  
-		
-		var marker = new Tmap.Marker(lonlat, icon);//마커 생성
-		markers.addMarker(marker);//마커 레이어에 마커 추가
-		
-		show = marker.isDrawn();//마커의 표출 여부를 확인
-	} 
-	// 맵 생성 실행
-	initTmap();
-</script>
+
+	<script>
+		var map;
+		var la;
+		var lo;
+		var result;
+		var test = "${path}";
+		var obj = JSON.parse('${json}');
+		// 페이지가 로딩이 된 후 호출하는 함수입니다.
+		console.log(obj);
+		var l = obj.length;
+		console.log(l);
+		var result = '';
+		function initTmap() {
+			// map 생성
+			// Tmap.map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
+			map = new Tmap.Map({
+				div : 'map_div', // map을 표시해줄 div
+				width : '100%', // map의 width 설정
+				height : '400px' // map의 height 설정
+			});
+			
+				markerLayer = new Tmap.Layer.Markers();//마커 레이어 생성
+				map.addLayer(markerLayer);//map에 마커 레이어 추가
+			
+				 for(var i=0; i<l; i++){
+				//index와 아이템
+				$(obj).each(function(index, item){
+					setInterval(function(){
+					la = item.lat;
+					lo = item.lng;
+					var lonlat = new Tmap.LonLat(la, lo).transform("EPSG:4326",
+						"EPSG:3857");//좌표 설정
+					var size = new Tmap.Size(24, 38);//아이콘 크기 설정
+					map.setCenter(lonlat, 15);//map의 중심 좌표 설정
+
+					var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
+					var icon = new Tmap.Icon(
+						'http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_a.png',
+						size, offset);//마커 아이콘 설정
+
+					marker = new Tmap.Marker(lonlat, icon);//마커 생성
+					markerLayer.addMarker(marker);//레이어에 마커 추가
+					//console.log(la+" "+lo);	
+					}, 1000);
+					
+				}); 
+				
+			}
+		}
+		// 맵 생성 실행
+		initTmap();
+	</script>
 
 <!-- temperature slide value -->
 <script>
@@ -451,9 +457,6 @@ var RangeSlider = function(){
 };
 RangeSlider();
 </script>
-
-
 </body>
-
 
 </html>
