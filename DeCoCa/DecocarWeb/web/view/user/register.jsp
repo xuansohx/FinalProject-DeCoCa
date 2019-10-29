@@ -155,15 +155,15 @@
 				method:"POST",
 				success:function(result){
 					if(result == '1'){
-						alert("아이디 중복입니다.");
+						//alert("아이디 중복입니다.");
 						$('input[name="registerok"]').attr('disabled','disabled');
 						$('.idsame').html('<span style="color:red">아이디 중복입니다.</span>');
 						return false;
 					}else if(result == '0'){
 						if( userid.length > 4 ){
-						alert("사용 가능한 아이디 입니다.");
+						//alert("사용 가능한 아이디 입니다.");
 						$('input[name="registerok"]').removeAttr('disabled');
-						$('.idsame').html('<span style="color:red"></span>');
+						$('.idsame').html('<span style="color:blue">사용 가능한 아이디입니다.</span>');
 						return false;
 						}
 						else if(userid.length <4 || userid.length >12){

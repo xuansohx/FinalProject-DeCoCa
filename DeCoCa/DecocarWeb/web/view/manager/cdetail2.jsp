@@ -52,6 +52,10 @@ table>tr>td {
 	margin: 0 auto;
 	vertical-align: center;
 }
+
+#div_temp {
+text-align: -webkit-center;
+}
 </style>
 
 <title>Car Status Detail[admin]</title>
@@ -292,8 +296,13 @@ table>tr>td {
 
 									<!-- Temperature -->
 									<td class="column-2">
-										<a href="changeStatus.mc?carid=${car.carid}&msg=temp_60">${temperature }℃</a>										
-										<input type="range" name="temper" min="18" max="28">
+									<div id="div_temp">
+										<a id="slider_val_view">${temperature }℃</a>
+										<br><br>										
+										<input type="range" name="temper" min="18" max="28" class="slider_range">
+										<br>
+										<input type="button" onclick="location.href='changeStatus.mc?carid=${car.carid}&msg=temp_${temperature}'" value="OK">
+									</div>
 									</td>
 
 									<!-- Pressure -->
@@ -426,7 +435,22 @@ table>tr>td {
 	initTmap();
 </script>
 
+<!-- temperature slide value -->
+<script>
 
+function ShowSliderVal(sVal){
+	var obValView = document.getElementById("slider_val_view");
+	obValView.innerHTML = sVal;
+}
+
+var RangeSlider = function(){
+	var range = $('.slider_range');
+	range.on('input',function(){
+		ShowSliderVal(this.value);
+	});
+};
+RangeSlider();
+</script>
 
 
 </body>
