@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+
 <!-- java에서 array list 가져오기 -->
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
@@ -14,8 +15,10 @@
 <script
 	src="https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=a9ee13e1-cb7e-46a8-b144-14bfd0103a90"></script>
 <script type="text/javascript"></script>
+
 <!-- Jquery JS-->
 <script src="vendor/jquery-3.2.1.min.js"></script>
+
 
 
 <head>
@@ -59,6 +62,11 @@ table>tr>td {
 	margin: 0 auto;
 	vertical-align: center;
 }
+
+#div_temp {
+text-align: -webkit-center;
+}
+
 </style>
 
 <title>Car Status Detail[admin]</title>
@@ -98,6 +106,7 @@ table>tr>td {
 <!--===============================================================================================-->
 
 </head>
+  
 <body class="animsition">
 
 	<h1 id="page_title">
@@ -220,7 +229,11 @@ table>tr>td {
 									<!-- Engine -->
 									<c:choose>
 										<c:when test="${engine == 0}">
-											<td class="column-1">OFF</td>
+
+											<td class="column-1">
+												<a href="changeStatus.mc?carid=${car.carid}&msg=engine">OFF</a>
+											</td>
+
 										</c:when>
 
 										<c:when test="${engine == 1}">
@@ -231,11 +244,13 @@ table>tr>td {
 									<!-- Door -->
 									<c:choose>
 										<c:when test="${door == 0}">
-											<td class="column-2">Locked</td>
+
+											<td class="column-2"><a href="changeStatus.mc?carid=${car.carid}&msg=door">Locked</a></td>
 										</c:when>
 
 										<c:when test="${door == 1}">
-											<td class="column-2">UnLocked</td>
+											<td class="column-2"><a href="changeStatus.mc?carid=${car.carid}&msg=door">UnLocked</a></td>
+
 										</c:when>
 									</c:choose>
 
@@ -290,7 +305,16 @@ table>tr>td {
 									</c:choose>
 
 									<!-- Temperature -->
-									<td class="column-2">${temperature }℃</td>
+									<td class="column-2">
+									<div id="div_temp">
+										<a id="slider_val_view">${temperature }℃</a>
+										<br><br>										
+										<input type="range" name="temper" min="18" max="28" class="slider_range">
+										<br>
+										<input type="button" onclick="location.href='changeStatus.mc?carid=${car.carid}&msg=temp_${temperature}'" value="OK">
+									</div>
+									</td>
+
 
 									<!-- Pressure -->
 									<td class="column-3">${pressure}kPa</td>
@@ -308,11 +332,10 @@ table>tr>td {
 								</tr>
 							</table>
 
-						</div>
 
-						<%-- 여기다....
-						<c:forEach var="p" items="${path }">${p.lng } ${p.lat }</c:forEach>
-						여기다2....${json } --%>
+						</div>
+            
+            <!-- MAP car location -->
 						<div id="map_div"></div>
 					</div>
 
@@ -354,6 +377,7 @@ table>tr>td {
 				scrollingThreshold : 1000,
 				wheelPropagation : false,
 			});
+
 			$(window).on('resize', function() {
 				ps.update();
 			})
@@ -363,10 +387,8 @@ table>tr>td {
 	<script src="js/main.js"></script>
 
 	<!-- Map Function -->
+
 	<script>
-	
-	
-	
 		var map;
 		var la;
 		var lo;
@@ -387,7 +409,6 @@ table>tr>td {
 				height : '400px' // map의 height 설정
 			});
 			
-				
 				markerLayer = new Tmap.Layer.Markers();//마커 레이어 생성
 				map.addLayer(markerLayer);//map에 마커 레이어 추가
 			
@@ -420,7 +441,22 @@ table>tr>td {
 		initTmap();
 	</script>
 
-</body>
+<!-- temperature slide value -->
+<script>
 
+function ShowSliderVal(sVal){
+	var obValView = document.getElementById("slider_val_view");
+	obValView.innerHTML = sVal;
+}
+
+var RangeSlider = function(){
+	var range = $('.slider_range');
+	range.on('input',function(){
+		ShowSliderVal(this.value);
+	});
+};
+RangeSlider();
+</script>
+</body>
 
 </html>

@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import Final.frame.Biz;
 import Final.vo.Car;
 import Final.vo.CarStatus;
+import Final.vo.Path;
 import Final.vo.Reservation;
 import Final.vo.User;
 import Final.vo.Path;
@@ -39,11 +40,8 @@ public class ManagerController {
 	@Resource(name = "Ureserbiz")
 	Biz<String, Reservation> uresbiz;
 	
-	// add simulation
 	@Resource(name = "pbiz")
 	Biz<Integer, Path> pbiz;
-	
-
 	@RequestMapping("/manmain.mc")
 	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView();
@@ -142,23 +140,19 @@ public class ManagerController {
 		Car car = null;
 		CarStatus cs = null;
 		ArrayList<Path> path = null;
-		
-		String ssivar = "Á»µÇ¶ó..";
-		//arraylist¸¦ jasonÀ¸·Î º¯È¯
-		
+
 		try {
-			// ¿©±â¿¡ µé¾î°¡´Â string °ªÀÌ ¸ô±î?
-			car = cbiz.get(carid);
+      car = cbiz.get(carid);
 			cs = csbiz.get(carid);
-			path = pbiz.getAll(carid);
 			cs.setCarid(carid);
+			path = pbiz.getAll(carid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		//path add
 		mv.addObject("path", path);	
 		
-		//arraylist°ªÀ» jsonÀ¸·Î ¸¸µé±â (object)
+		//arraylistï¿½ï¿½ï¿½ jsonï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ (object)
 		Gson gson = new Gson();
 		String json = gson.toJson(path);
 		
@@ -175,7 +169,6 @@ public class ManagerController {
 		int seatbelt = Integer.parseInt(status.substring(11,12));
 		int brake = Integer.parseInt(status.substring(12,13));
 		int engine = Integer.parseInt(status.substring(13,14));
-
 		mv.addObject("battery",battery);
 		mv.addObject("speed",speed);
 		mv.addObject("pressure",pressure);
@@ -184,10 +177,9 @@ public class ManagerController {
 		mv.addObject("seatbelt",seatbelt);
 		mv.addObject("brake",brake);
 		mv.addObject("engine",engine);
-		
 		mv.addObject("car",car);
 		mv.addObject("center", "manager/cdetail");
-		mv.setViewName("main");			
+		mv.setViewName("main");
 		return mv;
 	}	
 	

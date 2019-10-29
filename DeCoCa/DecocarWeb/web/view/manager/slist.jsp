@@ -105,8 +105,24 @@ a:hover {
 									href="schedetailM.mc?calid=${s.calid }">${s.calid }</a></td>
 								<td class="column-2"><a
 									href="schedetailM.mc?calid=${s.calid }">${s.carid }</a></td>
-								<td class="column-3"><a
-									href="schedetailM.mc?calid=${s.calid }">${s.sStyle }</a></td>
+
+								<c:choose>
+									<c:when test="${s.sStyle == 1 }">
+										<td class="column-3"><a
+											href="schedetailM.mc?calid=${s.calid }">스마트택시</a></td>
+									</c:when>
+
+									<c:when test="${s.sStyle == 2 }">
+										<td class="column-3"><a
+											href="schedetailM.mc?calid=${s.calid }">픽업</a></td>
+									</c:when>
+
+									<c:when test="${s.sStyle == 3 }">
+										<td class="column-3"><a
+											href="schedetailM.mc?calid=${s.calid }">퀵</a></td>
+									</c:when>
+								</c:choose>
+
 								<td class="column-4"><a
 									href="schedetailM.mc?calid=${s.calid }">${s.userid }</a></td>
 								<td class="column-5"><a

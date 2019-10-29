@@ -11,6 +11,3 @@ public interface PathMapper {
 	public Path select(Integer obj);
 	public ArrayList<Path> selectall(Integer obj);
 }
-
-
-
