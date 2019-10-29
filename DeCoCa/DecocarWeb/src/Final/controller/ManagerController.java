@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+
 import Final.frame.Biz;
 import Final.vo.Car;
 import Final.vo.CarStatus;
@@ -130,24 +132,32 @@ public class ManagerController {
 		return mv;
 	}
   
-	// add here ( simulation )
-	
-	
 	// manager version. schedule list per user
 	@RequestMapping("/cardetailM.mc")
-	public ModelAndView cardetailM(int carid) {
+	public ModelAndView cardetailM(int carid, HttpServletResponse rep ) {
 		ModelAndView mv = new ModelAndView();
 		
 		Car car = null;
 		CarStatus cs = null;
+		ArrayList<Path> path = null;
 		ArrayList<Path> path = null;	
 		try {
-			car = cbiz.get(carid);
+      car = cbiz.get(carid);
 			cs = csbiz.get(carid);
 			cs.setCarid(carid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		//path add
+		mv.addObject("path", path);	
+		
+		mv.addObject("ssi", ssivar);
+		//arraylist��� json��� ����� (object)
+		Gson gson = new Gson();
+		String json = gson.toJson(path);
+		
+		//System.out.println(json.toString());
+		mv.addObject("json", json);
 		// Cutting status and String -> Integer
 		/* mv.addObject("cs", cs); */
 		String status = cs.getStatus(); // get Status
@@ -159,9 +169,6 @@ public class ManagerController {
 		int seatbelt = Integer.parseInt(status.substring(11,12));
 		int brake = Integer.parseInt(status.substring(12,13));
 		int engine = Integer.parseInt(status.substring(13,14));
-		
-		//path add
-		mv.addObject("path", plist);		
 		mv.addObject("battery",battery);
 		mv.addObject("speed",speed);
 		mv.addObject("pressure",pressure);
@@ -171,8 +178,7 @@ public class ManagerController {
 		mv.addObject("brake",brake);
 		mv.addObject("engine",engine);
 		mv.addObject("car",car);
-		mv.addObject("plist",plist);
-		mv.addObject("center", "manager/cdetail2");
+		mv.addObject("center", "manager/cdetail");
 		mv.setViewName("main");
 		return mv;
 	}	
