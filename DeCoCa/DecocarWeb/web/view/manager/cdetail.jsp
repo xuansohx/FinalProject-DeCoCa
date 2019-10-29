@@ -59,6 +59,10 @@ table>tr>td {
 	margin: 0 auto;
 	vertical-align: center;
 }
+
+#div_temp{
+	text-align: -webkit-center;
+}
 </style>
 
 <title>Car Status Detail[admin]</title>
@@ -231,11 +235,13 @@ table>tr>td {
 									<!-- Door -->
 									<c:choose>
 										<c:when test="${door == 0}">
-											<td class="column-2">Locked</td>
+
+											<td class="column-2"><a href="changeStatus.mc?carid=${car.carid}&msg=door">Locked</a></td>
 										</c:when>
 
 										<c:when test="${door == 1}">
-											<td class="column-2">UnLocked</td>
+											<td class="column-2"><a href="changeStatus.mc?carid=${car.carid}&msg=door">UnLocked</a></td>
+
 										</c:when>
 									</c:choose>
 
@@ -290,7 +296,15 @@ table>tr>td {
 									</c:choose>
 
 									<!-- Temperature -->
-									<td class="column-2">${temperature }℃</td>
+									<td class="column-2">
+									<div id="div_temp">
+										<a id="slider_val_view">${temperature }</a>
+										<br><br>										
+										<input type="range" name="temper" min="18" max="28" class="slider_range">
+										<br>
+										<input type="button" onclick="tempclick()" value="OK">
+									</div>
+									</td>
 
 									<!-- Pressure -->
 									<td class="column-3">${pressure}kPa</td>
@@ -432,6 +446,17 @@ function ShowSliderVal(sVal){
 	obValView.innerHTML = sVal;
 }
 
+<!-- temperature slide value -->
+<script>
+function ShowSliderVal(sVal){
+	var obValView = document.getElementById("slider_val_view");
+	obValView.innerHTML = sVal;
+}
+function tempclick(){
+	var val= document.getElementById("slider_val_view").innerHTML;
+	var url='changeStatus.mc?carid=${car.carid}&msg=temp_' + val;
+	location.href=url;	
+}
 var RangeSlider = function(){
 	var range = $('.slider_range');
 	range.on('input',function(){
@@ -440,7 +465,7 @@ var RangeSlider = function(){
 };
 RangeSlider();
 </script>
-
+};
 </body>
 
 

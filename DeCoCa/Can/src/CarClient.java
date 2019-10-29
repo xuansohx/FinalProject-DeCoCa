@@ -149,6 +149,27 @@ public class CarClient implements SerialPortEventListener {
 							status[8]="1";
 						}
 						st.sendData("W28"+ statustoString());					
+					}else if(spl[0].equals("stat")) {
+						//spl[1] 을 status로 넣자
+						String data ="IN28"+spl[1]+"999999999999";
+						System.out.println(data);						
+							for (int i = 1; i <= 2; i++) {
+								status[i] = data.substring(i * 3 + 1, i * 3 + 4);
+							}
+							for (int i = 1; i <= 2; i++) {
+								status[i + 2] = data.substring(i * 2 + 8, i * 2 + 10);
+							}
+							for (int i = 1; i <= 4; i++) {
+								status[i + 4] = data.substring(i + 13, i + 1 + 13);
+							}
+							for (int i = 1; i <= 2; i++) {
+								status[i + 8] = data.substring(i * 3 + 15, i * 3 + 18);
+							}
+							for (int i = 1; i <= 2; i++) {
+								status[i + 10] = data.substring(i * 2 + 22, i * 2 + 24);
+							
+						}
+						st.sendData("W28"+ statustoString());
 					}
 				}
 			} catch (Exception e) {
@@ -311,7 +332,7 @@ public class CarClient implements SerialPortEventListener {
 			// CarClient st = new CarClient("COM5");
 			// st = new CarClient("COM5");
 			st = new CarClient("COM12");
-			client = new CarClient("70.12.227.106", 1234);
+			client = new CarClient("70.12.229.110", 1234);
 			client.start();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

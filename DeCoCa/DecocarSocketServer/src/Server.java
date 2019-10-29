@@ -77,7 +77,6 @@ public class Server {
 						Socket socket = serverSocket.accept();
 						new ReCThread(socket).start();
 						System.out.println(socket.getInetAddress() + " Connected");
-						sendMsg(socket.getInetAddress() + " 님이 접속했습니다");
 					}
 					System.out.println("Server Dead...");
 				} catch (IOException e) {
@@ -171,8 +170,9 @@ public class Server {
 			out = socket.getOutputStream();
 			dout = new DataOutputStream(out);
 			ip = socket.getInetAddress().toString();
-			if (nick.get(ip) != null)
+			if (nick.get(ip) != null) {
 				name = nick.get(ip);
+			}
 			map.put(ip, dout);
 			System.out.println("접속자 수: " + map.size());
 		}
@@ -185,21 +185,14 @@ public class Server {
 					System.out.println(str);
 					String sendId;
 					boolean flag = true;
-					// web 서버에서 메세지를 보내면 이를 명령어로 해석해서 작업을 한다.
-					// 1. N번 차량에게 일정을 전달하기
-					// sche-차량id-일정id
-					// 2. 모든 차량의 정보를 알려줘!
-					// selectAll
-					// 3. N 번 차량의 정보를 알려줘!
-					// select-차량id
 					String[] cmd = str.split("-");
-					System.out.println(cmd[0]+"first cmd");
-					if (str.equals("selectAll")) {// 2.
+					if (str.equals("selectAll")) { // 모든차량의 상태 업데이트
 						sendMsg("updateState");
-					} else if (cmd[0].equals("select")) {// 3.
+					} else if (cmd[0].equals("select")) { // 해당차량만 업데이트
 						String target = cmd[1];
 						sendWhisper("updateState", target);
-					} else if (cmd[0].equals("sche")) { // 1.
+					} else if (cmd[0].equals("sche")) { // 해당 차량에게 스케쥴 끝시간 보내기
+						map.remove(ip);
 						String target = cmd[1];
 						String schedule = cmd[2];
 						System.out.println(target+" "+schedule);
@@ -208,6 +201,13 @@ public class Server {
 						nick.put(ip, cmd[1]);
 						nickip.put(cmd[1],ip);
 						System.out.println(ip+"'s carid is "+cmd[1]);
+					}else if(cmd[0].equals("ctl")) {
+						String target = cmd[1];
+						String msg = cmd[2];
+						System.out.println(msg+" to " +target);
+						sendWhisper(msg, target);
+						Thread.sleep(500);
+						sendWhisper("updateState", target);
 					}
 				}
 			} catch (Exception e) {
