@@ -59,6 +59,10 @@ table>tr>td {
 	margin: 0 auto;
 	vertical-align: center;
 }
+
+#div_temp{
+	text-align: -webkit-center;
+}
 </style>
 
 <title>Car Status Detail[admin]</title>
@@ -446,7 +450,7 @@ function ShowSliderVal(sVal){
 	obValView.innerHTML = sVal;
 }
 function tempclick(){
-	var val= document.getElementById("slider_val_view").val;
+	var val= document.getElementById("slider_val_view").innerHTML;
 	var url='changeStatus.mc?carid=${car.carid}&msg=temp_' + val;
 	location.href=url;	
 }
@@ -455,6 +459,8 @@ var RangeSlider = function(){
 	range.on('input',function(){
 		ShowSliderVal(this.value);
 	});
+	
+	
 };
 RangeSlider();
 </script>

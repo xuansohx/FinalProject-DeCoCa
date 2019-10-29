@@ -92,6 +92,9 @@ public class ReservationController {
 		try {
 			rbiz.register(reserve);
 			sendPush(reserve);
+			if(!reserve.getReuserid().equals("none")) {
+				sendPush2(reserve);
+			}
 			response.sendRedirect("schelist.mc?userid="+reserve.getUserid());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -204,7 +207,19 @@ public class ReservationController {
 			e.printStackTrace();
 		}
 	}
-	
+	public void sendPush2(Reservation reserve) {
+		String uid = reserve.getReuserid();
+		User u = null;
+		try {
+			u = ubiz.get(uid);
+			String token = u.getUserdevice();
+			int pin = reserve.getPinNum();
+			FcmUtil fcm = new FcmUtil();
+			fcm.send_FCM(token, "Decoca", pin + "");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 
 }

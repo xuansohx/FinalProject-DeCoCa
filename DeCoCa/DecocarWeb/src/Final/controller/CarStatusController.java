@@ -96,7 +96,6 @@ public class CarStatusController {
 		double la = Double.parseDouble(lat);
 		double ln = Double.parseDouble(lng);
 		CarStatus cs = new CarStatus(car_id, carstatus,la,ln);
-		System.out.println(cs);
 		try {
 			csbiz.modify(cs);
 		} catch (Exception e) {
@@ -250,7 +249,8 @@ public class CarStatusController {
 	public void changeStatus(HttpServletResponse response,int carid , String msg) {
 		ModelAndView mv = new ModelAndView();
 		Client c= new Client("70.12.60.110",9999);
-		c.setMsg2(carid, msg);		
+		c.setMsg2(carid, msg);
+		System.out.println(msg);
 		try {
 			c.startClient();
 			Thread.sleep(1000);
