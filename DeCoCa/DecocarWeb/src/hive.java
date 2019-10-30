@@ -11,7 +11,7 @@ public class hive {
 		int test[] = new int[24]; 
 		Class.forName("org.apache.hive.jdbc.HiveDriver");
 		Connection conn = DriverManager.getConnection("jdbc:hive2://70.12.60.200:10000/default","root","111111");
-// hive2 서버를 구동하고있는 ip주소로 접속한다. id / pwd 입력 (익명으로 로그인시 생략 가능)
+		// hive2 서버를 구동하고있는 ip주소로 접속한다. id / pwd 입력 (익명으로 로그인시 생략 가능)
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM time");
 		
@@ -24,15 +24,12 @@ public class hive {
 		
 		for(int i=0;i<24;i++){
 			System.out.println(test[i]);
-			
 		}
 		/*
 		 * for(int i=0;i<1000;i++){
 		 * 
 		 * test[i]=rs.getString(3); System.out.println(test[i]); }
 		 */
-		
-		
 		conn.close();
 	}
 }

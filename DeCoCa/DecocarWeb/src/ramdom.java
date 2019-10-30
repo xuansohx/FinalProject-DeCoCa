@@ -25,7 +25,6 @@ public class ramdom {
 		}
 		BufferedOutputStream bos = new BufferedOutputStream(fos,5); 
 		
-		
 		for(int i=0; i<1000; i++) {
 			
 			day[i] = r.nextInt(31)+1;
@@ -47,8 +46,5 @@ public class ramdom {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
-
-
 	}
-
 }
