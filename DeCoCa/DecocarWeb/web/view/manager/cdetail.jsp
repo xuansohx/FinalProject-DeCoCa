@@ -413,7 +413,7 @@ table>tr>td {
 					arr2[index] = lonlat;
 					//makers.clearMarkers();
 			var size = new Tmap.Size(24, 38);//아이콘 크기 설정
-			map.setCenter(lonlat, 15);//map의 중심 좌표 설정
+			map.setCenter(lonlat, 14);//map의 중심 좌표 설정
 			var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
 			var icon = new Tmap.Icon(
 					'http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_a.png',
@@ -426,7 +426,7 @@ table>tr>td {
 				setTimeout(function() {
 					markerLayer.removeMarker(arr[x-1])
 					markerLayer.addMarker(arr[x]);//레이어에 마커 추가
-					map.setCenter(arr2[x], 13.5);//map의 중심 좌표 설정
+					//map.setCenter(arr2[x], 13.5);//map의 중심 좌표 설정
 					}, 2000 * x);
 			}
 			for (i = 1; i < arr.length; i++) {
@@ -438,13 +438,7 @@ table>tr>td {
 		initTmap();
 	</script>
 	
-<!-- temperature slide value -->
-<script>
 
-function ShowSliderVal(sVal){
-	var obValView = document.getElementById("slider_val_view");
-	obValView.innerHTML = sVal;
-}
 
 <!-- temperature slide value -->
 <script>

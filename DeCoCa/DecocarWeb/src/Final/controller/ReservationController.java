@@ -91,9 +91,9 @@ public class ReservationController {
 		int calid = reserve.getCalid();
 		try {
 			rbiz.register(reserve);
-			sendPush(reserve);
+			sendPush(reserve,0);
 			if(!reserve.getReuserid().equals("none")) {
-				sendPush2(reserve);
+				sendPush2(reserve,0);
 			}
 			response.sendRedirect("schelist.mc?userid="+reserve.getUserid());
 		} catch (Exception e) {
@@ -194,7 +194,7 @@ public class ReservationController {
 		}
 	}
   
-	public void sendPush(Reservation reserve) {
+	public void sendPush(Reservation reserve , int type) {
 		String uid = reserve.getUserid();
 		User u = null;
 		try {
@@ -202,12 +202,19 @@ public class ReservationController {
 			String token = u.getUserdevice();
 			int pin = reserve.getPinNum();
 			FcmUtil fcm = new FcmUtil();
-			fcm.send_FCM(token, "decoca", pin + "");
+			String str ="";
+			if(type==0) {// 일정을 등록했을때
+				str="일정이 등록되었습니다.\n 인증번호는 "+pin + " 입니다";				
+			}
+			else { // 차량이 배차 되었을때
+				str="차량이 출발했습니다. \n 인증번호는 "+pin +" 입니다";
+			}
+			fcm.send_FCM(token, "Decoca",str);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	public void sendPush2(Reservation reserve) {
+	public void sendPush2(Reservation reserve, int type) {
 		String uid = reserve.getReuserid();
 		User u = null;
 		try {
@@ -215,7 +222,14 @@ public class ReservationController {
 			String token = u.getUserdevice();
 			int pin = reserve.getPinNum();
 			FcmUtil fcm = new FcmUtil();
-			fcm.send_FCM(token, "Decoca", pin + "");
+			String str ="";
+			if(type==0) {
+				str="일정이 등록되었습니다.\n 인증번호는 "+pin + " 입니다";				
+			}
+			else {
+				str="차량이 출발했습니다. \n 인증번호는 "+pin +" 입니다";
+			}
+			fcm.send_FCM(token, "Decoca", str);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

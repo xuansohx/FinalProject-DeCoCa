@@ -109,7 +109,7 @@ public class Dispatch {
 				e.printStackTrace();
 			}
 			try {
-				Thread.sleep(600000); // 10분 주기로 실행 한다.
+				Thread.sleep(300000); // 5분 주기로 실행 한다.
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
