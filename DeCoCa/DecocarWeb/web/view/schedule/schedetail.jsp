@@ -228,6 +228,11 @@
 					<textarea class="size-111 bor8 stext-102 cl2 p-lr-20"
 						id="schedulememo" name="memo" readonly="readonly">${sch.memo }</textarea>
 				</div>
+				<div class="col-sm-6 p-b-5 m-lr-auto ">
+					<label class="stext-102 cl3">인증번호</label>
+					<textarea class="size-111 bor8 stext-102 cl2 p-lr-20"
+						id="scheduleNum" name="pinNum" readonly="readonly">${sch.pinNum }</textarea>
+				</div>
 			</div>
 		</div>
 

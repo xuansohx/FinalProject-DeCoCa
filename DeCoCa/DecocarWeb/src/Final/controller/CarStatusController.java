@@ -148,13 +148,16 @@ public class CarStatusController {
 				}
 			}
 		}
-		reserve.setReuserid("None");
 		// insert DataBase
 		try {
 			// reuid 가 null이 뜬다
 			carbiz.modify(car);
 			rbiz.modify(reserve);
 			sendSche(car.getCarid(), car.getCalid());
+			sendPush(reserve,1);
+			if(!reserve.getReuserid().equals("none")) {
+				sendPush2(reserve,1);				
+			}
 			//배차가 완료 되면 배차를 시키고 그 차에 일정의 eTime을 보내준다 
 			
 		} catch (Exception e) {
@@ -260,6 +263,46 @@ public class CarStatusController {
 		try {
 			response.sendRedirect("cardetailM.mc?carid="+carid);
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void sendPush(Reservation reserve , int type) {
+		String uid = reserve.getUserid();
+		User u = null;
+		try {
+			u = ubiz.get(uid);
+			String token = u.getUserdevice();
+			int pin = reserve.getPinNum();
+			FcmUtil fcm = new FcmUtil();
+			String str ="";
+			if(type==0) {// 일정을 등록했을때
+				str="일정이 등록되었습니다.\n 인증번호는 "+pin + " 입니다";				
+			}
+			else { // 차량이 배차 되었을때
+				str="차량이 출발했습니다. \n 인증번호는 "+pin +" 입니다";
+			}
+			fcm.send_FCM(token, "Decoca",str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void sendPush2(Reservation reserve, int type) {
+		String uid = reserve.getReuserid();
+		User u = null;
+		try {
+			u = ubiz.get(uid);
+			String token = u.getUserdevice();
+			int pin = reserve.getPinNum();
+			FcmUtil fcm = new FcmUtil();
+			String str ="";
+			if(type==0) {
+				str="일정이 등록되었습니다.\n 인증번호는 "+pin + " 입니다";				
+			}
+			else {
+				str="차량이 출발했습니다. \n 인증번호는 "+pin +" 입니다";
+			}
+			fcm.send_FCM(token, "Decoca", str);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
