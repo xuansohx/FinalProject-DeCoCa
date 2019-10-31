@@ -2,6 +2,10 @@ package Final.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
@@ -23,32 +27,39 @@ import Final.vo.Reservation;
 import Final.vo.User;
 import Final.vo.Path;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 @Controller
 public class ManagerController {
 	@Resource(name = "ubiz")
 	Biz<String, User> ubiz;
-	
+
 	@Resource(name = "carbiz")
 	Biz<Integer, Car> cbiz;
-	
+
 	@Resource(name = "csbiz")
 	Biz<Integer, CarStatus> csbiz;
-	
+
 	@Resource(name = "reserbiz")
 	Biz<Integer, Reservation> rbiz;
 
 	@Resource(name = "Ureserbiz")
 	Biz<String, Reservation> uresbiz;
-	
+
 	@Resource(name = "pbiz")
 	Biz<Integer, Path> pbiz;
+
 	@RequestMapping("/manmain.mc")
 	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		return mv;
 	}
-	
+
 	// manager version. All user list
 	@RequestMapping("/manageUser.mc")
 	public ModelAndView manageU() {
@@ -61,8 +72,8 @@ public class ManagerController {
 			e.printStackTrace();
 		}
 		System.out.println(ulist);
-		mv.addObject("center","manager/ulist");
-		mv.addObject("ulist",ulist); 
+		mv.addObject("center", "manager/ulist");
+		mv.addObject("ulist", ulist);
 		mv.setViewName("main");
 		return mv;
 	}
@@ -70,7 +81,7 @@ public class ManagerController {
 	// manager version. All car list
 	@RequestMapping("/manageCar.mc")
 	public ModelAndView manageC() {
-		ModelAndView mv = new ModelAndView();		
+		ModelAndView mv = new ModelAndView();
 		ArrayList<Car> clist = null;
 		try {
 			clist = cbiz.getAll(1);
@@ -78,16 +89,16 @@ public class ManagerController {
 			e.printStackTrace();
 		}
 		System.out.println(clist);
-		mv.addObject("center","manager/clist");
-		mv.addObject("clist",clist);
+		mv.addObject("center", "manager/clist");
+		mv.addObject("clist", clist);
 		mv.setViewName("main");
 		return mv;
 	}
-	
+
 	// manager version. All schedule list
 	@RequestMapping("/manageSche.mc")
 	public ModelAndView manageS() {
-		ModelAndView mv = new ModelAndView();		
+		ModelAndView mv = new ModelAndView();
 		ArrayList<Reservation> slist = null;
 		try {
 			slist = rbiz.getAll(1);
@@ -95,12 +106,12 @@ public class ManagerController {
 			e.printStackTrace();
 		}
 		System.out.println(slist);
-		mv.addObject("center","manager/slist");
-		mv.addObject("slist",slist); 
+		mv.addObject("center", "manager/slist");
+		mv.addObject("slist", slist);
 		mv.setViewName("main");
 		return mv;
 	}
-  
+
 	// manager version. schedule list per user
 	@RequestMapping("/userschelistM.mc")
 	public ModelAndView userschelistM(Reservation reserve, String userid) {
@@ -115,8 +126,8 @@ public class ManagerController {
 		mv.addObject("center", "manager/slist");
 		mv.setViewName("main");
 		return mv;
-	}	
-  
+	}
+
 	// manager version. schedule list per user
 	@RequestMapping("/schedetailM.mc")
 	public ModelAndView schedetailM(Reservation reserve, int calid) {
@@ -131,58 +142,58 @@ public class ManagerController {
 		mv.setViewName("main");
 		return mv;
 	}
-  
+
 	// manager version. schedule list per user
 	@RequestMapping("/cardetailM.mc")
-	public ModelAndView cardetailM(int carid, HttpServletResponse rep ) {
+	public ModelAndView cardetailM(int carid, HttpServletResponse rep) {
 		ModelAndView mv = new ModelAndView();
-		
+
 		Car car = null;
 		CarStatus cs = null;
 		ArrayList<Path> path = null;
 
 		try {
-      car = cbiz.get(carid);
+			car = cbiz.get(carid);
 			cs = csbiz.get(carid);
 			cs.setCarid(carid);
 			path = pbiz.getAll(carid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//path add
-		mv.addObject("path", path);	
-		
-		//arraylist��� json��� ����� (object)
+		// path add
+		mv.addObject("path", path);
+
+		// arraylist��� json��� ����� (object)
 		Gson gson = new Gson();
 		String json = gson.toJson(path);
-		
-		//System.out.println(json.toString());
+
+		// System.out.println(json.toString());
 		mv.addObject("json", json);
 		// Cutting status and String -> Integer
 		/* mv.addObject("cs", cs); */
 		String status = cs.getStatus(); // get Status
-		int battery = Integer.parseInt(status.substring(0,3));
-		int speed = Integer.parseInt(status.substring(3,6));
-		int pressure = Integer.parseInt(status.substring(6,8));
-		int temperature = Integer.parseInt(status.substring(8,10));
-		int door = Integer.parseInt(status.substring(10,11));
-		int seatbelt = Integer.parseInt(status.substring(11,12));
-		int brake = Integer.parseInt(status.substring(12,13));
-		int engine = Integer.parseInt(status.substring(13,14));
-		mv.addObject("battery",battery);
-		mv.addObject("speed",speed);
-		mv.addObject("pressure",pressure);
-		mv.addObject("temperature",temperature);
-		mv.addObject("door",door);
-		mv.addObject("seatbelt",seatbelt);
-		mv.addObject("brake",brake);
-		mv.addObject("engine",engine);
-		mv.addObject("car",car);
+		int battery = Integer.parseInt(status.substring(0, 3));
+		int speed = Integer.parseInt(status.substring(3, 6));
+		int pressure = Integer.parseInt(status.substring(6, 8));
+		int temperature = Integer.parseInt(status.substring(8, 10));
+		int door = Integer.parseInt(status.substring(10, 11));
+		int seatbelt = Integer.parseInt(status.substring(11, 12));
+		int brake = Integer.parseInt(status.substring(12, 13));
+		int engine = Integer.parseInt(status.substring(13, 14));
+		mv.addObject("battery", battery);
+		mv.addObject("speed", speed);
+		mv.addObject("pressure", pressure);
+		mv.addObject("temperature", temperature);
+		mv.addObject("door", door);
+		mv.addObject("seatbelt", seatbelt);
+		mv.addObject("brake", brake);
+		mv.addObject("engine", engine);
+		mv.addObject("car", car);
 		mv.addObject("center", "manager/cdetail");
 		mv.setViewName("main");
 		return mv;
-	}	
-	
+	}
+
 	// highcharts
 	@RequestMapping("/showchart.mc")
 	public ModelAndView showchart() {
@@ -191,7 +202,7 @@ public class ManagerController {
 		mv.setViewName("main");
 		return mv;
 	}
-	
+
 	@RequestMapping("/chartStype.mc")
 	public void chartStype(HttpServletResponse rep) {
 		ArrayList<Reservation> slist = null;
@@ -203,18 +214,18 @@ public class ManagerController {
 		int typecnt1 = 0;
 		int typecnt2 = 0;
 		int typecnt3 = 0;
-		for(int i=0; i<slist.size(); i++) {
-			if(slist.get(i).getsStyle() == 1) {
+		for (int i = 0; i < slist.size(); i++) {
+			if (slist.get(i).getsStyle() == 1) {
 				typecnt1++;
-			}else if(slist.get(i).getsStyle() == 2) {
+			} else if (slist.get(i).getsStyle() == 2) {
 				typecnt2++;
-			}else if(slist.get(i).getsStyle() == 3) {
+			} else if (slist.get(i).getsStyle() == 3) {
 				typecnt3++;
 			}
 		}
 		// JSON
 		JSONArray jb = new JSONArray();
-		JSONObject jo = new JSONObject(); 
+		JSONObject jo = new JSONObject();
 		jb.put(typecnt1);
 		jb.put(typecnt2);
 		jb.put(typecnt3);
@@ -229,7 +240,7 @@ public class ManagerController {
 		}
 		out.print(jb.toString());
 	}
-	
+
 	@RequestMapping("/chartStime.mc")
 	public void chartStime(HttpServletResponse rep) {
 		ArrayList<Reservation> slist = null;
@@ -239,32 +250,32 @@ public class ManagerController {
 			e.printStackTrace();
 		}
 		int t1 = 0, t2 = 0, t3 = 0, t4 = 0, t5 = 0, t6 = 0, t7 = 0, t8 = 0;
-		for(int i=0; i<slist.size(); i++) {
+		for (int i = 0; i < slist.size(); i++) {
 			String dtime = slist.get(i).getsTime();
 			String[] time = dtime.split(":");
 			int hour = Integer.parseInt(time[0]);
 			int minute = Integer.parseInt(time[1]);
-			if(0<=hour && hour<3) {
+			if (0 <= hour && hour < 3) {
 				t1++;
-			}else if(3<=hour && hour<6) {
+			} else if (3 <= hour && hour < 6) {
 				t2++;
-			}else if(6<=hour && hour<9) {
+			} else if (6 <= hour && hour < 9) {
 				t3++;
-			}else if(9<=hour && hour<12) {
+			} else if (9 <= hour && hour < 12) {
 				t4++;
-			}else if(12<=hour && hour<15) {
+			} else if (12 <= hour && hour < 15) {
 				t5++;
-			}else if(15<=hour && hour<18) {
+			} else if (15 <= hour && hour < 18) {
 				t6++;
-			}else if(18<=hour && hour<21) {
+			} else if (18 <= hour && hour < 21) {
 				t7++;
-			}else if(21<=hour && hour<24) {
+			} else if (21 <= hour && hour < 24) {
 				t8++;
 			}
 		}
 		// JSON
 		JSONArray jb = new JSONArray();
-		JSONObject jo = new JSONObject(); 
+		JSONObject jo = new JSONObject();
 		jb.put(t1);
 		jb.put(t2);
 		jb.put(t3);
@@ -284,12 +295,12 @@ public class ManagerController {
 		}
 		out.print(jb.toString());
 	}
-	
+
 	// show Car Location
 	@RequestMapping("/showCarLoc.mc")
 	public ModelAndView showCarLoc() {
 		ModelAndView mv = new ModelAndView();
-		
+
 		ArrayList<Path> path1 = null;
 		ArrayList<Path> path2 = null;
 		ArrayList<Path> path3 = null;
@@ -300,27 +311,69 @@ public class ManagerController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		//path add
-		mv.addObject("path1", path1);	
-		mv.addObject("path2", path2);	
-		mv.addObject("path3", path3);	
-				
-		//arraylist��� json��� ����� (object)
+
+		// path add
+		mv.addObject("path1", path1);
+		mv.addObject("path2", path2);
+		mv.addObject("path3", path3);
+
+		// arraylist��� json��� ����� (object)
 		Gson gson = new Gson();
 		String json1 = gson.toJson(path1);
 		String json2 = gson.toJson(path2);
 		String json3 = gson.toJson(path3);
-				
-		//System.out.println(json.toString());
+
+		// System.out.println(json.toString());
 		mv.addObject("json1", json1);
 		mv.addObject("json2", json2);
 		mv.addObject("json3", json3);
-		
+
 		mv.addObject("center", "manager/showcarloc");
 		mv.setViewName("main");
 		return mv;
+
 	}
-	
+
+	// Using Big data
+	@RequestMapping("/bigData.mc")
+	public ModelAndView bigData() throws SQLException, ClassNotFoundException {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("center", "manager/showbchart");
+		mv.setViewName("main");
+		return mv;
+	}
+
+	@RequestMapping("/bigChart.mc")
+	public void bigChart(HttpServletResponse rep) throws SQLException, ClassNotFoundException {
+
+		int test[] = new int[24];
+		
+		// JSON
+		JSONArray jb = new JSONArray();
+		JSONObject jo = new JSONObject();
+		
+		Class.forName("org.apache.hive.jdbc.HiveDriver");
+		Connection conn = DriverManager.getConnection("jdbc:hive2://70.12.60.200:10000/default", "root", "111111");
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM time");
+		while (rs.next()) {
+			// System.out.println(rs.getString(4));
+			int inx = Integer.parseInt(rs.getString(4));
+			test[inx]++;
+		}
+		for (int i = 0; i < 24; i++) {
+			jb.put(test[i]);
+			// System.out.println(test[i]);
+		}
+		PrintWriter out = null;
+		rep.setCharacterEncoding("EUC-KR");
+		rep.setContentType("text/json;charset=UTF-8");
+		try {
+			out = rep.getWriter();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		out.print(jb.toString());
+		conn.close();
+	}
 }

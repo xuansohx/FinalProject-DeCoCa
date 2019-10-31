@@ -93,6 +93,7 @@
 								--> 
 								<li><a href="showchart.mc">chart</a></li>
 								<li><a href="showCarLoc.mc">car map</a></li>
+								<li><a href="bigData.mc">Big data</a></li>
 								<li><a href="logout.mc">logout</a></li>
 							</ul>
 						</c:when>
