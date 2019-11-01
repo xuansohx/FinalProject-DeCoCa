@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tab_log_call" type="id" />
+    <item name="tab_contacts" type="id" />
+    <item name="tab_macro_setting" type="id" />
+    <item name="tab_call_log" type="id" />
+    <item name="action_settings" type="id" />
+</resources>

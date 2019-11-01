@@ -437,9 +437,6 @@ table>tr>td {
 		// 맵 생성 실행
 		initTmap();
 	</script>
-	
-
-
 <!-- temperature slide value -->
 <script>
 function ShowSliderVal(sVal){
