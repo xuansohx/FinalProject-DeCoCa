@@ -323,10 +323,13 @@ table>tr>td {
 							</table>
 
 						</div>
-
-						<div id="map_div"></div>
+						<c:choose>
+						<c:when test="${car.calid != 0 }">
+							<div id="map_div"></div>
+						</c:when>
+						</c:choose>
 					</div>
-
+					
 				</div>
 
 			</div>
@@ -437,9 +440,6 @@ table>tr>td {
 		// 맵 생성 실행
 		initTmap();
 	</script>
-	
-
-
 <!-- temperature slide value -->
 <script>
 function ShowSliderVal(sVal){
@@ -461,7 +461,6 @@ RangeSlider();
 </script>
 };
 </body>
-
 
 
 </html>

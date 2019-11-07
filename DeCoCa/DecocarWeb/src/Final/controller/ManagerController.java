@@ -180,6 +180,7 @@ public class ManagerController {
 		int seatbelt = Integer.parseInt(status.substring(11, 12));
 		int brake = Integer.parseInt(status.substring(12, 13));
 		int engine = Integer.parseInt(status.substring(13, 14));
+		
 		mv.addObject("battery", battery);
 		mv.addObject("speed", speed);
 		mv.addObject("pressure", pressure);
@@ -193,7 +194,45 @@ public class ManagerController {
 		mv.setViewName("main");
 		return mv;
 	}
-
+	@RequestMapping("/cardetailMap.mc")
+	public ModelAndView cardetailMap(int carid, HttpServletResponse rep) {
+		ModelAndView mv = new ModelAndView();
+		Car car = null;
+		CarStatus cs = null;
+		ArrayList<Path> path = null;
+		try {
+			car = cbiz.get(carid);
+			cs = csbiz.get(carid);
+			cs.setCarid(carid);
+			path = pbiz.getAll(carid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.addObject("path", path);
+		Gson gson = new Gson();
+		String json = gson.toJson(path);
+		mv.addObject("json", json);
+		String status = cs.getStatus(); // get Status
+		int battery = Integer.parseInt(status.substring(0, 3));
+		int speed = Integer.parseInt(status.substring(3, 6));
+		int pressure = Integer.parseInt(status.substring(6, 8));
+		int temperature = Integer.parseInt(status.substring(8, 10));
+		int door = Integer.parseInt(status.substring(10, 11));
+		int seatbelt = Integer.parseInt(status.substring(11, 12));
+		int brake = Integer.parseInt(status.substring(12, 13));
+		int engine = Integer.parseInt(status.substring(13, 14));
+		mv.addObject("battery", battery);
+		mv.addObject("speed", speed);
+		mv.addObject("pressure", pressure);
+		mv.addObject("temperature", temperature);
+		mv.addObject("door", door);
+		mv.addObject("seatbelt", seatbelt);
+		mv.addObject("brake", brake);
+		mv.addObject("engine", engine);
+		mv.addObject("car", car);
+		mv.setViewName("manager/cdetailmap");
+		return mv;
+	}
 	// highcharts
 	@RequestMapping("/showchart.mc")
 	public ModelAndView showchart() {
