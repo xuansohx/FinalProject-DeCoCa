@@ -40,11 +40,29 @@ var la2;
 var lo2;
 var la3;
 var lo3;
+var la4;
+var lo4;
+var la5;
+var lo5;
+var la6;
+var lo6;
+var la7;
+var lo7;
+var la8;
+var lo8;
+var la9;
+var lo9;
 var result;
 var test1 = "${path}";
 var obj1 = JSON.parse('${json1}');
 var obj2 = JSON.parse('${json2}');
 var obj3 = JSON.parse('${json3}');
+var obj4 = JSON.parse('${json4}');
+var obj5 = JSON.parse('${json5}');
+var obj6 = JSON.parse('${json6}');
+var obj7 = JSON.parse('${json7}');
+var obj8 = JSON.parse('${json8}');
+var obj9 = JSON.parse('${json9}');
 var marker;
 var cnt=0;
 var markerLayer;
@@ -53,6 +71,12 @@ var markerLayer2;
 var arr1 = new Array();
 var arr2 = new Array();
 var arr3 = new Array();
+var arr4 = new Array();
+var arr5 = new Array();
+var arr6 = new Array();
+var arr7 = new Array();
+var arr8 = new Array();
+var arr9 = new Array();
 var result = '';
 var i=0;
 var runAction = function(itv) {
@@ -77,12 +101,10 @@ function initTmap() {
 			result = item.idx;
 			var lonlat = new Tmap.LonLat(la1, lo1).transform("EPSG:4326","EPSG:3857");//좌표 설정
 			var size = new Tmap.Size(24, 38);//아이콘 크기 설정
-			map.setCenter(lonlat, 13.2);//map의 중심 좌표 설정
-
+			//map.setCenter(lonlat, 13.5);//map의 중심 좌표 설정
 			var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
 			var icon1 = new Tmap.Icon(
-					
-				'http://tmapapis.sktelecom.com/upload/tmap/marker/pin_g_m_a.png',
+				'http://tmapapis.sktelecom.com/upload/tmap/marker/pin_r_m_a.png',
 				size, offset);//마커 아이콘 설정
 			arr1[index] = new Tmap.Marker(lonlat, icon1);//마커 생성
 	});
@@ -93,7 +115,6 @@ function initTmap() {
 			var lonlat = new Tmap.LonLat(la2, lo2).transform("EPSG:4326","EPSG:3857");//좌표 설정
 			var size = new Tmap.Size(24, 38);//아이콘 크기 설정
 			//map.setCenter(lonlat, 13);//map의 중심 좌표 설정
-
 			var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
 			var icon2 = new Tmap.Icon(
 					
@@ -108,42 +129,158 @@ function initTmap() {
 			var lonlat = new Tmap.LonLat(la3, lo3).transform("EPSG:4326","EPSG:3857");//좌표 설정
 			var size = new Tmap.Size(24, 38);//아이콘 크기 설정
 			//map.setCenter(lonlat, 13);//map의 중심 좌표 설정
-
 			var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
-			/* var icon3 = new Tmap.Icon(
-				'http://70.12.60.111/DeCoCa/img/truck.png',
-				size, offset);//마커 아이콘 설정 */
  			var icon3 = new Tmap.Icon(
-				'http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_c.png',
+				'http://tmapapis.sktelecom.com/upload/tmap/marker/pin_r_m_c.png',
 				size, offset);//마커 아이콘 설정 
 			arr3[index] = new Tmap.Marker(lonlat, icon3);//마커 생성
+	});
+	$(obj4).each(function(index, item){
+			la4 = item.lat;
+			lo4 = item.lng;
+			result = item.idx;
+			var lonlat = new Tmap.LonLat(la4, lo4).transform("EPSG:4326","EPSG:3857");//좌표 설정
+			var size = new Tmap.Size(24, 38);//아이콘 크기 설정
+			//map.setCenter(lonlat, 13);//map의 중심 좌표 설정
+			var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
+ 			var icon4 = new Tmap.Icon(
+				'http://tmapapis.sktelecom.com/upload/tmap/marker/pin_r_m_d.png',
+				size, offset);//마커 아이콘 설정 
+			arr4[index] = new Tmap.Marker(lonlat, icon4);//마커 생성
+	});
+	$(obj5).each(function(index, item){
+			la5 = item.lat;
+			lo5 = item.lng;
+			result = item.idx;
+			var lonlat = new Tmap.LonLat(la5, lo5).transform("EPSG:4326","EPSG:3857");//좌표 설정
+			var size = new Tmap.Size(24, 38);//아이콘 크기 설정
+			map.setCenter(lonlat, 13.5);//map의 중심 좌표 설정
+			var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
+ 			var icon5 = new Tmap.Icon(
+				'http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_e.png',
+				size, offset);//마커 아이콘 설정 
+			arr5[index] = new Tmap.Marker(lonlat, icon5);//마커 생성
+	});
+	$(obj6).each(function(index, item){
+			la6 = item.lat;
+			lo6 = item.lng;
+			result = item.idx;
+			var lonlat = new Tmap.LonLat(la6, lo6).transform("EPSG:4326","EPSG:3857");//좌표 설정
+			var size = new Tmap.Size(24, 38);//아이콘 크기 설정
+			//map.setCenter(lonlat, 13);//map의 중심 좌표 설정
+			var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
+ 			var icon6 = new Tmap.Icon(
+				'http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_f.png',
+				size, offset);//마커 아이콘 설정 
+			arr6[index] = new Tmap.Marker(lonlat, icon6);//마커 생성
+	});
+	$(obj7).each(function(index, item){
+			la7 = item.lat;
+			lo7 = item.lng;
+			result = item.idx;
+			var lonlat = new Tmap.LonLat(la7, lo7).transform("EPSG:4326","EPSG:3857");//좌표 설정
+			var size = new Tmap.Size(24, 38);//아이콘 크기 설정
+			//map.setCenter(lonlat, 13);//map의 중심 좌표 설정
+			var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
+ 			var icon7 = new Tmap.Icon(
+				'http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_g.png',
+				size, offset);//마커 아이콘 설정 
+			arr7[index] = new Tmap.Marker(lonlat, icon7);//마커 생성
+	});
+	$(obj8).each(function(index, item){
+			la8 = item.lat;
+			lo8 = item.lng;
+			result = item.idx;
+			var lonlat = new Tmap.LonLat(la8, lo8).transform("EPSG:4326","EPSG:3857");//좌표 설정
+			var size = new Tmap.Size(24, 38);//아이콘 크기 설정
+			//map.setCenter(lonlat, 13);//map의 중심 좌표 설정
+			var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
+ 			var icon8 = new Tmap.Icon(
+				'http://tmapapis.sktelecom.com/upload/tmap/marker/pin_g_m_h.png',
+				size, offset);//마커 아이콘 설정 
+			arr8[index] = new Tmap.Marker(lonlat, icon8);//마커 생성
+	});
+	$(obj9).each(function(index, item){
+			la9 = item.lat;
+			lo9 = item.lng;
+			result = item.idx;
+			var lonlat = new Tmap.LonLat(la9, lo9).transform("EPSG:4326","EPSG:3857");//좌표 설정
+			var size = new Tmap.Size(24, 38);//아이콘 크기 설정
+			//map.setCenter(lonlat, 13);//map의 중심 좌표 설정
+			var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
+ 			var icon9 = new Tmap.Icon(
+				'http://tmapapis.sktelecom.com/upload/tmap/marker/pin_g_m_i.png',
+				size, offset);//마커 아이콘 설정 
+			arr9[index] = new Tmap.Marker(lonlat, icon9);//마커 생성
 	});
 	
 	function loop1(x) {
 		setTimeout(function() {
 			markerLayer.removeMarker(arr1[x-1]);
 			markerLayer.addMarker(arr1[x]);//레이어에 마커 추가
-			}, 2000 * x);
+			}, 1000 * x);
 	}
 	function loop2(x) {
 		setTimeout(function() {
 			markerLayer.removeMarker(arr2[x-1]);
 			markerLayer.addMarker(arr2[x]);//레이어에 마커 추가
-			}, 2000 * x);
+			}, 1000 * x);
 	}
 	function loop3(x) {
 		setTimeout(function() {
 			markerLayer.removeMarker(arr3[x-1]);
 			markerLayer.addMarker(arr3[x]);//레이어에 마커 추가
-			}, 2000 * x);
+			}, 1000 * x);
+	}
+	function loop4(x) {
+		setTimeout(function() {
+			markerLayer.removeMarker(arr4[x-1]);
+			markerLayer.addMarker(arr4[x]);//레이어에 마커 추가
+			}, 1000 * x);
+	}
+	function loop5(x) {
+		setTimeout(function() {
+			markerLayer.removeMarker(arr5[x-1]);
+			markerLayer.addMarker(arr5[x]);//레이어에 마커 추가
+			}, 1000 * x);
+	}
+	function loop6(x) {
+		setTimeout(function() {
+			markerLayer.removeMarker(arr6[x-1]);
+			markerLayer.addMarker(arr6[x]);//레이어에 마커 추가
+			}, 1000 * x);
+	}
+	function loop7(x) {
+		setTimeout(function() {
+			markerLayer.removeMarker(arr7[x-1]);
+			markerLayer.addMarker(arr7[x]);//레이어에 마커 추가
+			}, 1000 * x);
+	}
+	function loop8(x) {
+		setTimeout(function() {
+			markerLayer.removeMarker(arr8[x-1]);
+			markerLayer.addMarker(arr8[x]);//레이어에 마커 추가
+			}, 1000 * x);
+	}
+	function loop9(x) {
+		setTimeout(function() {
+			markerLayer.removeMarker(arr9[x-1]);
+			markerLayer.addMarker(arr9[x]);//레이어에 마커 추가
+			}, 1000 * x);
 	}
 	 /* for (i=1; i<arr3.length; i++) {
 		loop(i);
 	}  */
-	for (i=1,j=1,k=1; i<arr1.length, j<arr2.length, k<arr3.length; i++, j++, k++) {
+	for (i=1,j=1,k=1,a=1,b=1,c=1,d=1,e=1,f=1; i<arr1.length, j<arr2.length, k<arr3.length, a<arr4.length, b<arr5.length, c<arr6.length, d<arr7.length, e<arr8.length, f<arr9.length; i++, j++, k++, a++, b++, c++, d++, e++, f++) {
 		loop1(i);
 		loop2(j);
 		loop3(k);
+		loop4(a);
+		loop5(b);
+		loop6(c);
+		loop7(d);
+		loop8(e);
+		loop9(f);
 	}
 	
 }
