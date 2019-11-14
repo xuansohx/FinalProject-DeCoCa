@@ -343,10 +343,22 @@ public class ManagerController {
 		ArrayList<Path> path1 = null;
 		ArrayList<Path> path2 = null;
 		ArrayList<Path> path3 = null;
+		ArrayList<Path> path4 = null;
+		ArrayList<Path> path5 = null;
+		ArrayList<Path> path6 = null;
+		ArrayList<Path> path7 = null;
+		ArrayList<Path> path8 = null;
+		ArrayList<Path> path9 = null;
 		try {
-			path1 = pbiz.getAll(2038);
-			path2 = pbiz.getAll(2040);
-			path3 = pbiz.getAll(2041);
+			path1 = pbiz.getAll(2050);
+			path2 = pbiz.getAll(2051);
+			path3 = pbiz.getAll(2036);
+			path4 = pbiz.getAll(2037);
+			path5 = pbiz.getAll(2039);
+			path6 = pbiz.getAll(2046);
+			path7 = pbiz.getAll(2047);
+			path8 = pbiz.getAll(2048);
+			path9 = pbiz.getAll(2049);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -355,17 +367,35 @@ public class ManagerController {
 		mv.addObject("path1", path1);
 		mv.addObject("path2", path2);
 		mv.addObject("path3", path3);
+		mv.addObject("path4", path4);
+		mv.addObject("path5", path5);
+		mv.addObject("path6", path6);
+		mv.addObject("path7", path7);
+		mv.addObject("path8", path8);
+		mv.addObject("path9", path9);
 
 		// arraylist��� json��� ����� (object)
 		Gson gson = new Gson();
 		String json1 = gson.toJson(path1);
 		String json2 = gson.toJson(path2);
 		String json3 = gson.toJson(path3);
+		String json4 = gson.toJson(path4);
+		String json5 = gson.toJson(path5);
+		String json6 = gson.toJson(path6);
+		String json7 = gson.toJson(path7);
+		String json8 = gson.toJson(path8);
+		String json9 = gson.toJson(path9);
 
 		// System.out.println(json.toString());
 		mv.addObject("json1", json1);
 		mv.addObject("json2", json2);
 		mv.addObject("json3", json3);
+		mv.addObject("json4", json4);
+		mv.addObject("json5", json5);
+		mv.addObject("json6", json6);
+		mv.addObject("json7", json7);
+		mv.addObject("json8", json8);
+		mv.addObject("json9", json9);
 
 		mv.addObject("center", "manager/showcarloc");
 		mv.setViewName("main");
