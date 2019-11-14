@@ -396,7 +396,9 @@ public class ManagerController {
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM time");
 		while (rs.next()) {
-			// System.out.println(rs.getString(4));
+			//System.out.println(rs.getString(4));
+			if(rs.getString(4)==null)
+				continue;
 			int inx = Integer.parseInt(rs.getString(4));
 			test[inx]++;
 		}
