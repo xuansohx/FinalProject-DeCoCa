@@ -26,6 +26,10 @@
 
 ![구현환경](Image/구현환경.jpg)
 
+- **CAN 통신 규약 :**
+
+![CAN통신규약](Image/CAN통신규약.jpg)
+
 - **Entity-Relationship Diagram (ERD) :**
 
 ![ERD(final)](Image/ERD(final).jpg)
